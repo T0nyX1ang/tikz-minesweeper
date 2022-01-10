@@ -2,9 +2,6 @@
 [2022/01/07, v0.1.0]
 \RequirePackage{tikz}
 \RequirePackage{expl3}
-\RequirePackage{ifthen}
-
-\newcounter{countertikzminesweeper}
 
 % Color tables
 \definecolor{color0}{RGB}{192,192,192}
@@ -26,9 +23,9 @@
 % \mine : draw a mine in cell
 % \cellup : draw an up cell
 % \celldown : draw a down cell
-% \fillcellnum{number} : fill cell with number
+% \cellnum{number} : fill cell with number
 % \cell{x}{y}{content} : draw a cell at (x,y) and put content in it. If the content is a number then the cell is down. otherwise the cell is up. Let content=f to put a flag.
-% \row{x}{content} : draw the x-th row with content. The content is cell contents separated by comma. For example, \row{0}{ ,1,2,0,f,A}
+% \row{x}{content} : draw the x-th row with content. For example, \row{0}{1{20}0fA}
 
 \ExplSyntaxOn
     \cs_set:Nn \element_flag: {
@@ -45,56 +42,77 @@
         \shade[ball~color=color7] (8.5pt,-8.5pt) circle (4.5pt); % body
     }
 
-    \newcommand{\flag}{\element_flag:}
-    \newcommand{\mine}{\element_mine:}
-\ExplSyntaxOff
+    \cs_set:Nn \element_cellup: {
+        \fill[color0] (0, 0) rectangle (16pt, -16pt); % background
+        \fill[clight] (0, 0) -- (16pt, 0) -- (14pt, -2pt) -- (2pt, -2pt) -- (2pt, -14pt) -- (0, -16pt) -- cycle; % highlight
+        \fill[color8] (16pt, -16pt) -- (0pt, -16pt) -- (2pt, -14pt) -- (14pt, -14pt) -- (14pt, -2pt) -- (16pt, 0) -- cycle; % shade
+    }
 
-\newcommand{\cellup}{
-    \fill[color0] (0, 0) rectangle (16pt, -16pt); % background
-    \fill[clight] (0, 0) -- (16pt, 0) -- (14pt, -2pt) -- (2pt, -2pt) -- (2pt, -14pt) -- (0, -16pt) -- cycle; % highlight
-    \fill[color8] (16pt, -16pt) -- (0pt, -16pt) -- (2pt, -14pt) -- (14pt, -14pt) -- (14pt, -2pt) -- (16pt, 0) -- cycle; % shade
-}
-\newcommand{\celldown}{
-    \fill[color8] (0, 0) -- (16pt, 0) -- (16pt, -1pt) -- (1pt, -1pt) -- (1pt, -16pt) -- (0, -16pt) -- cycle; % border
-    \fill[color0] (1pt, -16pt) rectangle (16pt, -1pt); % background
-}
-\newcommand{\fillcellnum}[1]{
-    \node[text centered, text={color#1}] at (8.5pt, -8.5pt) {\textbf{#1}};
-}
-\newcommand{\cell}[3]{
-    \sffamily
-    \begin{scope}[shift={(#3*16pt,-#2*16pt)}]
-        \ifthenelse
-        {\equal{#1}{0} \or \equal{#1}{1} \or \equal{#1}{2} \or \equal{#1}{3} \or \equal{#1}{4} \or \equal{#1}{5} \or \equal{#1}{6} \or \equal{#1}{7} \or \equal{#1}{8}} % if
-        {\celldown\fillcellnum{#1}} % then
-        {
-            % else
-            \ifthenelse{\equal{#1}{f}}{\cellup\flag}{
-                \ifthenelse{\equal{#1}{m}}{
-                    \celldown
-                    \mine
-                }{
-					\cellup
-                    \pgfmathparse{less(width("#1"),8)} % calculate the width of the text
-                    \ifthenelse{\equal{\pgfmathresult}{1}}{
-                        \node[text centered, text={color7}] at (8pt, -8pt) {\textbf{#1}};
-                    }{
-                        \node[text centered, text={color7}] at (8pt, -8pt) {\textbf{\tiny #1}};
+    \cs_set:Nn \element_celldown: {
+        \fill[color8] (0, 0) -- (16pt, 0) -- (16pt, -1pt) -- (1pt, -1pt) -- (1pt, -16pt) -- (0, -16pt) -- cycle; % border
+        \fill[color0] (1pt, -16pt) rectangle (16pt, -1pt); % background
+    }
+
+    \cs_set:Npn \element_cellnum:n #1 {
+        \tl_set:Nn \l_tmpa_tl {color}
+        \tl_put_right:Nn \l_tmpa_tl {#1}
+        \node[text~centered, text=\l_tmpa_tl] at (8.5pt, -8.5pt) {\textbf{#1}};
+    }
+
+    \cs_set:Npn \element_cell:nnn #1#2#3 {
+        \sffamily
+        \tl_set:Nn \l_tmpa_tl {012345678}
+        \begin{scope}[xshift=#3*16pt,yshift=-#2*16pt]
+            \tl_if_single:nTF {#1} {
+                % single token
+                \tl_if_in:NnTF \l_tmpa_tl {#1} {
+                    % number
+                    \element_celldown:
+                    \element_cellnum:n {#1}
+                } {
+                    % otherwise
+                    \tl_case:NnF #1 {
+                        f {
+                            % flag
+                            \element_cellup:
+                            \element_flag:
+                        }
+                        m {
+                            % mine
+                            \element_celldown:
+                            \element_mine:
+                        }
+                    } {
+                        % otherwise
+                        \element_cellup:
+                        \node[text~centered, text={color7}] at (8pt, -8pt) {\textbf{#1}}; % normal label
                     }
                 }
+            } {
+                % otherwise
+                \element_cellup:
+                \node[text~centered, text={color7}] at (8pt, -8pt) {\textbf{\tiny #1}}; % tiny label
             }
-        }
-    \end{scope}
-}
-
-\newcommand{\row}[2]{
-    \setcounter{countertikzminesweeper}{0}
-    \foreach \y in {#2}
-    {
-        \cell{\y}{#1}{\value{countertikzminesweeper}}
-        \stepcounter{countertikzminesweeper}
+        \end{scope}
     }
-}
+
+    \cs_set:Npn \element_row:nn #1#2 {
+        \tl_set:Nn \l_tmpa_tl {#2}
+        \int_zero:N \l_tmpa_int
+        \tl_map_inline:Nn \l_tmpa_tl {
+            \element_cell:nnn {##1}{#1}{\l_tmpa_int}
+            \int_incr:N \l_tmpa_int
+        }
+    }
+
+    \newcommand{\flag}{\element_flag:}
+    \newcommand{\mine}{\element_mine:}
+    \newcommand{\cellup}{\element_cellup:}
+    \newcommand{\celldown}{\element_celldown:}
+    \newcommand{\cellnum}{\element_cellnum:n}
+    \newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
+    \newcommand{\row}[2]{\element_row:nn {#1}{#2}}
+\ExplSyntaxOff
 
 %%%%%%%%%%%
 % BORDERS %

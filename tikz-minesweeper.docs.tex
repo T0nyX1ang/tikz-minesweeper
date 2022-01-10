@@ -1,7 +1,6 @@
 \documentclass{article}
 
 \usepackage{ctex}
-\usepackage{geometry}
 \usepackage{verbatim}
 \usepackage{booktabs}
 \usepackage{makecell}
@@ -12,8 +11,6 @@
 \usepackage{tikz-minesweeper}
 
 \usepackage[pdfborder=001]{hyperref}
-
-\geometry{scale=.8}
 
 \title{\texttt{tikz-minesweeper}宏包使用手册}
 \author{濮天羿\footnote{本项目的维护者} \quad 向飞宇\footnote{本项目的创建者}}
@@ -30,24 +27,24 @@
 
     \begin{multicols}{2}
     \begin{verbatim}
-    \usepackage{tikz-minesweeper}
-    \begin{document}
-        \begin{tikzpicture}
-            \board{3}{5}
-            \row{0}{f,20,1,2,3}
-            \row{1}{A, ,4,0,5}
-            \row{2}{m, ,6,7,8}
-        \end{tikzpicture}
-    \end{document}
+\usepackage{tikz-minesweeper}
+\begin{document}
+    \begin{tikzpicture}
+        \board{3}{5}
+        \row{0}{f{20}123}
+        \row{1}{A~40~}
+        \row{2}{m~678}
+    \end{tikzpicture}
+\end{document}
     \end{verbatim}
     \columnbreak
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}
             \board{3}{5}
-                \row{0}{f,20,1,2,3}
-                \row{1}{A, ,4,0,5}
-                \row{2}{m, ,6,7,8}
+            \row{0}{f{20}123}
+            \row{1}{A~405}
+            \row{2}{m~678}
         \end{tikzpicture}
         \caption*{示例: 在3x5区域内绘制数字、雷、旗帜、空格和标记}
     \end{figure}
@@ -130,7 +127,7 @@
             \quad
             \subfloat[按下的方块]{\begin{tikzpicture}\begin{scope}[scale=5]\celldown\end{scope}\end{tikzpicture}}
         \end{figure}
-        \item[\texttt{\textbackslash cellnum\{数字\}}] 在当前方块中填入带配色的数字\raisebox{-0.5ex}{\tikz{\fillcellnum{0}}\tikz{\fillcellnum{1}}\tikz{\fillcellnum{2}}\tikz{\fillcellnum{3}}\tikz{\fillcellnum{4}}\tikz{\fillcellnum{5}}\tikz{\fillcellnum{6}}\tikz{\fillcellnum{7}}\tikz{\fillcellnum{8}}}. 数字中心为(8.5pt,8.5pt)
+        \item[\texttt{\textbackslash cellnum\{数字\}}] 在当前方块中填入带配色的数字\raisebox{-0.5ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}. 数字中心为(8.5pt,8.5pt)
 
     \end{itemize}
 
@@ -165,24 +162,27 @@
         \item[\texttt{\textbackslash cell\{行\}\{列\}\{内容\}}] 在第[行]行第[列]列交叉处绘制包含[内容]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8pt,-8pt). 内容不能为空, 如果希望没有内容, 可以把空格作为内容传进去.
         \item[\texttt{\textbackslash row\{行\}\{内容\}}] 在第[行]行从左到右绘制多个方格. 内容的格式是用逗号隔开单个字符, 每个字符作为\texttt{\textbackslash cell}的第三个参数. 如果字符长度超过\texttt{8pt}, 将会自动缩小字符, 转化为\texttt{\tiny}模式.
         \item[\texttt{\textbackslash board\{行\}\{列\}}] 绘制[行]行[列]列的边框.
-        \begin{figure}[!htp]
-            \centering
-            \begin{tabular}{|c|}
-                \hline
-                123
-                \\\hline
-            \end{tabular}
-            \quad
-            \begin{tabular}{c}
+        \begin{multicols}{2}
+\begin{verbatim}
+\begin{tikzpicture}
+    \board{3}{5}
+    \row{0}{f{20}123}
+    \row{1}{A~405}
+    \row{2}{m~678}
+\end{tikzpicture}
+\end{verbatim}
+            \columnbreak
+            \begin{figure}[H]
+                \centering
                 \begin{tikzpicture}
                     \board{3}{5}
-                    \row{0}{f,20,1,2,3}
-                    \row{1}{A, ,4,0,5}
-                    \row{2}{m, ,6,7,8}
+                    \row{0}{f{20}123}
+                    \row{1}{A~405}
+                    \row{2}{m~678}
                 \end{tikzpicture}
-            \end{tabular}
-            \caption*{使用\texttt{\textbackslash board}和\texttt{\textbackslash row}摆雷}
-        \end{figure}
+                \caption*{利用\texttt{\textbackslash board}和\texttt{\textbackslash row}绘制地图}
+            \end{figure}
+            \end{multicols}
         \item[\texttt{\textbackslash tboard\{行\}\{列\}}] 绘制[行]行[列]列的边框, 但是不包含下边.
         \item[\texttt{\textbackslash lboard\{行\}\{列\}}] 绘制[行]行[列]列的边框, 但是不包含右边.
         \item[\texttt{\textbackslash tlboard\{行\}\{列\}}] 绘制[行]行[列]列的边框, 但是不包含下边和右边.
