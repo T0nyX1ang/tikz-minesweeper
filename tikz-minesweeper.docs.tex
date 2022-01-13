@@ -78,7 +78,9 @@
     \end{table}
 
     \subsection{方格元素}
-    为了与标准扫雷游戏一致, 本宏包中一格的边长是\textbf{16pt}.
+    本宏包中设定单位长度为\textbf{1pt}, 下文如无特殊说明, 所有数据的单位为\textbf{pt}, 且所有数据不带单位. 如果需要放大一张地图, 请使用\texttt{scope}环境中的\texttt{scale}参数.
+
+    为了与标准扫雷游戏一致, 一格的边长是\textbf{16}.
     \begin{itemize}
         \item[\texttt{\textbackslash flag}] 绘制旗子
         \begin{figure}[!htp]
@@ -86,23 +88,23 @@
             \begin{tikzpicture}
                 \begin{scope}[scale=10]
                     \flag
-                    \draw[gray] (0,0) rectangle (16pt, -16pt);
+                    \draw[gray] (0,0) rectangle (16, -16);
 
-                    \draw[dashed] (0,-4pt) node[left] {-4} -- (8.5pt,-4pt);
-                    \draw[dashed,red] (16pt,-4.5pt) node[right] {-4.5} -- (8.5pt,-4.5pt);
-                    \draw[dashed,red] (0,-6.5pt) node[left] {-6.5} -- (4pt,-6.5pt);
-                    \draw[dashed,red] (16pt,-8.5pt) node[right] {-8.5} -- (8.5pt,-8.5pt);
-                    \draw[dashed] (0,-11pt) node[left] {-11} -- (6.5pt,-11pt);
-                    \draw[dashed] (16pt,-12pt) node[right] {-12} -- (12pt,-12pt);
-                    \draw[dashed] (0,-13pt) node[left] {-13} -- (5pt,-13pt);
+                    \draw[dashed] (0,-4) node[left] {-4} -- (8.5,-4);
+                    \draw[dashed,red] (16,-4.5) node[right] {-4.5} -- (8.5,-4.5);
+                    \draw[dashed,red] (0,-6.5) node[left] {-6.5} -- (4,-6.5);
+                    \draw[dashed,red] (16,-8.5) node[right] {-8.5} -- (8.5,-8.5);
+                    \draw[dashed] (0,-11) node[left] {-11} -- (6.5,-11);
+                    \draw[dashed] (16,-12) node[right] {-12} -- (12,-12);
+                    \draw[dashed] (0,-13) node[left] {-13} -- (5,-13);
 
-                    \draw[dashed,red] (4pt,0) node[above] {4} -- (4pt,-6.5pt);
-                    \draw[dashed] (5pt,-16pt) node[below] {5} -- (5pt,-13pt);
-                    \draw[dashed] (6.5pt,0) node[above] {6.5} -- (6.5pt,-11pt);
-                    \draw[dashed] (8.5pt,-16pt) node[below] {8.5} -- (8.5pt,-13pt);
-                    \draw[dashed] (9.5pt,0) node[above] {9.5} -- (9.5pt,-4pt);
-                    \draw[dashed] (10.5pt,-16pt) node[below] {10.5} -- (10.5pt,-13pt);
-                    \draw[dashed] (12pt,0) node[above] {12} -- (12pt,-12pt);
+                    \draw[dashed,red] (4,0) node[above] {4} -- (4,-6.5);
+                    \draw[dashed] (5,-16) node[below] {5} -- (5,-13);
+                    \draw[dashed] (6.5,0) node[above] {6.5} -- (6.5,-11);
+                    \draw[dashed] (8.5,-16) node[below] {8.5} -- (8.5,-13);
+                    \draw[dashed] (9.5,0) node[above] {9.5} -- (9.5,-4);
+                    \draw[dashed] (10.5,-16) node[below] {10.5} -- (10.5,-13);
+                    \draw[dashed] (12,0) node[above] {12} -- (12,-12);
                 \end{scope}
             \end{tikzpicture}
             \caption*{旗子参数. 方框是一格参考线, 左上角为原点. }
@@ -116,10 +118,10 @@
                 \end{scope}
             \end{tikzpicture}
         \end{figure}
-        \item[\texttt{\textbackslash cellup}] 绘制弹起的方块, 左上角原点. 四周形成立体感的宽度为2pt.
+        \item[\texttt{\textbackslash cellup}] 绘制弹起的方块, 左上角原点. 四周形成立体感的宽度为2.
 
 
-        \item[\texttt{\textbackslash celldown}] 绘制按下的方块, 左上角原点. 左和上的边界宽度为1pt.
+        \item[\texttt{\textbackslash celldown}] 绘制按下的方块, 左上角原点. 左和上的边界宽度为1.
         \begin{figure}[!htp]
             \captionsetup[subfloat]{labelformat=empty}
             \centering
@@ -127,12 +129,12 @@
             \quad
             \subfloat[按下的方块]{\begin{tikzpicture}\begin{scope}[scale=5]\celldown\end{scope}\end{tikzpicture}}
         \end{figure}
-        \item[\texttt{\textbackslash cellnum\{数字\}}] 在当前方块中填入带配色的数字\raisebox{-0.5ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}. 数字中心为(8.5pt,8.5pt)
+        \item[\texttt{\textbackslash cellnum\{数字\}}] 在当前方块中填入带配色的数字\raisebox{-0.5ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}. 数字中心为(8.5,8.5)
 
     \end{itemize}
 
     \subsection{边框元素}
-    边框分为三层, 中间层是color0, 宽度是6pt, 内外层用clight/cborder提供立体感, 宽度3pt. 提供立体感的方式和\texttt{\textbackslash cellup}同理. 左边和上边的高亮外边缘用cborder封边.
+    边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和\texttt{\textbackslash cellup}同理. 左边和上边的高亮外边缘用cborder封边.
     \begin{itemize}
         \item[\texttt{\textbackslash tlborder}] 绘制左上角边框, 右下角是原点.
         \item[\texttt{\textbackslash trborder}] 绘制右上角边框, 左下角是原点.
@@ -147,10 +149,10 @@
             \begin{tikzpicture}
                 \begin{scope}[scale=4]
                     \board{1}{1}
-                    \draw[dashed] (-14pt,0) -- (30pt,0);
-                    \draw[dashed] (-14pt,-16pt) -- (30pt,-16pt);
-                    \draw[dashed] (0,14pt) -- (0,-30pt);
-                    \draw[dashed] (16pt,14pt) -- (16pt,-30pt);
+                    \draw[dashed] (-14,0) -- (30,0);
+                    \draw[dashed] (-14,-16) -- (30,-16);
+                    \draw[dashed] (0,14) -- (0,-30);
+                    \draw[dashed] (16,14) -- (16,-30);
                 \end{scope}
             \end{tikzpicture}
             \caption*{边框组装效果}
@@ -159,7 +161,7 @@
 
     \subsection{模块}
     \begin{itemize}
-        \item[\texttt{\textbackslash cell\{行\}\{列\}\{内容\}}] 在第[行]行第[列]列交叉处绘制包含[内容]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8pt,-8pt). 内容不能为空, 如果希望没有内容, 可以把波浪号(\textasciitilde)作为内容传进去, 如果内容中含有多个字符, 将会自动缩小字符, 转化为\texttt{\textbackslash tiny}模式.
+        \item[\texttt{\textbackslash cell\{行\}\{列\}\{内容\}}] 在第[行]行第[列]列交叉处绘制包含[内容]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8,-8). 内容不能为空, 如果希望没有内容, 可以把波浪号(\textasciitilde)作为内容传进去, 如果内容中含有多个字符, 将会自动缩小字符, 转化为\texttt{\textbackslash tiny}模式.
         \item[\texttt{\textbackslash row\{行\}\{内容\}}] 在第[行]行从左到右绘制多个方格. 内容的格式按照顺序输入字符, 每个字符作为\texttt{\textbackslash cell}的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如\texttt{1\{23\}4}代表1, 23和4这这三个字符.
         \item[\texttt{\textbackslash board\{行\}\{列\}}] 绘制[行]行[列]列的边框.
         \begin{multicols}{2}

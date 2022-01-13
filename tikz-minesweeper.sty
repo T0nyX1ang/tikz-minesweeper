@@ -16,6 +16,9 @@
 \definecolor{cborder}{RGB}{160,160,160}
 \definecolor{clight}{RGB}{255,255,255}
 
+% Default unit
+\tikzset{x=1pt, y=1pt}
+
 %%%%%%%%%
 % CELLS %
 %%%%%%%%%
@@ -29,40 +32,40 @@
 
 \ExplSyntaxOn
     \cs_set:Nn \element_flag: {
-        \fill[color7] (5pt, -13pt) rectangle (12pt, -12pt); % lower base
-        \fill[color7] (6.5pt, -13pt) rectangle (10.5pt, -11pt); % upper base
-        \fill[color7] (8.5pt, -13pt) rectangle (9.5pt, -4pt); % pole
-        \fill[color3] (8.5pt, -4.5pt) -- (4pt, -6.5pt) -- (8.5pt, -8.5pt) -- cycle; % red flag
+        \fill[color7] (5, -13) rectangle (12, -12); % lower base
+        \fill[color7] (6.5, -13) rectangle (10.5, -11); % upper base
+        \fill[color7] (8.5, -13) rectangle (9.5, -4); % pole
+        \fill[color3] (8.5, -4.5) -- (4, -6.5) -- (8.5, -8.5) -- cycle; % red flag
     }
 
     \cs_set:Nn \element_mine: {
         \int_step_inline:nnnn {0} {45} {135} {
-            \fill[color7, xshift=8.5pt, yshift=-8.5pt, rotate=##1] (-6.5pt, 0.4pt) -- (0, 1.5pt) -- (6.5pt, 0.4pt) -- (6.5pt, -0.4pt) -- (0, -1.5pt) -- (-6.5pt, -0.4pt) -- cycle; % spikes
+            \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
         }
-        \shade[ball~color=color7] (8.5pt,-8.5pt) circle (4.5pt); % body
+        \shade[ball~color=color7] (8.5,-8.5) circle (4.5); % body
     }
 
     \cs_set:Nn \element_cellup: {
-        \fill[color0] (0, 0) rectangle (16pt, -16pt); % background
-        \fill[clight] (0, 0) -- (16pt, 0) -- (14pt, -2pt) -- (2pt, -2pt) -- (2pt, -14pt) -- (0, -16pt) -- cycle; % highlight
-        \fill[color8] (16pt, -16pt) -- (0pt, -16pt) -- (2pt, -14pt) -- (14pt, -14pt) -- (14pt, -2pt) -- (16pt, 0) -- cycle; % shade
+        \fill[color0] (0, 0) rectangle (16, -16); % background
+        \fill[clight] (0, 0) -- (16, 0) -- (14, -2) -- (2, -2) -- (2, -14) -- (0, -16) -- cycle; % highlight
+        \fill[color8] (16, -16) -- (0, -16) -- (2, -14) -- (14, -14) -- (14, -2) -- (16, 0) -- cycle; % shade
     }
 
     \cs_set:Nn \element_celldown: {
-        \fill[color8] (0, 0) -- (16pt, 0) -- (16pt, -1pt) -- (1pt, -1pt) -- (1pt, -16pt) -- (0, -16pt) -- cycle; % border
-        \fill[color0] (1pt, -16pt) rectangle (16pt, -1pt); % background
+        \fill[color8] (0, 0) -- (16, 0) -- (16, -1) -- (1, -1) -- (1, -16) -- (0, -16) -- cycle; % border
+        \fill[color0] (1, -16) rectangle (16, -1); % background
     }
 
     \cs_set:Npn \element_cellnum:n #1 {
         \tl_set:Nn \l_tmpa_tl {color}
         \tl_put_right:Nn \l_tmpa_tl {#1}
-        \node[text~centered, text=\l_tmpa_tl] at (8.5pt, -8.5pt) {\textbf{#1}};
+        \node[text~centered, text=\l_tmpa_tl] at (8.5, -8.5) {\textbf{#1}};
     }
 
     \cs_set:Npn \element_cell:nnn #1#2#3 {
         \sffamily
         \tl_set:Nn \l_tmpa_tl {012345678}
-        \begin{scope}[xshift=#3*16pt,yshift=-#2*16pt]
+        \begin{scope}[xshift=#3*16,yshift=-#2*16]
             \tl_if_single:nTF {#1} {
                 % single token
                 \tl_if_in:NnTF \l_tmpa_tl {#1} {
@@ -85,13 +88,13 @@
                     } {
                         % otherwise
                         \element_cellup:
-                        \node[text~centered, text={color7}] at (8pt, -8pt) {\textbf{#1}}; % normal label
+                        \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; % normal label
                     }
                 }
             } {
                 % otherwise
                 \element_cellup:
-                \node[text~centered, text={color7}] at (8pt, -8pt) {\textbf{\tiny #1}}; % tiny label
+                \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}}; % tiny label
             }
         \end{scope}
     }
@@ -118,68 +121,68 @@
 % BORDERS %
 %%%%%%%%%%%
 \newcommand{\tborder}[1]{
-    \fill[clight] (0, 9pt) rectangle (#1*16pt, 12pt);
-    \fill[color0] (0, 3pt) rectangle (#1*16pt, 9pt);
-    \fill[cborder] (0, 0) rectangle (#1*16pt, 3pt);
-    \draw[cborder,ultra thin] (0, 12pt) -- (#1*16pt, 12pt);
+    \fill[clight] (0, 9) rectangle (#1*16, 12);
+    \fill[color0] (0, 3) rectangle (#1*16, 9);
+    \fill[cborder] (0, 0) rectangle (#1*16, 3);
+    \draw[cborder,ultra thin] (0, 12) -- (#1*16, 12);
 }
 \newcommand{\lborder}[1]{
-    \fill[clight] (-9pt, 0) rectangle (-12pt, -#1*16pt);
-    \fill[color0] (-3pt, 0) rectangle (-9pt, -#1*16pt);
-    \fill[cborder] (0, 0) rectangle (-3pt, -#1*16pt);
-    \draw[cborder,ultra thin] (-12pt,0) -- (-12pt, -#1*16pt);
+    \fill[clight] (-9, 0) rectangle (-12, -#1*16);
+    \fill[color0] (-3, 0) rectangle (-9, -#1*16);
+    \fill[cborder] (0, 0) rectangle (-3, -#1*16);
+    \draw[cborder,ultra thin] (-12,0) -- (-12, -#1*16);
 }
 \newcommand{\bborder}[1]{
-    \fill[cborder] (0, -9pt) rectangle (#1*16pt, -12pt);
-    \fill[color0] (0, -3pt) rectangle (#1*16pt, -9pt);
-    \fill[clight] (0, 0) rectangle (#1*16pt, -3pt);
+    \fill[cborder] (0, -9) rectangle (#1*16, -12);
+    \fill[color0] (0, -3) rectangle (#1*16, -9);
+    \fill[clight] (0, 0) rectangle (#1*16, -3);
 }
 \newcommand{\rborder}[1]{
-    \fill[cborder] (9pt, 0) rectangle (12pt, -#1*16pt);
-    \fill[color0] (3pt, 0) rectangle (9pt, -#1*16pt);
-    \fill[clight] (0, 0) rectangle (3pt, -#1*16pt);
+    \fill[cborder] (9, 0) rectangle (12, -#1*16);
+    \fill[color0] (3, 0) rectangle (9, -#1*16);
+    \fill[clight] (0, 0) rectangle (3, -#1*16);
 }
 \newcommand{\tlborder}{
-    \fill[clight] (0, 0) rectangle (-12pt, 12pt);
-    \fill[color0] (0, 0) rectangle (-9pt, 9pt);
-    \fill[cborder] (0, 0) rectangle (-3pt, 3pt);
-    \draw[cborder,ultra thin] (-12pt, 0) -- (-12pt, 12pt) -- (0, 12pt);
+    \fill[clight] (0, 0) rectangle (-12, 12);
+    \fill[color0] (0, 0) rectangle (-9, 9);
+    \fill[cborder] (0, 0) rectangle (-3, 3);
+    \draw[cborder,ultra thin] (-12, 0) -- (-12, 12) -- (0, 12);
 }
 \newcommand{\brborder}{
-    \fill[cborder] (0, 0) rectangle (12pt, -12pt);
-    \fill[color0] (0, 0) rectangle (9pt, -9pt);
-    \fill[clight] (0, 0) rectangle (3pt, -3pt);
+    \fill[cborder] (0, 0) rectangle (12, -12);
+    \fill[color0] (0, 0) rectangle (9, -9);
+    \fill[clight] (0, 0) rectangle (3, -3);
 }
 \newcommand{\trborder}{
-    \fill[color0] (0, 0) rectangle (9pt, 9pt);
-    \fill[cborder] (0, 0) -- (3pt, 3pt) -- (0, 3pt) -- cycle;
-    \fill[cborder] (9pt, 9pt) -- (12pt, 12pt) -- (12pt, 0) -- (9pt, 0) -- cycle;
-    \fill[clight] (0, 0) -- (3pt, 3pt) -- (3pt, 0) -- cycle;
-    \fill[clight] (9pt, 9pt) -- (12pt, 12pt) -- (0, 12pt) -- (0, 9pt) -- cycle;
-    \draw[cborder,ultra thin] (12pt, 12pt) -- (0, 12pt);
+    \fill[color0] (0, 0) rectangle (9, 9);
+    \fill[cborder] (0, 0) -- (3, 3) -- (0, 3) -- cycle;
+    \fill[cborder] (9, 9) -- (12, 12) -- (12, 0) -- (9, 0) -- cycle;
+    \fill[clight] (0, 0) -- (3, 3) -- (3, 0) -- cycle;
+    \fill[clight] (9, 9) -- (12, 12) -- (0, 12) -- (0, 9) -- cycle;
+    \draw[cborder,ultra thin] (12, 12) -- (0, 12);
 }
 \newcommand{\blborder}{
-    \fill[color0] (0, 0) rectangle (-9pt, -9pt);
-    \fill[clight] (0, 0) -- (-3pt, -3pt) -- (0, -3pt) -- cycle;
-    \fill[clight] (-9pt, -9pt) -- (-12pt, -12pt) -- (-12pt, 0) -- (-9pt, 0) -- cycle;
-    \fill[cborder] (0, 0) -- (-3pt, -3pt) -- (-3pt, 0) -- cycle;
-    \fill[cborder] (-9pt, -9pt) -- (-12pt, -12pt) -- (0, -12pt) -- (0, -9pt) -- cycle;
-    \draw[cborder,ultra thin] (-12pt, -12pt) -- (-12pt, 0);
+    \fill[color0] (0, 0) rectangle (-9, -9);
+    \fill[clight] (0, 0) -- (-3, -3) -- (0, -3) -- cycle;
+    \fill[clight] (-9, -9) -- (-12, -12) -- (-12, 0) -- (-9, 0) -- cycle;
+    \fill[cborder] (0, 0) -- (-3, -3) -- (-3, 0) -- cycle;
+    \fill[cborder] (-9, -9) -- (-12, -12) -- (0, -12) -- (0, -9) -- cycle;
+    \draw[cborder,ultra thin] (-12, -12) -- (-12, 0);
 }
 
 \newcommand{\board}[2]{
     \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
-    \begin{scope}[shift={(#2*16pt, 0)}]\trborder\rborder{#1}\end{scope}
-    \begin{scope}[shift={(0, -#1*16pt)}]\blborder\bborder{#2}\end{scope}
-    \begin{scope}[shift={(#2*16pt, -#1*16pt)}]\brborder\end{scope}
+    \begin{scope}[shift={(#2*16, 0)}]\trborder\rborder{#1}\end{scope}
+    \begin{scope}[shift={(0, -#1*16)}]\blborder\bborder{#2}\end{scope}
+    \begin{scope}[shift={(#2*16, -#1*16)}]\brborder\end{scope}
 }
 \newcommand{\tboard}[2]{
     \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
-    \begin{scope}[shift={(#2*16pt, 0)}]\trborder\rborder{#1}\end{scope}
+    \begin{scope}[shift={(#2*16, 0)}]\trborder\rborder{#1}\end{scope}
 }
 \newcommand{\lboard}[2]{
     \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
-    \begin{scope}[shift={(0, -#1*16pt)}]\blborder\bborder{#2}\end{scope}
+    \begin{scope}[shift={(0, -#1*16)}]\blborder\bborder{#2}\end{scope}
 }
 \newcommand{\tlboard}[2]{
     \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
