@@ -32,136 +32,137 @@
 % \row{x}{content} : draw the x-th row with content. For example, \row{0}{1{20}0fA}
 
 \ExplSyntaxOn
-    \cs_set:Nn \element_flag: {
-        \fill[color7] (5, -13) rectangle (12, -12); % lower base
-        \fill[color7] (6.5, -13) rectangle (10.5, -11); % upper base
-        \fill[color7] (8.5, -13) rectangle (9.5, -4); % pole
-        \fill[color3] (8.5, -4.5) -- (4, -6.5) -- (8.5, -8.5) -- cycle; % red flag
-    }
+\cs_set:Nn \element_flag: {
+    \fill[color7] (5, -13) rectangle (12, -12); % lower base
+    \fill[color7] (6.5, -13) rectangle (10.5, -11); % upper base
+    \fill[color7] (8.5, -13) rectangle (9.5, -4); % pole
+    \fill[color3] (8.5, -4.5) -- (4, -6.5) -- (8.5, -8.5) -- cycle; % red flag
+}
 
-    \cs_set:Nn \element_mine: {
-        \int_step_inline:nnnn {0} {45} {135} {
-            \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
-        }
-        \shade[ball~color=color7] (8.5,-8.5) circle (4.5); % body
+\cs_set:Nn \element_mine: {
+    \int_step_inline:nnnn {0} {45} {135} {
+        \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
     }
+    \shade[ball~color=color7] (8.5,-8.5) circle (4.5); % body
+}
 
-    \cs_set:Nn \element_cellup: {
-        \fill[color0] (0, 0) rectangle (16, -16); % background
-        \fill[clight] (0, 0) -- (16, 0) -- (14, -2) -- (2, -2) -- (2, -14) -- (0, -16) -- cycle; % highlight
-        \fill[color8] (16, -16) -- (0, -16) -- (2, -14) -- (14, -14) -- (14, -2) -- (16, 0) -- cycle; % shade
-    }
+\cs_set:Nn \element_cellup: {
+    \fill[color0] (0, 0) rectangle (16, -16); % background
+    \fill[clight] (0, 0) -- (16, 0) -- (14, -2) -- (2, -2) -- (2, -14) -- (0, -16) -- cycle; % highlight
+    \fill[color8] (16, -16) -- (0, -16) -- (2, -14) -- (14, -14) -- (14, -2) -- (16, 0) -- cycle; % shade
+}
 
-    \cs_set:Nn \element_celldown: {
-        \fill[color8] (0, 0) -- (16, 0) -- (16, -1) -- (1, -1) -- (1, -16) -- (0, -16) -- cycle; % border
-        \fill[color0] (1, -16) rectangle (16, -1); % background
-    }
+\cs_set:Nn \element_celldown: {
+    \fill[color8] (0, 0) -- (16, 0) -- (16, -1) -- (1, -1) -- (1, -16) -- (0, -16) -- cycle; % border
+    \fill[color0] (1, -16) rectangle (16, -1); % background
+}
 
-    \cs_set:Npn \element_cellnum:n #1 {
-        \tl_set:Nn \l_tmpa_tl {color}
-        \tl_put_right:Nn \l_tmpa_tl {#1}
-        \node[text~centered, text=\l_tmpa_tl] at (8.5, -8.5) {\textbf{#1}};
-    }
+\cs_set:Npn \element_cellnum:n #1 {
+    \tl_set:Nn \l_tmpa_tl {color}
+    \tl_put_right:Nn \l_tmpa_tl {#1}
+    \node[text~centered, text=\l_tmpa_tl] at (8.5, -8.5) {\textbf{#1}};
+}
 
-    \cs_set:Npn \element_cell:nnn #1#2#3 {
-        \sffamily
-        \tl_set:Nn \l_tmpa_tl {012345678}
-        \begin{scope}[xshift=#3*16,yshift=-#2*16]
-            \tl_if_single:nTF {#1} {
-                % single token
-                \tl_if_in:NnTF \l_tmpa_tl {#1} {
-                    % number
-                    \element_celldown:
-                    \element_cellnum:n {#1}
-                } {
-                    % otherwise
-                    \tl_case:NnF #1 {
-                        f {
-                            % flag
-                            \element_cellup:
-                            \element_flag:
-                        }
-                        m {
-                            % mine
-                            \element_celldown:
-                            \element_mine:
-                        }
-                        - {
-                            % empty
-                            \element_cellup:
-                        }
-                    } {
-                        % otherwise
-                        \element_cellup:
-                        \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; % normal label
-                    }
-                }
-            } {
-                % otherwise
+\cs_set:Npn \element_cell:nnn #1#2#3 {
+    \sffamily
+    \tl_set:Nn \l_tmpa_tl {012345678}
+    \begin{scope}[xshift=#3*16,yshift=-#2*16]
+        \tl_if_single:nTF {#1} {
+        % single token
+        \tl_if_in:NnTF \l_tmpa_tl {#1} {
+        % number
+        \element_celldown:
+        \element_cellnum:n {#1}
+        } {
+        % otherwise
+        \tl_case:NnF #1 {
+        f {
+                % flag
                 \element_cellup:
-                \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}}; % tiny label
+                \element_flag:
             }
-        \end{scope}
-    }
-
-    \cs_set:Npn \element_row:nn #1#2 {
-        \tl_set:Nn \l_tmpa_tl {#2}
-        \int_zero:N \l_tmpa_int
-        \tl_map_inline:Nn \l_tmpa_tl {
-            \element_cell:nnn {##1}{#1}{\l_tmpa_int}
-            \int_incr:N \l_tmpa_int
+        m {
+                % mine
+                \element_celldown:
+                \element_mine:
+            }
+        - {
+        % empty
+        \element_cellup:
         }
-    }
+        } {
+        % otherwise
+        \element_cellup:
+        \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; % normal label
+        }
+        }
+        } {
+        % otherwise
+        \element_cellup:
+        \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}}; % tiny label
+        }
+    \end{scope}
+}
 
-    \newcommand{\flag}{\element_flag:}
-    \newcommand{\mine}{\element_mine:}
-    \newcommand{\cellup}{\element_cellup:}
-    \newcommand{\celldown}{\element_celldown:}
-    \newcommand{\cellnum}{\element_cellnum:n}
-    \newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
-    \newcommand{\row}[2]{\element_row:nn {#1}{#2}}
+\cs_set:Npn \element_row:nn #1#2 {
+    \tl_set:Nn \l_tmpa_tl {#2}
+    \int_zero:N \l_tmpa_int
+    \tl_map_inline:Nn \l_tmpa_tl {
+        \element_cell:nnn {##1}{#1}{\l_tmpa_int}
+        \int_incr:N \l_tmpa_int
+    }
+}
+
+\newcommand{\flag}{\element_flag:}
+\newcommand{\mine}{\element_mine:}
+\newcommand{\cellup}{\element_cellup:}
+\newcommand{\celldown}{\element_celldown:}
+\newcommand{\cellnum}{\element_cellnum:n}
+\newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
+\newcommand{\row}[2]{\element_row:nn {#1}{#2}}
 \ExplSyntaxOff
 
-\newcommand{\colorcell}[2]{
-	\newcounter{i1}
-	\newcounter{i2}
-	\newcounter{j1}
-	\newcounter{j2}
-	\begin{scope}
-		\foreach \x in {#2}{
-			\StrLen{\x}[\len]
-			\IfBeginWith{\x}{(}{
-				\StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
-				\StrBefore{\y}{,}[\istr]
-				\StrBehind{\y}{,}[\jstr]
-			}{
-				\StrBefore{\x}{,}[\istr]
-				\StrBehind{\x}{,}[\jstr]			
-			}
-			
-			\IfSubStr{\istr}{:}{
-				\StrBefore{\istr}{:}[\tmp1]
-				\setcounter{i1}{\tmp1}
-				\StrBehind{\istr}{:}[\tmp2]
-				\setcounter{i2}{\tmp2}
-			}{
-				\setcounter{i1}{\istr}
-				\setcounter{i2}{\istr}
-			}
-			
-			\IfSubStr{\jstr}{:}{
-				\StrBefore{\jstr}{:}[\tmp1]
-				\setcounter{j1}{\tmp1}
-				\StrBehind{\jstr}{:}[\tmp2]
-				\setcounter{j2}{\tmp2}
-			}{
-				\setcounter{j1}{\jstr}
-				\setcounter{j2}{\jstr}
-			}
+\newcounter{i1}
+\newcounter{i2}
+\newcounter{j1}
+\newcounter{j2}
 
-			\fill[opacity=0.2,#1] (\numexpr16*\value{j1}-16\relax, \numexpr-16*\value{i1}+16\relax) rectangle (\numexpr16*\value{j2}\relax, \numexpr-16*\value{i2}\relax);
-		}
-	\end{scope}
+\newcommand{\colorcell}[2]{
+    \begin{scope}
+        \foreach \x in {#2}{
+                \StrLen{\x}[\len]
+                \IfBeginWith{\x}{(}{
+                    \StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
+                    \StrBefore{\y}{,}[\istr]
+                    \StrBehind{\y}{,}[\jstr]
+                }{
+                    \StrBefore{\x}{,}[\istr]
+                    \StrBehind{\x}{,}[\jstr]
+                }
+
+                \IfSubStr{\istr}{:}{
+                    \StrBefore{\istr}{:}[\tmp1]
+                    \setcounter{i1}{\tmp1}
+                    \StrBehind{\istr}{:}[\tmp2]
+                    \setcounter{i2}{\tmp2}
+                }{
+                    \setcounter{i1}{\istr}
+                    \setcounter{i2}{\istr}
+                }
+
+                \IfSubStr{\jstr}{:}{
+                    \StrBefore{\jstr}{:}[\tmp1]
+                    \setcounter{j1}{\tmp1}
+                    \StrBehind{\jstr}{:}[\tmp2]
+                    \setcounter{j2}{\tmp2}
+                }{
+                    \setcounter{j1}{\jstr}
+                    \setcounter{j2}{\jstr}
+                }
+
+                \fill[opacity=0.2,#1] (\numexpr16*\value{j1}-16\relax, \numexpr-16*\value{i1}+16\relax) rectangle (\numexpr16*\value{j2}\relax, \numexpr-16*\value{i2}\relax);
+            }
+    \end{scope}
 }
 
 %%%%%%%%%%%
