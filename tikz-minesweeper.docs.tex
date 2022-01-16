@@ -30,10 +30,12 @@
 \usepackage{tikz-minesweeper}
 \begin{document}
     \begin{tikzpicture}
-        \board{3}{5}
+        \board{5}{5}
         \row{0}{f{20}123}
         \row{1}{A-405}
         \row{2}{m-678}
+        \row{3}{rgbcy}
+        \row{4}{o----}
     \end{tikzpicture}
 \end{document}
     \end{verbatim}
@@ -41,12 +43,14 @@
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}
-            \board{3}{5}
+            \board{5}{5}
             \row{0}{f{20}123}
             \row{1}{A-405}
             \row{2}{m-678}
+            \row{3}{rgbcy}
+            \row{4}{oltv-}
         \end{tikzpicture}
-        \caption*{示例: 在3x5区域内绘制数字、雷、旗帜、空格和标记}
+        \caption*{示例: 在5x5区域内绘制数字、雷、旗帜、空格和标记}
     \end{figure}
 \end{multicols}
 
@@ -161,7 +165,7 @@
 
 \subsection{模块}
 \begin{itemize}
-    \item[\texttt{\textbackslash cell\{行\}\{列\}\{内容\}}] 在第[行]行第[列]列交叉处绘制包含[内容]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8,-8). 内容不能为空, 如果内容是-, 方格是按下状态并且无字符, 如果内容中含有多个字符, 将会自动缩小字符, 转化为\texttt{\textbackslash tiny}模式.
+    \item[\texttt{\textbackslash cell\{行\}\{列\}\{内容\}}] 在第[行]行第[列]列交叉处绘制包含[内容]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8,-8). 内容不能为空, 如果内容是-, 方格是按下状态并且无字符, 如果内容中含有多个字符, 将会自动缩小字符, 转化为\texttt{\textbackslash tiny}模式. 如果内容是r, g, b, c, y, o, l, t, v, 将给该方格染成对应颜色.
     \item[\texttt{\textbackslash row\{行\}\{内容\}}] 在第[行]行从左到右绘制多个方格. 内容的格式按照顺序输入字符, 每个字符作为\texttt{\textbackslash cell}的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如\texttt{1\{23\}4}代表1, 23和4这这三个字符.
     \item[\texttt{\textbackslash board\{行\}\{列\}}] 绘制[行]行[列]列的边框.
         \begin{multicols}{2}

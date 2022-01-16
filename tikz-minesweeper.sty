@@ -63,6 +63,13 @@
     \node[text~centered, text=\l_tmpa_tl] at (8.5, -8.5) {\textbf{#1}};
 }
 
+\cs_set:Npn \element_cellcolored:n #1 {
+    \element_cellup:
+    \begin{scope}
+        \fill[opacity=0.2,#1] (0, 0) rectangle (16, -16);
+    \end{scope}
+}
+
 \cs_set:Npn \element_cell:nnn #1#2#3 {
     \sffamily
     \tl_set:Nn \l_tmpa_tl {012345678}
@@ -90,6 +97,42 @@
         % empty
         \element_cellup:
         }
+        r {
+                % red
+                \element_cellcolored:n {red}
+            }
+        g {
+                % green
+                \element_cellcolored:n {green}
+            }
+        b {
+                % blue
+                \element_cellcolored:n {blue}
+            }
+        c {
+                % cyan
+                \element_cellcolored:n {cyan}
+            }
+        y {
+                % yellow
+                \element_cellcolored:n {yellow}
+            }
+        o {
+                % orange
+                \element_cellcolored:n {orange}
+            }
+        l {
+                % lime
+                \element_cellcolored:n {lime}
+            }
+        t {
+                % teal
+                \element_cellcolored:n {teal}
+            }
+        v {
+                % violet
+                \element_cellcolored:n {violet}
+            }
         } {
         % otherwise
         \element_cellup:
@@ -124,40 +167,40 @@
 
 
 \newcommand{\colorcell}[2]{
-	\@ifundefined{c@ia}{\newcounter{ia}}{}
-	\@ifundefined{c@ib}{\newcounter{ib}}{}
-	\@ifundefined{c@ja}{\newcounter{ja}}{}
-	\@ifundefined{c@jb}{\newcounter{jb}}{}
-	\begin{scope}
-		\foreach \x in {#2}{
-			\StrLen{\x}[\len]
-			\StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
-			\StrBefore{\y}{,}[\istr]
-			\StrBehind{\y}{,}[\jstr]
+    \@ifundefined{c@ia}{\newcounter{ia}}{}
+    \@ifundefined{c@ib}{\newcounter{ib}}{}
+    \@ifundefined{c@ja}{\newcounter{ja}}{}
+    \@ifundefined{c@jb}{\newcounter{jb}}{}
+    \begin{scope}
+        \foreach \x in {#2}{
+                \StrLen{\x}[\len]
+                \StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
+                \StrBefore{\y}{,}[\istr]
+                \StrBehind{\y}{,}[\jstr]
 
-			\IfSubStr{\istr}{:}{
-				\StrBefore{\istr}{:}[\tmpa]
-				\setcounter{ia}{\tmpa}
-				\StrBehind{\istr}{:}[\tmpb]
-				\setcounter{ib}{\tmpb}
-			}{
-				\setcounter{ia}{\istr}
-				\setcounter{ib}{\istr}
-			}
+                \IfSubStr{\istr}{:}{
+                    \StrBefore{\istr}{:}[\tmpa]
+                    \setcounter{ia}{\tmpa}
+                    \StrBehind{\istr}{:}[\tmpb]
+                    \setcounter{ib}{\tmpb}
+                }{
+                    \setcounter{ia}{\istr}
+                    \setcounter{ib}{\istr}
+                }
 
-			\IfSubStr{\jstr}{:}{
-				\StrBefore{\jstr}{:}[\tmpa]
-				\setcounter{ja}{\tmpa}
-				\StrBehind{\jstr}{:}[\tmpb]
-				\setcounter{jb}{\tmpb}
-			}{
-				\setcounter{ja}{\jstr}
-				\setcounter{jb}{\jstr}
-			}
+                \IfSubStr{\jstr}{:}{
+                    \StrBefore{\jstr}{:}[\tmpa]
+                    \setcounter{ja}{\tmpa}
+                    \StrBehind{\jstr}{:}[\tmpb]
+                    \setcounter{jb}{\tmpb}
+                }{
+                    \setcounter{ja}{\jstr}
+                    \setcounter{jb}{\jstr}
+                }
 
-			\fill[opacity=0.2,#1] (\numexpr16*\value{ja}\relax, \numexpr-16*\value{ia}\relax) rectangle (\numexpr16*\value{jb}+16\relax, \numexpr-16*\value{ib}-16\relax);
-		}
-	\end{scope}
+                \fill[opacity=0.2,#1] (\numexpr16*\value{ja}\relax, \numexpr-16*\value{ia}\relax) rectangle (\numexpr16*\value{jb}+16\relax, \numexpr-16*\value{ib}-16\relax);
+            }
+    \end{scope}
 }
 
 %%%%%%%%%%%
