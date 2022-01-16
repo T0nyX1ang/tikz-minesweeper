@@ -123,43 +123,38 @@
 \ExplSyntaxOff
 
 \newcommand{\colorcell}[2]{
-	\newcounter{i1}
-	\newcounter{i2}
-	\newcounter{j1}
-	\newcounter{j2}
+	\@ifundefined{c@ia}{\newcounter{ia}}{}
+	\@ifundefined{c@ib}{\newcounter{ib}}{}
+	\@ifundefined{c@ja}{\newcounter{ja}}{}
+	\@ifundefined{c@jb}{\newcounter{jb}}{}
 	\begin{scope}
 		\foreach \x in {#2}{
 			\StrLen{\x}[\len]
-			\IfBeginWith{\x}{(}{
-				\StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
-				\StrBefore{\y}{,}[\istr]
-				\StrBehind{\y}{,}[\jstr]
-			}{
-				\StrBefore{\x}{,}[\istr]
-				\StrBehind{\x}{,}[\jstr]			
-			}
+			\StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
+			\StrBefore{\y}{,}[\istr]
+			\StrBehind{\y}{,}[\jstr]
 			
 			\IfSubStr{\istr}{:}{
-				\StrBefore{\istr}{:}[\tmp1]
-				\setcounter{i1}{\tmp1}
-				\StrBehind{\istr}{:}[\tmp2]
-				\setcounter{i2}{\tmp2}
+				\StrBefore{\istr}{:}[\tmpa]
+				\setcounter{ia}{\tmpa}
+				\StrBehind{\istr}{:}[\tmpb]
+				\setcounter{ib}{\tmpb}
 			}{
-				\setcounter{i1}{\istr}
-				\setcounter{i2}{\istr}
+				\setcounter{ia}{\istr}
+				\setcounter{ib}{\istr}
 			}
 			
 			\IfSubStr{\jstr}{:}{
-				\StrBefore{\jstr}{:}[\tmp1]
-				\setcounter{j1}{\tmp1}
-				\StrBehind{\jstr}{:}[\tmp2]
-				\setcounter{j2}{\tmp2}
+				\StrBefore{\jstr}{:}[\tmpa]
+				\setcounter{ja}{\tmpa}
+				\StrBehind{\jstr}{:}[\tmpb]
+				\setcounter{jb}{\tmpb}
 			}{
-				\setcounter{j1}{\jstr}
-				\setcounter{j2}{\jstr}
+				\setcounter{ja}{\jstr}
+				\setcounter{jb}{\jstr}
 			}
 
-			\fill[opacity=0.2,#1] (\numexpr16*\value{j1}-16\relax, \numexpr-16*\value{i1}+16\relax) rectangle (\numexpr16*\value{j2}\relax, \numexpr-16*\value{i2}\relax);
+			\fill[opacity=0.2,#1] (\numexpr16*\value{ja}-16\relax, \numexpr-16*\value{ia}+16\relax) rectangle (\numexpr16*\value{jb}\relax, \numexpr-16*\value{ib}\relax);
 		}
 	\end{scope}
 }
