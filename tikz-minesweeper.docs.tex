@@ -197,6 +197,30 @@
             \quad
             \subfloat[\texttt{\textbackslash tlboard}]{\begin{tikzpicture}\begin{scope}[scale=3]\tlboard{1}{1}\end{scope}\end{tikzpicture}}
         \end{figure}
+    	\item[\texttt{\textbackslash colorcell\{颜色\}\{位置\}}] 将[位置]位置的方格染色为[颜色]颜色.
+    	\begin{multicols}{2}
+\begin{verbatim}
+\begin{tikzpicture}
+	\board{3}{5}
+	\row{0}{f{20}123}
+	\row{1}{A-405}
+	\row{2}{m-678}
+	\colorcell{green}{(1,1),(1:2,3:5)}
+\end{tikzpicture}
+\end{verbatim}
+    		\columnbreak
+    		\begin{figure}[H]
+    			\centering
+    			\begin{tikzpicture}
+    				\board{3}{5}
+    				\row{0}{f{20}123}
+    				\row{1}{A-405}
+    				\row{2}{m-678}
+    				\colorcell{green}{(1,1),(1:2,3:5)}
+    			\end{tikzpicture}
+    			\caption*{方格染色}
+    		\end{figure}
+    	\end{multicols}
     \end{itemize}
 
 \end{document}

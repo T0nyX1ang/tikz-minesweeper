@@ -2,6 +2,7 @@
 [2022/01/07, v0.1.0]
 \RequirePackage{tikz}
 \RequirePackage{expl3}
+\RequirePackage{xstring}
 
 % Color tables
 \definecolor{color0}{RGB}{192,192,192}
@@ -120,6 +121,48 @@
     \newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
     \newcommand{\row}[2]{\element_row:nn {#1}{#2}}
 \ExplSyntaxOff
+
+\newcommand{\colorcell}[2]{
+	\newcounter{i1}
+	\newcounter{i2}
+	\newcounter{j1}
+	\newcounter{j2}
+	\begin{scope}
+		\foreach \x in {#2}{
+			\StrLen{\x}[\len]
+			\IfBeginWith{\x}{(}{
+				\StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
+				\StrBefore{\y}{,}[\istr]
+				\StrBehind{\y}{,}[\jstr]
+			}{
+				\StrBefore{\x}{,}[\istr]
+				\StrBehind{\x}{,}[\jstr]			
+			}
+			
+			\IfSubStr{\istr}{:}{
+				\StrBefore{\istr}{:}[\tmp1]
+				\setcounter{i1}{\tmp1}
+				\StrBehind{\istr}{:}[\tmp2]
+				\setcounter{i2}{\tmp2}
+			}{
+				\setcounter{i1}{\istr}
+				\setcounter{i2}{\istr}
+			}
+			
+			\IfSubStr{\jstr}{:}{
+				\StrBefore{\jstr}{:}[\tmp1]
+				\setcounter{j1}{\tmp1}
+				\StrBehind{\jstr}{:}[\tmp2]
+				\setcounter{j2}{\tmp2}
+			}{
+				\setcounter{j1}{\jstr}
+				\setcounter{j2}{\jstr}
+			}
+
+			\fill[opacity=0.2,#1] (\numexpr16*\value{j1}-16\relax, \numexpr-16*\value{i1}+16\relax) rectangle (\numexpr16*\value{j2}\relax, \numexpr-16*\value{i2}\relax);
+		}
+	\end{scope}
+}
 
 %%%%%%%%%%%
 % BORDERS %
