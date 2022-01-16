@@ -134,7 +134,7 @@
 			\StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
 			\StrBefore{\y}{,}[\istr]
 			\StrBehind{\y}{,}[\jstr]
-			
+
 			\IfSubStr{\istr}{:}{
 				\StrBefore{\istr}{:}[\tmpa]
 				\setcounter{ia}{\tmpa}
@@ -144,7 +144,7 @@
 				\setcounter{ia}{\istr}
 				\setcounter{ib}{\istr}
 			}
-			
+
 			\IfSubStr{\jstr}{:}{
 				\StrBefore{\jstr}{:}[\tmpa]
 				\setcounter{ja}{\tmpa}
@@ -155,7 +155,7 @@
 				\setcounter{jb}{\jstr}
 			}
 
-			\fill[opacity=0.2,#1] (\numexpr16*\value{ja}-16\relax, \numexpr-16*\value{ia}+16\relax) rectangle (\numexpr16*\value{jb}\relax, \numexpr-16*\value{ib}\relax);
+			\fill[opacity=0.2,#1] (\numexpr16*\value{ja}\relax, \numexpr-16*\value{ia}\relax) rectangle (\numexpr16*\value{jb}+16\relax, \numexpr-16*\value{ib}-16\relax);
 		}
 	\end{scope}
 }
