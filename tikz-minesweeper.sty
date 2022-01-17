@@ -40,6 +40,7 @@
 }
 
 \cs_set:Nn \element_mine: {
+    \element_celldown:
     \int_step_inline:nnnn {0} {45} {135} {
         \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
     }
@@ -60,6 +61,7 @@
 \cs_set:Npn \element_cellnum:n #1 {
     \tl_set:Nn \l_tmpa_tl {color}
     \tl_put_right:Nn \l_tmpa_tl {#1}
+    \element_celldown:
     \node[text~centered, text=\l_tmpa_tl] at (8.5, -8.5) {\textbf{#1}};
 }
 
@@ -78,25 +80,19 @@
         % single token
         \tl_if_in:NnTF \l_tmpa_tl {#1} {
         % number
-        \element_celldown:
         \element_cellnum:n {#1}
         } {
         % otherwise
         \tl_case:NnF #1 {
         f {
                 % flag
-                \element_cellup:
                 \element_flag:
             }
         m {
                 % mine
-                \element_celldown:
                 \element_mine:
             }
-        - {
-        % empty
-        \element_cellup:
-        }
+        - { } % empty
         r {
                 % red
                 \element_cellcolored:n {red}
@@ -135,13 +131,11 @@
             }
         } {
         % otherwise
-        \element_cellup:
         \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; % normal label
         }
         }
         } {
         % otherwise
-        \element_cellup:
         \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}}; % tiny label
         }
     \end{scope}
@@ -261,6 +255,15 @@
     \begin{scope}[shift={(#2*16, 0)}]\trborder\rborder{#1}\end{scope}
     \begin{scope}[shift={(0, -#1*16)}]\blborder\bborder{#2}\end{scope}
     \begin{scope}[shift={(#2*16, -#1*16)}]\brborder\end{scope}
+    \foreach \i in {1,...,#1}
+        {
+            \foreach \j in {1,...,#2}
+                {
+                    \begin{scope}[shift={(\j*16-16,-\i*16+16)}]
+                        \cellup
+                    \end{scope}
+                }
+        }
 }
 \newcommand{\tboard}[2]{
     \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
