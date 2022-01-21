@@ -156,6 +156,61 @@
     }
 }
 
+\cs_set:Npn \element_border:n #1 {
+    \tl_case:Nn #1 {
+        T {
+                \fill[clight] (0, 9) rectangle (16, 12);
+                \fill[color0] (0, 3) rectangle (16, 9);
+                \fill[cborder] (0, 0) rectangle (16, 3);
+                \draw[cborder,ultra~thin] (0, 12) -- (16, 12);
+            }
+        L {
+                \fill[clight] (-9, 0) rectangle (-12, -16);
+                \fill[color0] (-3, 0) rectangle (-9, -16);
+                \fill[cborder] (0, 0) rectangle (-3, -16);
+                \draw[cborder,ultra~thin] (-12, 0) -- (-12, -16);
+            }
+        B {
+                \fill[cborder] (0, -9) rectangle (16, -12);
+                \fill[color0] (0, -3) rectangle (16, -9);
+                \fill[clight] (0, 0) rectangle (16, -3);
+            }
+        R {
+                \fill[cborder] (9, 0) rectangle (12, -16);
+                \fill[color0] (3, 0) rectangle (9, -16);
+                \fill[clight] (0, 0) rectangle (3, -16);
+            }
+        t {
+                \fill[clight] (0, 0) rectangle (-12, 12);
+                \fill[color0] (0, 0) rectangle (-9, 9);
+                \fill[cborder] (0, 0) rectangle (-3, 3);
+                \draw[cborder,ultra~thin] (-12, 0) -- (-12, 12) -- (0, 12);
+            }
+        l {
+                \fill[color0] (0, 0) rectangle (-9, -9);
+                \fill[clight] (0, 0) -- (-3, -3) -- (0, -3) -- cycle;
+                \fill[clight] (-9, -9) -- (-12, -12) -- (-12, 0) -- (-9, 0) -- cycle;
+                \fill[cborder] (0, 0) -- (-3, -3) -- (-3, 0) -- cycle;
+                \fill[cborder] (-9, -9) -- (-12, -12) -- (0, -12) -- (0, -9) -- cycle;
+                \draw[cborder,ultra~thin] (-12, -12) -- (-12, 0);
+            }
+        b {
+                \fill[cborder] (0, 0) rectangle (12, -12);
+                \fill[color0] (0, 0) rectangle (9, -9);
+                \fill[clight] (0, 0) rectangle (3, -3);
+            }
+        r {
+                \fill[color0] (0, 0) rectangle (9, 9);
+                \fill[cborder] (0, 0) -- (3, 3) -- (0, 3) -- cycle;
+                \fill[cborder] (9, 9) -- (12, 12) -- (12, 0) -- (9, 0) -- cycle;
+                \fill[clight] (0, 0) -- (3, 3) -- (3, 0) -- cycle;
+                \fill[clight] (9, 9) -- (12, 12) -- (0, 12) -- (0, 9) -- cycle;
+                \draw[cborder,ultra~thin] (12, 12) -- (0, 12);
+            }
+    }
+
+}
+
 \newcommand{\flag}{\element_flag:}
 \newcommand{\mine}{\element_mine:}
 \newcommand{\cellup}{\element_cellup:}
@@ -163,6 +218,7 @@
 \newcommand{\cellnum}{\element_cellnum:n}
 \newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
 \newcommand{\row}[2]{\element_row:nn {#1}{#2}}
+\newcommand{\border}[1]{\element_border:n {#1}}
 \ExplSyntaxOff
 
 
@@ -203,73 +259,39 @@
     \end{scope}
 }
 
-%%%%%%%%%%%
-% BORDERS %
-%%%%%%%%%%%
-\newcommand{\tborder}[1]{
-    \fill[clight] (0, 9) rectangle (#1*16, 12);
-    \fill[color0] (0, 3) rectangle (#1*16, 9);
-    \fill[cborder] (0, 0) rectangle (#1*16, 3);
-    \draw[cborder,ultra thin] (0, 12) -- (#1*16, 12);
+\newcommand{\tlboard}[2]{
+    \begin{scope}[xshift=0, yshift=0]
+        \border{t}
+        \begin{scope}[xscale=#2] \border{T} \end{scope}
+        \begin{scope}[yscale=#1] \border{L} \end{scope}
+    \end{scope}
 }
-\newcommand{\lborder}[1]{
-    \fill[clight] (-9, 0) rectangle (-12, -#1*16);
-    \fill[color0] (-3, 0) rectangle (-9, -#1*16);
-    \fill[cborder] (0, 0) rectangle (-3, -#1*16);
-    \draw[cborder,ultra thin] (-12,0) -- (-12, -#1*16);
+
+\newcommand{\tboard}[2]{
+    \tlboard{#1}{#2}
+    \begin{scope}[xshift=#2*16, yshift=0]
+        \border{r}
+        \begin{scope}[yscale=#1] \border{R} \end{scope}
+    \end{scope}
 }
-\newcommand{\bborder}[1]{
-    \fill[cborder] (0, -9) rectangle (#1*16, -12);
-    \fill[color0] (0, -3) rectangle (#1*16, -9);
-    \fill[clight] (0, 0) rectangle (#1*16, -3);
-}
-\newcommand{\rborder}[1]{
-    \fill[cborder] (9, 0) rectangle (12, -#1*16);
-    \fill[color0] (3, 0) rectangle (9, -#1*16);
-    \fill[clight] (0, 0) rectangle (3, -#1*16);
-}
-\newcommand{\tlborder}{
-    \fill[clight] (0, 0) rectangle (-12, 12);
-    \fill[color0] (0, 0) rectangle (-9, 9);
-    \fill[cborder] (0, 0) rectangle (-3, 3);
-    \draw[cborder,ultra thin] (-12, 0) -- (-12, 12) -- (0, 12);
-}
-\newcommand{\brborder}{
-    \fill[cborder] (0, 0) rectangle (12, -12);
-    \fill[color0] (0, 0) rectangle (9, -9);
-    \fill[clight] (0, 0) rectangle (3, -3);
-}
-\newcommand{\trborder}{
-    \fill[color0] (0, 0) rectangle (9, 9);
-    \fill[cborder] (0, 0) -- (3, 3) -- (0, 3) -- cycle;
-    \fill[cborder] (9, 9) -- (12, 12) -- (12, 0) -- (9, 0) -- cycle;
-    \fill[clight] (0, 0) -- (3, 3) -- (3, 0) -- cycle;
-    \fill[clight] (9, 9) -- (12, 12) -- (0, 12) -- (0, 9) -- cycle;
-    \draw[cborder,ultra thin] (12, 12) -- (0, 12);
-}
-\newcommand{\blborder}{
-    \fill[color0] (0, 0) rectangle (-9, -9);
-    \fill[clight] (0, 0) -- (-3, -3) -- (0, -3) -- cycle;
-    \fill[clight] (-9, -9) -- (-12, -12) -- (-12, 0) -- (-9, 0) -- cycle;
-    \fill[cborder] (0, 0) -- (-3, -3) -- (-3, 0) -- cycle;
-    \fill[cborder] (-9, -9) -- (-12, -12) -- (0, -12) -- (0, -9) -- cycle;
-    \draw[cborder,ultra thin] (-12, -12) -- (-12, 0);
+
+\newcommand{\lboard}[2]{
+    \tlboard{#1}{#2}
+    \begin{scope}[xshift=0, yshift=-#1*16]
+        \border{l}
+        \begin{scope}[xscale=#2] \border{B} \end{scope}
+    \end{scope}
 }
 
 \newcommand{\board}[2]{
-    \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
-    \begin{scope}[shift={(#2*16, 0)}]\trborder\rborder{#1}\end{scope}
-    \begin{scope}[shift={(0, -#1*16)}]\blborder\bborder{#2}\end{scope}
-    \begin{scope}[shift={(#2*16, -#1*16)}]\brborder\end{scope}
+    \tboard{#1}{#2}
+    \begin{scope}[xshift=0, yshift=-#1*16]
+        \border{l}
+        \begin{scope}[xscale=#2] \border{B} \end{scope}
+    \end{scope}
+    \begin{scope}[xshift=#2*16, yshift=-#1*16]
+        \border{b}
+    \end{scope}
 }
-\newcommand{\tboard}[2]{
-    \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
-    \begin{scope}[shift={(#2*16, 0)}]\trborder\rborder{#1}\end{scope}
-}
-\newcommand{\lboard}[2]{
-    \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
-    \begin{scope}[shift={(0, -#1*16)}]\blborder\bborder{#2}\end{scope}
-}
-\newcommand{\tlboard}[2]{
-    \begin{scope}[shift={(0, 0)}]\tlborder\tborder{#2}\lborder{#1}\end{scope}
-}
+
+

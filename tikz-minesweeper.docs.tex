@@ -140,14 +140,7 @@
 \subsection{边框元素}
 边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和\texttt{\textbackslash cellup}同理. 左边和上边的高亮外边缘用cborder封边.
 \begin{itemize}
-    \item[\texttt{\textbackslash tlborder}] 绘制左上角边框, 右下角是原点.
-    \item[\texttt{\textbackslash trborder}] 绘制右上角边框, 左下角是原点.
-    \item[\texttt{\textbackslash blborder}] 绘制左下角边框, 右上角是原点.
-    \item[\texttt{\textbackslash brborder}] 绘制右下角边框, 左上角是原点.
-    \item[\texttt{\textbackslash tborder\{长度\}}] 绘制上边框, 左下角是原点.
-    \item[\texttt{\textbackslash bborder\{长度\}}] 绘制下边框, 左上角是原点.
-    \item[\texttt{\textbackslash lborder\{长度\}}] 绘制左边框, 右上角是原点.
-    \item[\texttt{\textbackslash rborder\{长度\}}] 绘制右边框, 左上角是原点.
+    \item[\texttt{\textbackslash border\{选项\}}] 绘制以格为单位长度(宽度)的边框.
         \begin{figure}[!htp]
             \centering
             \begin{tikzpicture}
@@ -157,6 +150,14 @@
                     \draw[dashed] (-14,-16) -- (30,-16);
                     \draw[dashed] (0,14) -- (0,-30);
                     \draw[dashed] (16,14) -- (16,-30);
+                    \node at (-6, 6) {t};
+                    \node at (8, 6) {T};
+                    \node at (22, 6) {r};
+                    \node at (22, -8) {R};
+                    \node at (22, -22) {b};
+                    \node at (8, -22) {B};
+                    \node at (-6, -22) {l};
+                    \node at (-6, -8) {L};
                 \end{scope}
             \end{tikzpicture}
             \caption*{边框组装效果}
