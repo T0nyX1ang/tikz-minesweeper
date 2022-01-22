@@ -133,19 +133,19 @@
             \quad
             \subfloat[按下的方块]{\begin{tikzpicture}\begin{scope}[scale=5]\celldown\end{scope}\end{tikzpicture}}
         \end{figure}
-    \item[\texttt{\textbackslash cellnum\{数字\}}] 在当前方块中填入带配色的数字\raisebox{-0.5ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}. 数字中心为(8.5,8.5)
+    \item[\texttt{\textbackslash cellnum\{数字\}}] 在当前方块中填入带配色的数字\raisebox{-0.5ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}. 数字中心为(8.5,8.5).
 
 \end{itemize}
 
 \subsection{边框元素}
-边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和\texttt{\textbackslash cellup}同理. 左边和上边的高亮外边缘用cborder封边.
+边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和 \texttt{\textbackslash cellup} 同理. 左边和上边的高亮外边缘用cborder封边.
 \begin{itemize}
-    \item[\texttt{\textbackslash border\{选项\}}] 绘制以格为单位长度(宽度)的边框.
+    \item[\texttt{\textbackslash border[tTrRbBlL]}] 绘制以格为单位长度(宽度)的边框.
         \begin{figure}[!htp]
             \centering
             \begin{tikzpicture}
                 \begin{scope}[scale=4]
-                    \board{1}{1}
+                    \border
                     \draw[dashed] (-14,0) -- (30,0);
                     \draw[dashed] (-14,-16) -- (30,-16);
                     \draw[dashed] (0,14) -- (0,-30);
@@ -167,40 +167,18 @@
 \subsection{模块}
 \begin{itemize}
     \item[\texttt{\textbackslash cell\{行\}\{列\}\{内容\}}] 在第[行]行第[列]列交叉处绘制包含[内容]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8,-8). 内容不能为空, 如果内容是-, 方格是按下状态并且无字符, 如果内容中含有多个字符, 将会自动缩小字符, 转化为 \texttt{\textbackslash tiny} 模式. 如果内容是r, g, b, c, y, o, l, t, v, 将给该方格染成对应颜色.
-    \item[\texttt{\textbackslash row\{行\}\{内容\}}] 在第[行]行从左到右绘制多个方格. 内容的格式按照顺序输入字符, 每个字符作为\texttt{\textbackslash cell}的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如\texttt{1\{23\}4}代表1, 23和4这这三个字符.
-    \item[\texttt{\textbackslash board\{行\}\{列\}}] 绘制[行]行[列]列的边框.
-        \begin{multicols}{2}
-            \begin{verbatim}
-\begin{tikzpicture}
-    \board{3}{5}
-    \row{0}{f{20}123}
-    \row{1}{A-405}
-    \row{2}{m-678}
-\end{tikzpicture}
-\end{verbatim}
-            \columnbreak
-            \begin{figure}[H]
-                \centering
-                \begin{tikzpicture}
-                    \board{3}{5}
-                    \row{0}{f{20}123}
-                    \row{1}{A-405}
-                    \row{2}{m-678}
-                \end{tikzpicture}
-                \caption*{利用\texttt{\textbackslash board}和\texttt{\textbackslash row}绘制地图}
-            \end{figure}
-        \end{multicols}
-    \item[\texttt{\textbackslash tboard\{行\}\{列\}}] 绘制[行]行[列]列的边框, 但是不包含下边.
-    \item[\texttt{\textbackslash lboard\{行\}\{列\}}] 绘制[行]行[列]列的边框, 但是不包含右边.
-    \item[\texttt{\textbackslash tlboard\{行\}\{列\}}] 绘制[行]行[列]列的边框, 但是不包含下边和右边.
+    \item[\texttt{\textbackslash row\{行\}\{内容\}}] 在第[行]行从左到右绘制多个方格. 内容的格式按照顺序输入字符, 每个字符作为 \texttt{\textbackslash cell} 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如\texttt{1\{23\}4}代表1, 23和4这这三个字符.
+    \item[\texttt{\textbackslash board[tTrRbBlL]\{行\}\{列\}}] 绘制[行]行[列]列的边框, t, T, r, R, b, B, l, L为与 \texttt{\textbackslash border} 对应\footnote{注: \texttt{\textbackslash board[tTrRbBlL]\{1\}\{1\}}与\texttt{\textbackslash border[tTrRbBlL]}等价.}的可叠加的边框开关, 默认全部开启, 即地图中有完整边框. 此选项可以根据自己需求进行定制.
         \begin{figure}[!htp]
             \captionsetup[subfloat]{labelformat=empty}
             \centering
-            \subfloat[\texttt{\textbackslash tboard}]{\begin{tikzpicture}\begin{scope}[scale=3]\tboard{1}{1}\end{scope}\end{tikzpicture}}
+            \subfloat[\texttt{\textbackslash board}]{\begin{tikzpicture}[scale=2]\board{1}{1}\end{tikzpicture}}
             \quad
-            \subfloat[\texttt{\textbackslash lboard}]{\begin{tikzpicture}\begin{scope}[scale=3]\lboard{1}{1}\end{scope}\end{tikzpicture}}
+            \subfloat[\texttt{\textbackslash board[tTLlB]}]{\begin{tikzpicture}[scale=2]\border[tTLlB]\end{tikzpicture}}
             \quad
-            \subfloat[\texttt{\textbackslash tlboard}]{\begin{tikzpicture}\begin{scope}[scale=3]\tlboard{1}{1}\end{scope}\end{tikzpicture}}
+            \subfloat[\texttt{\textbackslash board[tTrRL]}]{\begin{tikzpicture}[scale=2]\border[tTrRL]\end{tikzpicture}}
+            \quad
+            \subfloat[\texttt{\textbackslash board[tTL]}]{\begin{tikzpicture}[scale=2]\border[tTL]\end{tikzpicture}}
         \end{figure}
     \item[\texttt{\textbackslash colorcell\{颜色\}\{位置\}}] 将[位置]位置的方格染色为[颜色]颜色.
         \begin{multicols}{2}
