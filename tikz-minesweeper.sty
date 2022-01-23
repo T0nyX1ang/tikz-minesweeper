@@ -64,86 +64,42 @@
 }
 
 \cs_set:Npn \element_cellcolored:n #1 {
-    \element_cellup:
-    \begin{scope}
-        \fill[opacity=0.2,#1] (0, 0) rectangle (16, -16);
-    \end{scope}
+    \tl_case:NnT #1 {
+        r { \tl_set:Nn \l_tmpa_tl {red} }
+        g { \tl_set:Nn \l_tmpa_tl {green} }
+        b { \tl_set:Nn \l_tmpa_tl {blue} }
+        c { \tl_set:Nn \l_tmpa_tl {cyan} }
+        y { \tl_set:Nn \l_tmpa_tl {yellow} }
+        o { \tl_set:Nn \l_tmpa_tl {orange} }
+        l { \tl_set:Nn \l_tmpa_tl {lime} }
+        t { \tl_set:Nn \l_tmpa_tl {teal} }
+        v { \tl_set:Nn \l_tmpa_tl {violet} }
+    } {
+        \begin{scope}
+            \fill[opacity=0.2, color=\l_tmpa_tl] (0, 0) rectangle (16, -16);
+        \end{scope}
+    }
 }
 
 \cs_set:Npn \element_cell:nnn #1#2#3 {
     \sffamily
     \tl_set:Nn \l_tmpa_tl {012345678}
+    \tl_set:Nn \l_tmpb_tl {rgbcyoltv}
     \begin{scope}[xshift=#3*16,yshift=-#2*16]
         \tl_if_single:nTF {#1} {
-        % single token
-        \tl_if_in:NnTF \l_tmpa_tl {#1} {
-        % number
-        \element_celldown:
-        \element_cellnum:n {#1}
-        } {
-        % otherwise
-        \tl_case:NnF #1 {
-        f {
-                % flag
-                \element_cellup:
-                \element_flag:
+            % single token
+            \tl_if_in:NnTF \l_tmpa_tl {#1} { \element_celldown: \element_cellnum:n {#1} } % number
+            {
+                \tl_if_in:NnTF \l_tmpb_tl {#1} { \element_cellup: \element_cellcolored:n {#1} } % color
+                {
+                    \tl_case:NnF #1 {
+                        f { \element_cellup: \element_flag: } % flag
+                        m { \element_celldown: \element_mine: } % mine
+                        - { \element_cellup: } % empty
+                    } { \element_cellup: \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; } % normal label
+                }
             }
-        m {
-                % mine
-                \element_celldown:
-                \element_mine:
-            }
-        - {
-        % empty
-        \element_cellup:
-        }
-        r {
-                % red
-                \element_cellcolored:n {red}
-            }
-        g {
-                % green
-                \element_cellcolored:n {green}
-            }
-        b {
-                % blue
-                \element_cellcolored:n {blue}
-            }
-        c {
-                % cyan
-                \element_cellcolored:n {cyan}
-            }
-        y {
-                % yellow
-                \element_cellcolored:n {yellow}
-            }
-        o {
-                % orange
-                \element_cellcolored:n {orange}
-            }
-        l {
-                % lime
-                \element_cellcolored:n {lime}
-            }
-        t {
-                % teal
-                \element_cellcolored:n {teal}
-            }
-        v {
-                % violet
-                \element_cellcolored:n {violet}
-            }
-        } {
-        % otherwise
-        \element_cellup:
-        \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; % normal label
-        }
-        }
-        } {
-        % otherwise
-        \element_cellup:
-        \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}}; % tiny label
-        }
+        } { \element_cellup: \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}}; } % tiny label
     \end{scope}
 }
 
@@ -168,33 +124,33 @@
                 \fill[color0] (0, 3) rectangle (#3*16, 9);
                 \fill[cborder] (0, 0) rectangle (#3*16, 3);
                 \draw[cborder,ultra~thin] (0, 12) -- (#3*16, 12);
-                }
+            }
             L {
                 \fill[clight] (-9, 0) rectangle (-12, -#2*16);
                 \fill[color0] (-3, 0) rectangle (-9, -#2*16);
                 \fill[cborder] (0, 0) rectangle (-3, -#2*16);
                 \draw[cborder,ultra~thin] (-12, 0) -- (-12, -#2*16);
-                }
+            }
             B {
                 \begin{scope}[yshift=-#2*16]
                     \fill[cborder] (0, -9) rectangle (#3*16, -12);
                     \fill[color0] (0, -3) rectangle (#3*16, -9);
                     \fill[clight] (0, 0) rectangle (#3*16, -3);
                 \end{scope}
-                }
+            }
             R {
                 \begin{scope}[xshift=#3*16]
                     \fill[cborder] (9, 0) rectangle (12, -#2*16);
                     \fill[color0] (3, 0) rectangle (9, -#2*16);
                     \fill[clight] (0, 0) rectangle (3, -#2*16);
                 \end{scope}
-                }
+            }
             t {
-                    \fill[clight] (0, 0) rectangle (-12, 12);
-                    \fill[color0] (0, 0) rectangle (-9, 9);
-                    \fill[cborder] (0, 0) rectangle (-3, 3);
-                    \draw[cborder,ultra~thin] (-12, 0) -- (-12, 12) -- (0, 12);
-                }
+                \fill[clight] (0, 0) rectangle (-12, 12);
+                \fill[color0] (0, 0) rectangle (-9, 9);
+                \fill[cborder] (0, 0) rectangle (-3, 3);
+                \draw[cborder,ultra~thin] (-12, 0) -- (-12, 12) -- (0, 12);
+            }
             l {
                 \begin{scope}[yshift=-#2*16]
                     \fill[color0] (0, 0) rectangle (-9, -9);
@@ -204,14 +160,14 @@
                     \fill[cborder] (-9, -9) -- (-12, -12) -- (0, -12) -- (0, -9) -- cycle;
                     \draw[cborder,ultra~thin] (-12, -12) -- (-12, 0);
                 \end{scope}
-                }
+            }
             b {
                 \begin{scope}[xshift=#3*16, yshift=-#2*16]
                     \fill[cborder] (0, 0) rectangle (12, -12);
                     \fill[color0] (0, 0) rectangle (9, -9);
                     \fill[clight] (0, 0) rectangle (3, -3);
                 \end{scope}
-                }
+            }
             r {
                 \begin{scope}[xshift=#3*16]
                     \fill[color0] (0, 0) rectangle (9, 9);
@@ -221,7 +177,7 @@
                     \fill[clight] (9, 9) -- (12, 12) -- (0, 12) -- (0, 9) -- cycle;
                     \draw[cborder,ultra~thin] (12, 12) -- (0, 12);
                 \end{scope}
-                }
+            }
         }
     }
 }
