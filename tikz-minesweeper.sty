@@ -147,11 +147,14 @@
     \end{scope}
 }
 
-\cs_set:Npn \element_row:nn #1#2 {
+\cs_set:Npn \element_line:nn #1#2#3 {
     \tl_set:Nn \l_tmpa_tl {#2}
     \int_zero:N \l_tmpa_int
     \tl_map_inline:Nn \l_tmpa_tl {
-        \element_cell:nnn {##1}{#1}{\l_tmpa_int}
+        \tl_case:Nn #3 {
+            r { \element_cell:nnn {##1}{#1}{\l_tmpa_int} }
+            c { \element_cell:nnn {##1}{\l_tmpa_int}{#1} }
+        }
         \int_incr:N \l_tmpa_int
     }
 }
@@ -229,7 +232,8 @@
 \newcommand{\celldown}{\element_celldown:}
 \newcommand{\cellnum}{\element_cellnum:n}
 \newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
-\newcommand{\row}[2]{\element_row:nn {#1}{#2}}
+\newcommand{\row}[2]{\element_line:nn {#1}{#2}{r}}
+\newcommand{\col}[2]{\element_line:nn {#1}{#2}{c}}
 \newcommand{\border}[1][tTrRbBlL]{\element_border:nnn {#1}{1}{1}}
 \newcommand{\board}[3][tTrRbBlL]{\element_border:nnn {#1}{#2}{#3}}
 \ExplSyntaxOff
