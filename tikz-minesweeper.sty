@@ -116,11 +116,20 @@
 }
 
 \cs_set:Npn \element_border:nnn #1#2#3 {
-    \tl_set:Nn \l_tmpa_tl {#1}
     \int_zero_new:N \l_tmpt_int
     \int_zero_new:N \l_tmpl_int
     \int_zero_new:N \l_tmpb_int
     \int_zero_new:N \l_tmpr_int
+
+    \tl_set:Nn \l_tmpa_tl {#1}
+    \tl_if_in:NnT \l_tmpa_tl {-} {
+        % special case for '-' option
+        \tl_if_eq:nnT {-t} {#1} { \tl_set:Nn \l_tmpa_tl {lbr} }
+        \tl_if_eq:nnT {-l} {#1} { \tl_set:Nn \l_tmpa_tl {tbr} }
+        \tl_if_eq:nnT {-b} {#1} { \tl_set:Nn \l_tmpa_tl {tlr} }
+        \tl_if_eq:nnT {-r} {#1} { \tl_set:Nn \l_tmpa_tl {tlb} }
+    }
+
     \tl_map_inline:Nn \l_tmpa_tl {
         \tl_case:Nn ##1 {
             t {
