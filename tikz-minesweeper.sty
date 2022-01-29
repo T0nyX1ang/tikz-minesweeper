@@ -76,7 +76,7 @@
         v { \tl_set:Nn \l_tmpa_tl {violet} }
     } {
         \begin{scope}
-            \fill[opacity=0.2, color=\l_tmpa_tl] (0, 0) rectangle (16, -16);
+            \fill[opacity=0.2, \l_tmpa_tl] (0, 0) rectangle (16, -16);
         \end{scope}
     }
 }
@@ -85,7 +85,7 @@
     \sffamily
     \tl_set:Nn \l_tmpa_tl {012345678}
     \tl_set:Nn \l_tmpb_tl {rgbcyoltv}
-    \begin{scope}[xshift=#3*16,yshift=-#2*16]
+    \begin{scope}[xshift=#3*16, yshift=-#2*16]
         \tl_if_single:nTF {#1} {
             % single token
             \tl_if_in:NnTF \l_tmpa_tl {#1} { \element_celldown: \element_cellnum:n {#1} } % number
@@ -215,52 +215,39 @@
     }
 }
 
+\cs_set:Npn \element_colorcell:nn #1#2 {
+    \tl_set:Nn \l_tmpa_tl {#2}
+    \seq_set_split:NnV \l_tmpa_seq {;} \l_tmpa_tl
+    \seq_map_inline:Nn \l_tmpa_seq {
+        \tl_set:Nx \l_tmpb_tl {##1}
+        \seq_set_split:NnV \l_tmpb_seq {,} \l_tmpb_tl
+        \tl_set:Nx \l__ms_width_tl {\seq_item:Nn \l_tmpb_seq {1}}
+        \tl_set:Nx \l__ms_height_tl {\seq_item:Nn \l_tmpb_seq {-1}}
+        \seq_set_split:NnV \l__ms_width_seq {-} \l__ms_width_tl
+        \seq_set_split:NnV \l__ms_height_seq {-} \l__ms_height_tl
+        \tl_set:Nx \l__ms_widthx_tl {\seq_item:Nn \l__ms_width_seq {1}}
+        \tl_set:Nx \l__ms_widthy_tl {\seq_item:Nn \l__ms_width_seq {-1}}
+        \tl_set:Nx \l__ms_heightx_tl {\seq_item:Nn \l__ms_height_seq {1}}
+        \tl_set:Nx \l__ms_heighty_tl {\seq_item:Nn \l__ms_height_seq {-1}}
+        \int_step_variable:nnNn {\l__ms_widthx_tl} {\l__ms_widthy_tl} \l_tmpa_int {
+            \int_step_variable:nnNn {\l__ms_heightx_tl} {\l__ms_heighty_tl} \l_tmpb_int {
+                \begin{scope}[xshift=\l_tmpb_int*16,yshift=-\l_tmpa_int*16]
+                    \element_cellcolored:n {#1}
+                \end{scope}
+            }
+        }
+    }
+}
+
 \newcommand{\flag}{\element_flag:}
 \newcommand{\mine}{\element_mine:}
 \newcommand{\cellup}{\element_cellup:}
 \newcommand{\celldown}{\element_celldown:}
-\newcommand{\cellnum}{\element_cellnum:n}
+\newcommand{\cellnum}[1]{\element_cellnum:n {#1}}
 \newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
 \newcommand{\row}[2]{\element_line:nn {#1}{#2}{r}}
 \newcommand{\col}[2]{\element_line:nn {#1}{#2}{c}}
 \newcommand{\border}[1][-]{\element_border:nnn {#1}{1}{1}}
 \newcommand{\board}[3][-]{\element_border:nnn {#1}{#2}{#3}}
+\newcommand{\colorcell}[2]{\element_colorcell:nn {#1}{#2}}
 \ExplSyntaxOff
-
-
-\newcommand{\colorcell}[2]{
-    \@ifundefined{c@ia}{\newcounter{ia}}{}
-    \@ifundefined{c@ib}{\newcounter{ib}}{}
-    \@ifundefined{c@ja}{\newcounter{ja}}{}
-    \@ifundefined{c@jb}{\newcounter{jb}}{}
-    \begin{scope}
-        \foreach \x in {#2}{
-                \StrLen{\x}[\len]
-                \StrMid{\x}{2}{\numexpr\len-1}[\y] % remove parenthesis
-                \StrBefore{\y}{,}[\istr]
-                \StrBehind{\y}{,}[\jstr]
-
-                \IfSubStr{\istr}{:}{
-                    \StrBefore{\istr}{:}[\tmpa]
-                    \setcounter{ia}{\tmpa}
-                    \StrBehind{\istr}{:}[\tmpb]
-                    \setcounter{ib}{\tmpb}
-                }{
-                    \setcounter{ia}{\istr}
-                    \setcounter{ib}{\istr}
-                }
-
-                \IfSubStr{\jstr}{:}{
-                    \StrBefore{\jstr}{:}[\tmpa]
-                    \setcounter{ja}{\tmpa}
-                    \StrBehind{\jstr}{:}[\tmpb]
-                    \setcounter{jb}{\tmpb}
-                }{
-                    \setcounter{ja}{\jstr}
-                    \setcounter{jb}{\jstr}
-                }
-
-                \fill[opacity=0.2,#1] (\numexpr16*\value{ja}\relax, \numexpr-16*\value{ia}\relax) rectangle (\numexpr16*\value{jb}+16\relax, \numexpr-16*\value{ib}-16\relax);
-            }
-    \end{scope}
-}
