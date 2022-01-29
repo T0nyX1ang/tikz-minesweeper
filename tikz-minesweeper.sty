@@ -117,29 +117,29 @@
 
 \cs_set:Npn \element_border:nnn #1#2#3 {
     \bool_set_false:N \l_tmpa_bool
-    \bool_set_false:N \l_flagt_bool
-    \bool_set_false:N \l_flagl_bool
-    \bool_set_false:N \l_flagb_bool
-    \bool_set_false:N \l_flagr_bool
+    \bool_set_false:N \l__ms_flagt_bool
+    \bool_set_false:N \l__ms_flagl_bool
+    \bool_set_false:N \l__ms_flagb_bool
+    \bool_set_false:N \l__ms_flagr_bool
     \tl_set:Nn \l_tmpa_tl {#1}
 
     \tl_map_inline:Nn \l_tmpa_tl {
         \tl_case:Nn ##1 {
             - {
                 \bool_set_true:N \l_tmpa_bool
-                \bool_set_true:N \l_flagt_bool
-                \bool_set_true:N \l_flagl_bool
-                \bool_set_true:N \l_flagb_bool
-                \bool_set_true:N \l_flagr_bool
+                \bool_set_true:N \l__ms_flagt_bool
+                \bool_set_true:N \l__ms_flagl_bool
+                \bool_set_true:N \l__ms_flagb_bool
+                \bool_set_true:N \l__ms_flagr_bool
             }
-            t { \bool_set:Nn \l_flagt_bool {!\l_tmpa_bool} }
-            l { \bool_set:Nn \l_flagl_bool {!\l_tmpa_bool} }
-            b { \bool_set:Nn \l_flagb_bool {!\l_tmpa_bool} }
-            r { \bool_set:Nn \l_flagr_bool {!\l_tmpa_bool} }
+            t { \bool_set:Nn \l__ms_flagt_bool {!\l_tmpa_bool} }
+            l { \bool_set:Nn \l__ms_flagl_bool {!\l_tmpa_bool} }
+            b { \bool_set:Nn \l__ms_flagb_bool {!\l_tmpa_bool} }
+            r { \bool_set:Nn \l__ms_flagr_bool {!\l_tmpa_bool} }
         }
     }
 
-    \bool_if:NT \l_flagt_bool {
+    \bool_if:NT \l__ms_flagt_bool {
         % side case: t
         \fill[clight] (0, 9) rectangle (#3*16, 12);
         \fill[color0] (0, 3) rectangle (#3*16, 9);
@@ -147,7 +147,7 @@
         \draw[cborder,ultra~thin] (0, 12) -- (#3*16, 12);
     }
 
-    \bool_if:NT \l_flagl_bool {
+    \bool_if:NT \l__ms_flagl_bool {
         % side case: l
         \fill[clight] (-9, 0) rectangle (-12, -#2*16);
         \fill[color0] (-3, 0) rectangle (-9, -#2*16);
@@ -155,7 +155,7 @@
         \draw[cborder,ultra~thin] (-12, 0) -- (-12, -#2*16);
     }
 
-    \bool_if:NT \l_flagb_bool {
+    \bool_if:NT \l__ms_flagb_bool {
         % side case: b
         \begin{scope}[yshift=-#2*16]
             \fill[cborder] (0, -9) rectangle (#3*16, -12);
@@ -164,7 +164,7 @@
         \end{scope}
     }
 
-    \bool_if:NT \l_flagr_bool {
+    \bool_if:NT \l__ms_flagr_bool {
         % side case: r
         \begin{scope}[xshift=#3*16]
             \fill[cborder] (9, 0) rectangle (12, -#2*16);
@@ -173,7 +173,7 @@
         \end{scope}
     }
 
-    \bool_lazy_and:nnT {\l_flagt_bool} {\l_flagl_bool} {
+    \bool_lazy_and:nnT {\l__ms_flagt_bool} {\l__ms_flagl_bool} {
         % corner case: tl
         \fill[clight] (0, 0) rectangle (-12, 12);
         \fill[color0] (0, 0) rectangle (-9, 9);
@@ -181,7 +181,7 @@
         \draw[cborder,ultra~thin] (-12, 0) -- (-12, 12) -- (0, 12);
     }
 
-    \bool_lazy_and:nnT {\l_flagb_bool} {\l_flagl_bool} {
+    \bool_lazy_and:nnT {\l__ms_flagb_bool} {\l__ms_flagl_bool} {
         % corner case: bl
         \begin{scope}[yshift=-#2*16]
             \fill[color0] (0, 0) rectangle (-9, -9);
@@ -193,7 +193,7 @@
         \end{scope}
     }
 
-    \bool_lazy_and:nnT {\l_flagb_bool} {\l_flagr_bool} {
+    \bool_lazy_and:nnT {\l__ms_flagb_bool} {\l__ms_flagr_bool} {
         % corner case: br
         \begin{scope}[xshift=#3*16, yshift=-#2*16]
             \fill[cborder] (0, 0) rectangle (12, -12);
@@ -202,7 +202,7 @@
         \end{scope}
     }
 
-    \bool_lazy_and:nnT {\l_flagt_bool} {\l_flagr_bool} {
+    \bool_lazy_and:nnT {\l__ms_flagt_bool} {\l__ms_flagr_bool} {
         % corner case: tr
         \begin{scope}[xshift=#3*16]
             \fill[color0] (0, 0) rectangle (9, 9);
