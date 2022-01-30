@@ -1,0 +1,522 @@
+% \iffalse meta-comment
+% Copyright (C) 2021-2022 by Tian-Yi Pu, Fei-Yu Xiang
+% and Yao-Yu Zhu
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.3 of this license or (at your option) any later
+% version. The latest version of this license is in:
+%
+%    http://www.latex-project.org/lppl.txt
+%
+% and version 1.3 or later is part of all distributions of
+% LaTeX version 2005/12/01 or later.
+%
+% \fi
+
+% \iffalse
+%<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+%<package>\ProvidesPackage{tikz-minesweeper}
+%<package>    [2022/01/30 v0.1.0 Draw a minesweeper board in LaTeX]
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{tikz-minesweeper}
+\usepackage{ctex}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{colortbl}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{multicol}
+\EnableCrossrefs
+\OnlyDescription
+\CodelineIndex
+\RecordChanges
+\begin{document}
+    \DocInput{tikz-minesweeper.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \GetFileInfo{tikz-minesweeper.sty}
+%
+% \title{\texttt{tikz-minesweeper}宏包使用手册\thanks{本使用手册适用于\texttt{tikz-minesweeper}~\fileversion, 更新于~\filedate.}}
+% \author{濮天羿 \quad 向飞宇 \quad 朱耀宇}
+% \maketitle
+%
+% \section{绘制示例}
+%
+% \begin{multicols}{2}
+% \iffalse
+%<*internal>
+% \fi
+\begin{verbatim}
+\usepackage{tikz-minesweeper}
+\begin{document}
+    \begin{tikzpicture}
+        \board{5}{5}
+        \row{0}{f{20}12}
+        \row{1}{A-40}
+        \row{2}{m-67}
+        \row{3}{rgbc}
+        \row{4}{oltv}
+        \col{4}{358y-}
+    \end{tikzpicture}
+\end{document}
+\end{verbatim}
+% \iffalse
+%</internal>
+% \fi
+%     \columnbreak
+%     \begin{figure}[H]
+%         \centering
+%         \begin{tikzpicture}
+%             \board{5}{5}
+%             \row{0}{f{20}12}
+%             \row{1}{A-40}
+%             \row{2}{m-67}
+%             \row{3}{rgbc}
+%             \row{4}{oltv}
+%             \col{4}{358y-}
+%         \end{tikzpicture}
+%         \caption*{示例: 在5x5区域内绘制数字、雷、旗帜、空格和标记}
+%     \end{figure}
+% \end{multicols}
+% \section{绘制指令介绍}
+%
+% \subsection{配色}
+% \texttt{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色.
+%
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{ccccc}
+%         \toprule
+%         颜色                                        & R   & G   & B   & 场景                              \\
+%         \midrule
+%         \textcolor{color0}{color0}                  & 192 & 192 & 192 & 格子内部 / 外边框                 \\
+%         \textcolor{color1}{color1}                  & 0   & 0   & 255 & 数字1                             \\
+%         \textcolor{color2}{color2}                  & 0   & 128 & 0   & 数字2                             \\
+%         \textcolor{color3}{color3}                  & 255 & 0   & 0   & 数字3                             \\
+%         \textcolor{color4}{color4}                  & 0   & 0   & 128 & 数字4                             \\
+%         \textcolor{color5}{color5}                  & 128 & 0   & 0   & 数字5                             \\
+%         \textcolor{color6}{color6}                  & 0   & 128 & 128 & 数字6                             \\
+%         \textcolor{color7}{color7}                  & 0   & 0   & 0   & 数字7                             \\
+%         \textcolor{color8}{color8}                  & 128 & 128 & 128 & 数字8 / 格子阴影 / 按下的格子边界   \\
+%         \textcolor{cborder}{cborder}                & 160 & 160 & 160 & 边框阴影                          \\
+%         \cellcolor{black}\textcolor{clight}{clight} & 255 & 255 & 255 & 高亮                              \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption*{颜色对照表}
+% \end{table}
+%
+% \subsection{方格元素}
+% 本宏包中设定单位长度为\textbf{1pt}, 下文如无特殊说明, 所有数据的单位为\textbf{pt}, 且所有数据不带单位. 如果需要放大一张地图, 请使用\texttt{scope}环境中的\texttt{scale}参数.
+%
+% 为了与标准扫雷游戏一致, 一格的边长是\textbf{16}.
+%
+% \DescribeMacro{\flag} 绘制旗子
+%
+% \begin{figure}[!htp]
+%     \centering
+%     \begin{tikzpicture}
+%         \begin{scope}[scale=10]
+%             \flag
+%             \draw[gray] (0,0) rectangle (16, -16);
+%             \draw[dashed] (0,-4) node[left] {-4} -- (8.5,-4);
+%             \draw[dashed,red] (16,-4.5) node[right] {-4.5} -- (8.5,-4.5);
+%             \draw[dashed,red] (0,-6.5) node[left] {-6.5} -- (4,-6.5);
+%             \draw[dashed,red] (16,-8.5) node[right] {-8.5} -- (8.5,-8.5);
+%             \draw[dashed] (0,-11) node[left] {-11} -- (6.5,-11);
+%             \draw[dashed] (16,-12) node[right] {-12} -- (12,-12);
+%             \draw[dashed] (0,-13) node[left] {-13} -- (5,-13);
+%             \draw[dashed,red] (4,0) node[above] {4} -- (4,-6.5);
+%             \draw[dashed] (5,-16) node[below] {5} -- (5,-13);
+%             \draw[dashed] (6.5,0) node[above] {6.5} -- (6.5,-11);
+%             \draw[dashed] (8.5,-16) node[below] {8.5} -- (8.5,-13);
+%             \draw[dashed] (9.5,0) node[above] {9.5} -- (9.5,-4);
+%             \draw[dashed] (10.5,-16) node[below] {10.5} -- (10.5,-13);
+%             \draw[dashed] (12,0) node[above] {12} -- (12,-12);
+%         \end{scope}
+%     \end{tikzpicture}
+%     \caption*{旗子参数. 方框是一格参考线, 左上角为原点. }
+% \end{figure}
+%
+% \DescribeMacro{\mine} 绘制雷
+%
+% \begin{figure}[!htp]
+%     \centering
+%     \begin{tikzpicture}
+%         \begin{scope}[scale=10]
+%             \mine
+%         \end{scope}
+%     \end{tikzpicture}
+% \end{figure}
+%
+% \DescribeMacro{\cellup} 绘制弹起的方块, 左上角原点. 四周形成立体感的宽度为2.
+%
+% \DescribeMacro{\celldown} 绘制按下的方块, 左上角原点. 左和上的边界宽度为1.
+%
+% \begin{figure}[!htp]
+%     \captionsetup[subfloat]{labelformat=empty}
+%     \centering
+%     \subfloat[弹起的方块]{\begin{tikzpicture}\begin{scope}[scale=5]\cellup\end{scope}\end{tikzpicture}}
+%     \quad
+%     \subfloat[按下的方块]{\begin{tikzpicture}\begin{scope}[scale=5]\celldown\end{scope}\end{tikzpicture}}
+% \end{figure}
+%
+
+% \DescribeMacro{\cellnum \marg{数字}} 在当前方块中填入带配色的数字\raisebox{-0.5ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}. 数字中心为(8.5,8.5).
+%
+% \subsection{边框元素}
+% 边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和 |\cellup| 同理. 左边和上边的高亮外边缘用cborder封边.
+%
+% \DescribeMacro{\border \oarg{-tlbr}} 绘制以格为单位长度(宽度)的边框. t, r, b, l 分别代表上, 右, 下, 左边框, 如果相邻边框同时绘制, 将自动绘制对应的角.
+%
+% \begin{figure}[!htp]
+%     \centering
+%     \begin{tikzpicture}
+%         \begin{scope}[scale=4]
+%             \border
+%             \draw[dashed] (-14,0) -- (30,0);
+%             \draw[dashed] (-14,-16) -- (30,-16);
+%             \draw[dashed] (0,14) -- (0,-30);
+%             \draw[dashed] (16,14) -- (16,-30);
+%             \node at (8, 6) {t};
+%             \node at (22, -8) {r};
+%             \node at (8, -22) {b};
+%             \node at (-6, -8) {l};
+%         \end{scope}
+%     \end{tikzpicture}
+%     \caption*{边框组装效果}
+% \end{figure}
+%
+% \subsection{模块}
+%
+% \DescribeMacro{\cell \marg{行} \marg{列} \marg{内容}} 在第[行]行第[列]列交叉处绘制包含[内容]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8,-8). 内容不能为空, 如果内容是-, 方格是按下状态并且无字符, 如果内容中含有多个字符, 将会自动缩小字符, 转化为 |\tiny| 模式. 如果内容是r, g, b, c, y, o, l, t, v, 将给该方格染成对应颜色.
+%
+% \DescribeMacro{\row \marg{行} \marg{内容}} 在第[行]行从左到右绘制多个方格. 内容的格式按照顺序输入字符, 每个字符作为 |\cell| 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如|1{23}4|代表1, 23和4这这三个字符.
+%
+% \DescribeMacro{\col \marg{列} \marg{内容}}  在第[列]列从左到右绘制多个方格, 语法与 |row| 一致.
+%
+% \DescribeMacro{\board \oarg{-tlbr} \marg{行} \marg{列}} 绘制[行]行[列]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}的可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}.
+%
+% \begin{figure}[!htp]
+%     \captionsetup[subfloat]{labelformat=empty}
+%     \centering
+%     \subfloat[\texttt{\textbackslash board}]{\begin{tikzpicture}[scale=2]\board{1}{1}\end{tikzpicture}}
+%     \quad
+%     \subfloat[\texttt{\textbackslash board[tlb]} 或 \\ \texttt{\textbackslash board[-r]} ]{\begin{tikzpicture}[scale=2]\border[-r]\end{tikzpicture}}
+%     \quad
+%     \subfloat[\texttt{\textbackslash board[tlr]} 或 \\ \texttt{\textbackslash board[-b]} ]{\begin{tikzpicture}[scale=2]\border[-b]\end{tikzpicture}}
+%     \quad
+%     \subfloat[\texttt{\textbackslash board[tl]}]{\begin{tikzpicture}[scale=2]\border[tl]\end{tikzpicture}}
+% \end{figure}
+%
+% \DescribeMacro{\colorcell \marg{颜色} \marg{位置}} 将[位置]位置的方格染色为[颜色]颜色.
+% \begin{multicols}{2}
+% \iffalse
+%<*internal>
+% \fi
+\begin{verbatim}
+\begin{tikzpicture}
+\board{3}{5}
+\row{0}{f{20}123}
+\row{1}{A-405}
+\row{2}{m-678}
+\colorcell{g}{
+    0,0-1;0-1,3
+}
+\colorcell{r}{
+    0,4;1-2,0-2
+}
+\end{tikzpicture}
+\end{verbatim}
+% \iffalse
+%</internal>
+% \fi
+%     \columnbreak
+%     \begin{figure}[H]
+%         \centering
+%         \begin{tikzpicture}
+%             \board{3}{5}
+%             \row{0}{f{20}123}
+%             \row{1}{A-405}
+%             \row{2}{m-678}
+%             \colorcell{g}{
+%                 0,0-1;0-1,3
+%             }
+%             \colorcell{r}{
+%                 0,4;1-2,0-2
+%             }
+%         \end{tikzpicture}
+%         \caption*{方格染色}
+%     \end{figure}
+% \end{multicols}
+%
+% \StopEventually{}
+%     \begin{macrocode}
+%<*package>
+\RequirePackage{tikz}
+\RequirePackage{expl3}
+
+% Color tables
+\definecolor{color0}{RGB}{192,192,192}
+\definecolor{color1}{RGB}{0,0,255}
+\definecolor{color2}{RGB}{0,128,0}
+\definecolor{color3}{RGB}{255,0,0}
+\definecolor{color4}{RGB}{0,0,128}
+\definecolor{color5}{RGB}{122,43,26}
+\definecolor{color6}{RGB}{0,128,128}
+\definecolor{color7}{RGB}{0,0,0}
+\definecolor{color8}{RGB}{128,128,128}
+\definecolor{cborder}{RGB}{160,160,160}
+\definecolor{clight}{RGB}{255,255,255}
+
+% Default unit
+\tikzset{x=1pt, y=1pt}
+
+\ExplSyntaxOn
+\cs_set:Nn \element_flag: {
+    \fill[color7] (5, -13) rectangle (12, -12); % lower base
+    \fill[color7] (6.5, -13) rectangle (10.5, -11); % upper base
+    \fill[color7] (8.5, -13) rectangle (9.5, -4); % pole
+    \fill[color3] (8.5, -4.5) -- (4, -6.5) -- (8.5, -8.5) -- cycle; % red flag
+}
+
+\cs_set:Nn \element_mine: {
+    \int_step_inline:nnnn {0} {45} {135} {
+        \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
+    }
+    \shade[ball~color=color7] (8.5,-8.5) circle (4.5); % body
+}
+
+\cs_set:Nn \element_cellup: {
+    \fill[color0] (0, 0) rectangle (16, -16); % background
+    \fill[clight] (0, 0) -- (16, 0) -- (14, -2) -- (2, -2) -- (2, -14) -- (0, -16) -- cycle; % highlight
+    \fill[color8] (16, -16) -- (0, -16) -- (2, -14) -- (14, -14) -- (14, -2) -- (16, 0) -- cycle; % shade
+}
+
+\cs_set:Nn \element_celldown: {
+    \fill[color8] (0, 0) -- (16, 0) -- (16, -1) -- (1, -1) -- (1, -16) -- (0, -16) -- cycle; % border
+    \fill[color0] (1, -16) rectangle (16, -1); % background
+}
+
+\cs_set:Npn \element_cellnum:n #1 {
+    \tl_set:Nn \l_tmpa_tl {color}
+    \tl_put_right:Nn \l_tmpa_tl {#1}
+    \node[text~centered, text=\l_tmpa_tl] at (8.5, -8.5) {\textbf{#1}};
+}
+
+\cs_set:Npn \element_cellcolored:n #1 {
+    \tl_case:NnT #1 {
+        r { \tl_set:Nn \l_tmpa_tl {red} }
+        g { \tl_set:Nn \l_tmpa_tl {green} }
+        b { \tl_set:Nn \l_tmpa_tl {blue} }
+        c { \tl_set:Nn \l_tmpa_tl {cyan} }
+        y { \tl_set:Nn \l_tmpa_tl {yellow} }
+        o { \tl_set:Nn \l_tmpa_tl {orange} }
+        l { \tl_set:Nn \l_tmpa_tl {lime} }
+        t { \tl_set:Nn \l_tmpa_tl {teal} }
+        v { \tl_set:Nn \l_tmpa_tl {violet} }
+    } {
+        \begin{scope}
+            \fill[opacity=0.2, \l_tmpa_tl] (0, 0) rectangle (16, -16);
+        \end{scope}
+    }
+}
+
+\cs_set:Npn \element_cell:nnn #1#2#3 {
+    \sffamily
+    \tl_set:Nn \l_tmpa_tl {012345678}
+    \tl_set:Nn \l_tmpb_tl {rgbcyoltv}
+    \begin{scope}[xshift=#3*16, yshift=-#2*16]
+        \tl_if_single:nTF {#1} {
+            % single token
+            \tl_if_in:NnTF \l_tmpa_tl {#1} { \element_celldown: \element_cellnum:n {#1} } % number
+            {
+                \tl_if_in:NnTF \l_tmpb_tl {#1} { \element_cellup: \element_cellcolored:n {#1} } % color
+                {
+                    \tl_case:NnF #1 {
+                        f { \element_cellup: \element_flag: } % flag
+                        m { \element_celldown: \element_mine: } % mine
+                        - { \element_cellup: } % empty
+                    } { \element_cellup: \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; } % normal label
+                }
+            }
+        } { \element_cellup: \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}}; } % tiny label
+    \end{scope}
+}
+
+\cs_set:Npn \element_line:nn #1#2#3 {
+    \tl_set:Nn \l_tmpa_tl {#2}
+    \int_zero:N \l_tmpa_int
+    \tl_map_inline:Nn \l_tmpa_tl {
+        \tl_case:Nn #3 {
+            r { \element_cell:nnn {##1}{#1}{\l_tmpa_int} }
+            c { \element_cell:nnn {##1}{\l_tmpa_int}{#1} }
+        }
+        \int_incr:N \l_tmpa_int
+    }
+}
+
+\cs_set:Npn \element_border:nnn #1#2#3 {
+    \bool_set_false:N \l_tmpa_bool
+    \bool_set_false:N \l__ms_flagt_bool
+    \bool_set_false:N \l__ms_flagl_bool
+    \bool_set_false:N \l__ms_flagb_bool
+    \bool_set_false:N \l__ms_flagr_bool
+    \tl_set:Nn \l_tmpa_tl {#1}
+
+    \tl_map_inline:Nn \l_tmpa_tl {
+        \tl_case:Nn ##1 {
+            - {
+                \bool_set_true:N \l_tmpa_bool
+                \bool_set_true:N \l__ms_flagt_bool
+                \bool_set_true:N \l__ms_flagl_bool
+                \bool_set_true:N \l__ms_flagb_bool
+                \bool_set_true:N \l__ms_flagr_bool
+            }
+            t { \bool_set:Nn \l__ms_flagt_bool {!\l_tmpa_bool} }
+            l { \bool_set:Nn \l__ms_flagl_bool {!\l_tmpa_bool} }
+            b { \bool_set:Nn \l__ms_flagb_bool {!\l_tmpa_bool} }
+            r { \bool_set:Nn \l__ms_flagr_bool {!\l_tmpa_bool} }
+        }
+    }
+
+    \bool_if:NT \l__ms_flagt_bool {
+        % side case: t
+        \fill[clight] (0, 9) rectangle (#3*16, 12);
+        \fill[color0] (0, 3) rectangle (#3*16, 9);
+        \fill[cborder] (0, 0) rectangle (#3*16, 3);
+        \draw[cborder,ultra~thin] (0, 12) -- (#3*16, 12);
+    }
+
+    \bool_if:NT \l__ms_flagl_bool {
+        % side case: l
+        \fill[clight] (-9, 0) rectangle (-12, -#2*16);
+        \fill[color0] (-3, 0) rectangle (-9, -#2*16);
+        \fill[cborder] (0, 0) rectangle (-3, -#2*16);
+        \draw[cborder,ultra~thin] (-12, 0) -- (-12, -#2*16);
+    }
+
+    \bool_if:NT \l__ms_flagb_bool {
+        % side case: b
+        \begin{scope}[yshift=-#2*16]
+            \fill[cborder] (0, -9) rectangle (#3*16, -12);
+            \fill[color0] (0, -3) rectangle (#3*16, -9);
+            \fill[clight] (0, 0) rectangle (#3*16, -3);
+        \end{scope}
+    }
+
+    \bool_if:NT \l__ms_flagr_bool {
+        % side case: r
+        \begin{scope}[xshift=#3*16]
+            \fill[cborder] (9, 0) rectangle (12, -#2*16);
+            \fill[color0] (3, 0) rectangle (9, -#2*16);
+            \fill[clight] (0, 0) rectangle (3, -#2*16);
+        \end{scope}
+    }
+
+    \bool_lazy_and:nnT {\l__ms_flagt_bool} {\l__ms_flagl_bool} {
+        % corner case: tl
+        \fill[clight] (0, 0) rectangle (-12, 12);
+        \fill[color0] (0, 0) rectangle (-9, 9);
+        \fill[cborder] (0, 0) rectangle (-3, 3);
+        \draw[cborder,ultra~thin] (-12, 0) -- (-12, 12) -- (0, 12);
+    }
+
+    \bool_lazy_and:nnT {\l__ms_flagb_bool} {\l__ms_flagl_bool} {
+        % corner case: bl
+        \begin{scope}[yshift=-#2*16]
+            \fill[color0] (0, 0) rectangle (-9, -9);
+            \fill[clight] (0, 0) -- (-3, -3) -- (0, -3) -- cycle;
+            \fill[clight] (-9, -9) -- (-12, -12) -- (-12, 0) -- (-9, 0) -- cycle;
+            \fill[cborder] (0, 0) -- (-3, -3) -- (-3, 0) -- cycle;
+            \fill[cborder] (-9, -9) -- (-12, -12) -- (0, -12) -- (0, -9) -- cycle;
+            \draw[cborder,ultra~thin] (-12, -12) -- (-12, 0);
+        \end{scope}
+    }
+
+    \bool_lazy_and:nnT {\l__ms_flagb_bool} {\l__ms_flagr_bool} {
+        % corner case: br
+        \begin{scope}[xshift=#3*16, yshift=-#2*16]
+            \fill[cborder] (0, 0) rectangle (12, -12);
+            \fill[color0] (0, 0) rectangle (9, -9);
+            \fill[clight] (0, 0) rectangle (3, -3);
+        \end{scope}
+    }
+
+    \bool_lazy_and:nnT {\l__ms_flagt_bool} {\l__ms_flagr_bool} {
+        % corner case: tr
+        \begin{scope}[xshift=#3*16]
+            \fill[color0] (0, 0) rectangle (9, 9);
+            \fill[cborder] (0, 0) -- (3, 3) -- (0, 3) -- cycle;
+            \fill[cborder] (9, 9) -- (12, 12) -- (12, 0) -- (9, 0) -- cycle;
+            \fill[clight] (0, 0) -- (3, 3) -- (3, 0) -- cycle;
+            \fill[clight] (9, 9) -- (12, 12) -- (0, 12) -- (0, 9) -- cycle;
+            \draw[cborder,ultra~thin] (12, 12) -- (0, 12);
+        \end{scope}
+    }
+}
+
+\cs_set:Npn \element_colorcell:nn #1#2 {
+    \tl_set:Nn \l_tmpa_tl {#2}
+    \seq_set_split:NnV \l_tmpa_seq {;} \l_tmpa_tl
+    \seq_map_inline:Nn \l_tmpa_seq {
+        \tl_set:Nx \l_tmpb_tl {##1}
+        \seq_set_split:NnV \l_tmpb_seq {,} \l_tmpb_tl
+        \tl_set:Nx \l__ms_width_tl {\seq_item:Nn \l_tmpb_seq {1}}
+        \tl_set:Nx \l__ms_height_tl {\seq_item:Nn \l_tmpb_seq {-1}}
+        \seq_set_split:NnV \l__ms_width_seq {-} \l__ms_width_tl
+        \seq_set_split:NnV \l__ms_height_seq {-} \l__ms_height_tl
+        \tl_set:Nx \l__ms_widthx_tl {\seq_item:Nn \l__ms_width_seq {1}}
+        \tl_set:Nx \l__ms_widthy_tl {\seq_item:Nn \l__ms_width_seq {-1}}
+        \tl_set:Nx \l__ms_heightx_tl {\seq_item:Nn \l__ms_height_seq {1}}
+        \tl_set:Nx \l__ms_heighty_tl {\seq_item:Nn \l__ms_height_seq {-1}}
+        \int_step_variable:nnNn {\l__ms_widthx_tl} {\l__ms_widthy_tl} \l_tmpa_int {
+            \int_step_variable:nnNn {\l__ms_heightx_tl} {\l__ms_heighty_tl} \l_tmpb_int {
+                \begin{scope}[xshift=\l_tmpb_int*16,yshift=-\l_tmpa_int*16]
+                    \element_cellcolored:n {#1}
+                \end{scope}
+            }
+        }
+    }
+}
+
+\newcommand{\flag}{\element_flag:}
+\newcommand{\mine}{\element_mine:}
+\newcommand{\cellup}{\element_cellup:}
+\newcommand{\celldown}{\element_celldown:}
+\newcommand{\cellnum}[1]{\element_cellnum:n {#1}}
+\newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
+\newcommand{\row}[2]{\element_line:nn {#1}{#2}{r}}
+\newcommand{\col}[2]{\element_line:nn {#1}{#2}{c}}
+\newcommand{\border}[1][-]{\element_border:nnn {#1}{1}{1}}
+\newcommand{\board}[3][-]{\element_border:nnn {#1}{#2}{#3}}
+\newcommand{\colorcell}[2]{\element_colorcell:nn {#1}{#2}}
+\ExplSyntaxOff
+%</package>
+%     \end{macrocode}
+%
+% \Finale
+%
+\endinput
