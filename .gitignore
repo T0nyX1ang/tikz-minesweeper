@@ -276,5 +276,8 @@ TSWLatexianTemp*
 *.lpz
 *.pdf
 
+# Generated .sty files
+*.sty
+
 # Testing codes
 test.*
