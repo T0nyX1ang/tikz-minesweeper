@@ -30,13 +30,13 @@ jobs:
       uses: xu-cheng/latex-action@v2
       with:
         root_file: tikz-minesweeper.ins
-        latexmk_use_xelatex: true    
+        args: -xelatex -file-line-error -interaction=nonstopmode -shell-escape
     
     - name: Build dtx
       uses: xu-cheng/latex-action@v2
       with:
         root_file: tikz-minesweeper.dtx
-        latexmk_use_xelatex: true
+        args: -xelatex -file-line-error -interaction=nonstopmode -shell-escape
         
     # Upload demo to artifacts if the demo is compiled successfully
     - name: Upload artifacts
