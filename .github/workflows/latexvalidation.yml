@@ -36,7 +36,7 @@ jobs:
       uses: xu-cheng/latex-action@v2
       with:
         root_file: tikz-minesweeper.dtx
-        latex_use_xelatex: true
+        latexmk_use_xelatex: true
         
     # Upload demo to artifacts if the demo is compiled successfully
     - name: Upload artifacts
