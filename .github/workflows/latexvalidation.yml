@@ -27,10 +27,7 @@ jobs:
 
     # Compile the LaTeX document with XeLaTeX
     - name: Build ins
-      uses: xu-cheng/latex-action@v2
-      with:
-        root_file: tikz-minesweeper.ins
-        args: -xelatex -file-line-error -interaction=nonstopmode -shell-escape
+      run: xetex tikz-minesweeper.ins
     
     - name: Build dtx
       uses: xu-cheng/latex-action@v2
