@@ -73,3 +73,5 @@ Draw a minesweeper board in LaTeX.
 ## Other notes
 
 - `tikz-minesweeper.pdf` is fully in Chinese, and we don't have the efforts to translate it into other languages now.
+
+test
