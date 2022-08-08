@@ -310,9 +310,9 @@
 }
 
 \cs_set:Nn \element_cellup: {
-    \fill[color0] (0, 0) rectangle (16, -16); % background
     \fill[clight] (0, 0) -- (16, 0) -- (14, -2) -- (2, -2) -- (2, -14) -- (0, -16) -- cycle; % highlight
     \fill[color8] (16, -16) -- (0, -16) -- (2, -14) -- (14, -14) -- (14, -2) -- (16, 0) -- cycle; % shade
+    \fill[color0] (2, -2) rectangle (14, -14); % background, modified to draw later
 }
 
 \cs_set:Nn \element_celldown: {
@@ -339,7 +339,7 @@
         v { \tl_set:Nn \l_tmpa_tl {violet} }
     } {
         \begin{scope}
-            \fill[opacity=0.2, \l_tmpa_tl] (0, 0) rectangle (16, -16);
+            \fill[color=\l_tmpa_tl, opacity=0.2] (0, 0) rectangle (16, -16);
         \end{scope}
     }
 }
@@ -385,6 +385,9 @@
     \bool_set_false:N \l__ms_flagb_bool
     \bool_set_false:N \l__ms_flagr_bool
     \tl_set:Nn \l_tmpa_tl {#1}
+
+    % prefill with color8
+    \fill[color8] (0, 0) rectangle (#3*16, -#2*16);
 
     \tl_map_inline:Nn \l_tmpa_tl {
         \tl_case:Nn ##1 {
