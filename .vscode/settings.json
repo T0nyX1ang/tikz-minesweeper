@@ -1,0 +1,41 @@
+{
+    "latex-workshop.latex.search.rootFiles.include": [
+        "**/*.tex",
+        "**/*.dtx",
+        "**/*.ins"
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "xetex(ins only)",
+            "command": "xetex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%.ins"
+            ],
+            "env": {}
+        },
+        {
+            "name": "xelatex(dtx only)",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%.dtx"
+            ],
+            "env": {}
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "Build dtx (ins)",
+            "tools": ["xetex(ins only)", "xelatex(dtx only)"]
+        },
+        {
+            "name": "Build dtx (no ins)",
+            "tools": ["xelatex(dtx only)"]
+        }
+    ]
+}
