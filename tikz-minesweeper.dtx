@@ -505,9 +505,9 @@
         \tl_set:Nx \l__ms_widthy_tl {\seq_item:Nn \l__ms_width_seq {-1}}
         \tl_set:Nx \l__ms_heightx_tl {\seq_item:Nn \l__ms_height_seq {1}}
         \tl_set:Nx \l__ms_heighty_tl {\seq_item:Nn \l__ms_height_seq {-1}}
-        \int_step_variable:nnNn {\l__ms_widthx_tl} {\l__ms_widthy_tl} \l_tmpa_int {
-            \int_step_variable:nnNn {\l__ms_heightx_tl} {\l__ms_heighty_tl} \l_tmpb_int {
-                \begin{scope}[xshift=\l_tmpb_int*16,yshift=-\l_tmpa_int*16]
+        \int_step_variable:nnNn {\l__ms_widthx_tl} {\l__ms_widthy_tl} \l_tmpc_tl {
+            \int_step_variable:nnNn {\l__ms_heightx_tl} {\l__ms_heighty_tl} \l_tmpd_tl {
+                \begin{scope}[xshift=\l_tmpd_tl*16,yshift=-\l_tmpc_tl*16]
                     \element_cellcolored:n {#1}
                 \end{scope}
             }
