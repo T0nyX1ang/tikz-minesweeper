@@ -386,18 +386,17 @@
     \bool_set_false:N \l__ms_flagr_bool
     \tl_set:Nn \l_tmpa_tl {#1}
 
+    % draw lines in advance to avoid gaps
     \int_step_inline:nnn {1} {#3-1} {
-        % draw lines in advance to avoid gaps
-        \draw[color8, xshift=##1*16] (0, 0) -- (0, -#2*16);
+        \int_step_variable:nnNn {1} {#2} \l_tmpb_tl {
+            \fill[color8, xshift=##1*16, yshift=-\l_tmpb_tl*16] (0, 0) -- (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) -- (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
+        }
     }
-
     \int_step_inline:nnn {1} {#2-1} {
-        % draw lines in advance to avoid gaps
-        \draw[color8, yshift=-##1*16] (0, 0) -- (#3*16, 0);
+        \int_step_variable:nnNn {1} {#3} \l_tmpb_tl {
+            \fill[color8, xshift=\l_tmpb_tl*16, yshift=-##1*16] (0, 0) -- (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) -- (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) -- (-0.5, 0.5) -- cycle;
+        }
     }
-
-    % % prefill with color8
-    % \fill[color8] (0, 0) rectangle (#3*16, -#2*16);
 
     \tl_map_inline:Nn \l_tmpa_tl {
         \tl_case:Nn ##1 {
