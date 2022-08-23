@@ -419,7 +419,7 @@
         \fill[clight] (0, 9) rectangle (#3*16, 12);
         \fill[color0] (0, 3) rectangle (#3*16, 9);
         \fill[cborder] (0, 0) rectangle (#3*16, 3);
-        \draw[cborder,ultra~thin] (0, 12) -- (#3*16, 12);
+        \fill[cborder] (0, 12) rectangle (#3*16, 12.1);
     }
 
     \bool_if:NT \l__ms_flagl_bool {
@@ -427,7 +427,7 @@
         \fill[clight] (-9, 0) rectangle (-12, -#2*16);
         \fill[color0] (-3, 0) rectangle (-9, -#2*16);
         \fill[cborder] (0, 0) rectangle (-3, -#2*16);
-        \draw[cborder,ultra~thin] (-12, 0) -- (-12, -#2*16);
+        \fill[cborder] (-12, 0) rectangle (-12.1, -#2*16);
     }
 
     \bool_if:NT \l__ms_flagb_bool {
@@ -453,7 +453,7 @@
         \fill[cborder] (-3, 3) -- (0, 3) -- (1.5, 1.5) -- (-1.5, -1.5) -- (-3, 0) -- cycle;
         \fill[color0] (-9, 9) -- (0, 9) -- (1.5, 6) -- (0, 3) -- (-3, 3) -- (-3, 0) -- (-6, -1.5) -- (-9, 0) -- cycle;
         \fill[clight] (-12, 12) -- (0, 12) -- (1.5, 10.5) -- (0, 9) -- (-9, 9) -- (-9, 0) -- (-10.5, -1.5) -- (-12, 0) -- cycle;
-        \draw[cborder,ultra~thin] (-12, 0) -- (-12, 12) -- (0, 12);
+        \fill[cborder] (-12, 12) -- (0, 12) -- (0.05, 12.05) -- (0, 12.1) -- (-12.1, 12.1) -- (-12.1, 0) -- (-12.05, -0.05) -- (-12, 0) -- cycle;
     }
 
     \bool_lazy_and:nnT {\l__ms_flagb_bool} {\l__ms_flagl_bool} {
@@ -464,7 +464,7 @@
             \fill[color0] (-9, -9) -- (0, -9) -- (1.5, -6) -- (0, -3) -- (-3, -3) -- (-3, 0) -- (-6, 1.5) -- (-9, 0) -- cycle;
             \fill[clight] (-9, -9) -- (-12, -12) -- (-12, 0) -- (-10.5, 1.5) -- (-9, 0) -- cycle;
             \fill[cborder] (-9, -9) -- (-12, -12) -- (0, -12) -- (1.5, -10.5) -- (0, -9) -- cycle;
-            \draw[cborder,ultra~thin] (-12, -12) -- (-12, 0);
+            \fill[cborder] (-12, -12) -- (-12, 0) -- (-12.05, 0.05) -- (-12.1, 0) -- (-12.1, -12) -- cycle;
         \end{scope}
     }
 
@@ -485,7 +485,7 @@
             \fill[color0] (9, 9) -- (0, 9) -- (-1.5, 6) -- (0, 3) -- (3, 3) -- (3, 0) -- (6, -1.5) -- (9, 0) -- cycle;
             \fill[cborder] (9, 9) -- (12, 12) -- (12, 0) -- (10.5, -1.5) -- (9, 0) -- cycle;
             \fill[clight] (9, 9) -- (12, 12) -- (0, 12) -- (-1.5, 10.5) -- (0, 9) -- cycle;
-            \draw[cborder,ultra~thin] (12, 12) -- (0, 12);
+            \fill[cborder] (12, 12) -- (0, 12) -- (-0.05, 12.05) -- (0, 12.1) -- (12, 12.1) -- cycle;
         \end{scope}
     }
 }
