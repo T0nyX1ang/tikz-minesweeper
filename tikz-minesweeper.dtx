@@ -19,9 +19,8 @@
 %<package>\ProvidesPackage{tikz-minesweeper}
 %<package>    [2022/01/30 v0.1.0 Draw a minesweeper board in LaTeX]
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass{ctxdoc}
 \usepackage{tikz-minesweeper}
-\usepackage{ctex}
 \usepackage{verbatim}
 \usepackage{booktabs}
 \usepackage{makecell}
@@ -29,11 +28,19 @@
 \usepackage{subfig}
 \usepackage{float}
 \usepackage{multicol}
+\ctexset{
+    section = {
+        name = {,},
+        number = \arabic{section},
+    }
+}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
 \begin{document}
     \DocInput{tikz-minesweeper.dtx}
+    \IndexLayout
+    \PrintChanges
 \end{document}
 %</driver>
 % \fi
@@ -56,6 +63,8 @@
 %   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %   Right brace   \}     Tilde         \~}
 %
+% \changes{v0.1.0}{2022/01/30}{初始更新版本}
+%
 % \GetFileInfo{tikz-minesweeper.sty}
 %
 % \title{\texttt{tikz-minesweeper}宏包使用手册\thanks{本使用手册适用于\texttt{tikz-minesweeper}~\fileversion, 更新于~\filedate.}}
@@ -69,18 +78,18 @@
 %<*internal>
 % \fi
 \begin{verbatim}
-\usepackage{tikz-minesweeper}
-\begin{document}
-    \begin{tikzpicture}
-        \board{5}{5}
-        \row{0}{f{20}12}
-        \row{1}{A-40}
-        \row{2}{m-67}
-        \row{3}{rgbc}
-        \row{4}{oltv}
-        \col{4}{358y-}
-    \end{tikzpicture}
-\end{document}
+    \usepackage{tikz-minesweeper}
+    \begin{document}
+        \begin{tikzpicture}
+            \board{5}{5}
+            \row{0}{f{20}12}
+            \row{1}{A-40}
+            \row{2}{m-67}
+            \row{3}{rgbc}
+            \row{4}{oltv}
+            \col{4}{358y-}
+        \end{tikzpicture}
+    \end{document}
 \end{verbatim}
 % \iffalse
 %</internal>
@@ -236,18 +245,14 @@
 %<*internal>
 % \fi
 \begin{verbatim}
-\begin{tikzpicture}
-\board{3}{5}
-\row{0}{f{20}123}
-\row{1}{A-405}
-\row{2}{m-678}
-\colorcell{g}{
-    0,0-1;0-1,3
-}
-\colorcell{r}{
-    0,4;1-2,0-2
-}
-\end{tikzpicture}
+    \begin{tikzpicture}
+        \board{3}{5}
+        \row{0}{f{20}123}
+        \row{1}{A-405}
+        \row{2}{m-678}
+        \colorcell{g}{0,0-1;0-1,3}
+        \colorcell{r}{0,4;1-2,0-2}
+    \end{tikzpicture}
 \end{verbatim}
 % \iffalse
 %</internal>
