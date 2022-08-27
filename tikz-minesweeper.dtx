@@ -30,7 +30,6 @@
 \usepackage{float}
 \usepackage{multicol}
 \EnableCrossrefs
-\OnlyDescription
 \CodelineIndex
 \RecordChanges
 \begin{document}
@@ -273,26 +272,24 @@
 % \end{multicols}
 %
 % \StopEventually{}
-%     \begin{macrocode}
+% \iffalse
 %<*package>
 \RequirePackage{tikz}
 \RequirePackage{expl3}
 
-% Color tables
-\definecolor{color0}{RGB}{192,192,192}
-\definecolor{color1}{RGB}{0,0,255}
-\definecolor{color2}{RGB}{0,128,0}
-\definecolor{color3}{RGB}{255,0,0}
-\definecolor{color4}{RGB}{0,0,128}
-\definecolor{color5}{RGB}{122,43,26}
-\definecolor{color6}{RGB}{0,128,128}
-\definecolor{color7}{RGB}{0,0,0}
-\definecolor{color8}{RGB}{128,128,128}
-\definecolor{cborder}{RGB}{160,160,160}
-\definecolor{clight}{RGB}{255,255,255}
+\definecolor{color0}{RGB}{192,192,192} % color for blank cell
+\definecolor{color1}{RGB}{0,0,255} % color for cell 1
+\definecolor{color2}{RGB}{0,128,0} % color for cell 2
+\definecolor{color3}{RGB}{255,0,0} % color for cell 3
+\definecolor{color4}{RGB}{0,0,128} % color for cell 4
+\definecolor{color5}{RGB}{122,43,26} % color for cell 5
+\definecolor{color6}{RGB}{0,128,128} % color for cell 6
+\definecolor{color7}{RGB}{0,0,0} % color for cell 7
+\definecolor{color8}{RGB}{128,128,128} % color for cell 8
+\definecolor{cborder}{RGB}{160,160,160} % color for border
+\definecolor{clight}{RGB}{255,255,255} % color for whitespace
 
-% Default unit
-\tikzset{x=1pt, y=1pt}
+\tikzset{x=1pt, y=1pt} % Default unit
 
 \ExplSyntaxOn
 \cs_set:Nn \element_flag: {
@@ -525,9 +522,10 @@
 \newcommand{\border}[1][-]{\element_border:nnn {#1}{1}{1}}
 \newcommand{\board}[3][-]{\element_border:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\element_colorcell:nn {#1}{#2}}
+
 \ExplSyntaxOff
 %</package>
-%     \end{macrocode}
+% \fi
 %
 % \Finale
 %
