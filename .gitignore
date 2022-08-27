@@ -279,5 +279,8 @@ TSWLatexianTemp*
 # Generated .sty files
 *.sty
 
+# Generated .hd files
+*.hd
+
 # Testing codes
 test.*
