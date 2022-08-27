@@ -12,7 +12,7 @@
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
-                "%DOC%.ins"
+                "%DOCFILE%.ins"
             ],
             "env": {}
         },
@@ -23,19 +23,32 @@
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
-                "%DOC%.dtx"
+                "%DOCFILE%.dtx"
             ],
             "env": {}
+        },
+        {
+            "name": "makeindex",
+            "command": "makeindex",
+            "args": [
+                "-s",
+                "gglo.ist",
+                "-o",
+                "%DOCFILE%.gls",
+                "%DOCFILE%.glo"
+            ],
         }
     ],
     "latex-workshop.latex.recipes": [
         {
-            "name": "Build dtx (ins)",
-            "tools": ["xetex(ins only)", "xelatex(dtx only)"]
-        },
-        {
-            "name": "Build dtx (no ins)",
-            "tools": ["xelatex(dtx only)"]
+            "name": "Build dtx",
+            "tools": [
+                "xetex(ins only)",
+                "xelatex(dtx only)",
+                "makeindex",
+                "xelatex(dtx only)",
+                "xelatex(dtx only)"
+            ]
         }
     ]
 }
