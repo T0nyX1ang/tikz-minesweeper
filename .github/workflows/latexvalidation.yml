@@ -24,7 +24,7 @@ jobs:
 
     # Compile the LaTeX document with XeLaTeX
     - name: Build dtx
-      uses: xu-cheng/latex-action@v2
+      uses: xu-cheng/texlive-action/full@v1
       with:
         run: |
           xetex -synctex=1 -interaction=nonstopmode -file-line-error tikz-minesweeper.ins
