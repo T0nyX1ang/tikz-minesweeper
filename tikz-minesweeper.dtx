@@ -18,6 +18,49 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<package>\ProvidesPackage{tikz-minesweeper}
 %<package>    [2022/01/30 v0.1.0 Draw a minesweeper board in LaTeX]
+%<*batchfile>
+\begingroup
+\input docstrip.tex
+\keepsilent
+\usedir{tex/latex/tikz-minesweeper}
+
+\preamble
+
+Copyright (C) 2021-2022 by Tian-Yi Pu, Fei-Yu Xiang
+and Yao-Yu Zhu
+
+This file may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either
+version 1.3 of this license or (at your option) any later
+version. The latest version of this license is in:
+
+   http://www.latex-project.org/lppl.txt
+
+and version 1.3 or later is part of all distributions of
+LaTeX version 2005/12/01 or later.
+
+\endpreamble
+
+\askforoverwritefalse
+\generate{\file{tikz-minesweeper.sty}{\from{tikz-minesweeper.dtx}{package}}}
+
+\obeyspaces
+\typeout{****************************************************}
+\typeout{*                                                  *}
+\typeout{* To finish the installation you have to move the  *}
+\typeout{* following file into a directory searched by TeX: *}
+\typeout{*                                                  *}
+\typeout{*     tikz-minesweeper.sty                         *}
+\typeout{*                                                  *}
+\typeout{* To produce the documentation run the file        *}
+\typeout{* tikz-minesweeper.dtx through LaTeX.              *}
+\typeout{*                                                  *}
+\typeout{* Happy TeXing (and minesweeping) !                *}
+\typeout{*                                                  *}
+\typeout{****************************************************}
+
+\endgroup
+%</batchfile>
 %<*driver>
 \documentclass{ctxdoc}
 \usepackage{tikz-minesweeper}
