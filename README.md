@@ -10,19 +10,33 @@ Draw a minesweeper board in LaTeX.
 
 - Change the directory to target folder
 
-- Compile `tikz-minesweeper.ins` with XeTeX or XeLaTeX (this step will generate `tikz-minesweeper.sty`)
+- Compile `tikz-minesweeper.dtx` with XeLaTeX once (this step will generate `tikz-minesweeper.sty`, `tikz-minesweeper.glo` and many auxiliary files)
 
 ```bash
-    xetex tikz-minesweeper.ins
+    xelatex tikz-minesweeper.dtx
 ```
 
-- Compile `tikz-minesweeper.dtx` with XeLaTeX for two times (this step will generate `tikz-minesweeper.pdf`)
+- Compile `tikz-minesweeper.glo` with `makeindex` (this step will generate `tikz-minesweeper.gls`)
+
+```bash
+    makeindex -s gglo.ist -o tikz-minesweeper.gls tikz-minesweeper.glo
+```
+
+- Compile `tikz-minesweeper.dtx` with XeLaTeX twice (this step will generate `tikz-minesweeper.pdf`)
 
 ```bash
     xelatex tikz-minesweeper.dtx (twice)
 ```
 
 - Move `tikz-minesweeper.sty` to your project folder
+
+### Compliation (shortcut)
+
+- Clone this repository
+
+- Install `VSCode` and `LaTeX Workshop` extension (at least `v8.29.0`)
+
+- Compile `tikz-minesweeper.dtx` in `VSCode`, and all of the steps will be done in one click!
 
 ### Install globally on your disk
 
@@ -42,19 +56,19 @@ Draw a minesweeper board in LaTeX.
 
 - `\celldown`: draw a pressed cell
 
-- `\cellnum{n}`: draw a cell with a centered number (0-8)
+- `\cellnum{num}`: draw a cell with a centered number (0-8)
 
 - `\border[-tlbr]`: draw a border with edge options
 
-- `\cell{r}{c}{xxx}`: draw `xxx` at (`r`, `c`), see #1 for detailed command discussions
+- `\cell{r}{c}{info}`: draw `info` at (`r`, `c`), see #1 for detailed command discussions
 
-- `\row{r}{xxx}`: draw a row with `xxx` according to `\cell`
+- `\row{r}{seq: info}`: draw a row with a sequence of `info` according to `\cell`
 
-- `\col{c}{xxx}`: draw a column with `xxx` according to `\cell`
+- `\col{c}{seq: info}`: draw a column with a sequence of `info` according to `\cell`
 
 - `\board[-tlbr]{r}{c}`: draw a board with border
 
-- `\colorcell{color}{pos}`: fill an area with a certain color
+- `\colorcell{color}{seq: pos}`: fill an area with a certain color
 
 ## Contribution
 
