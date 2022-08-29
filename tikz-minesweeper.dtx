@@ -1,4 +1,6 @@
 % \iffalse meta-comment
+% !TeX program  = XeLaTeX
+% !TeX encoding = UTF-8
 % Copyright (C) 2021-2022 by Tian-Yi Pu, Fei-Yu Xiang
 % and Yao-Yu Zhu
 %
@@ -20,12 +22,11 @@
 %<package>    [2022/01/30 v0.1.0 Draw a minesweeper board in LaTeX]
 %<*batchfile>
 \begingroup
-\input docstrip.tex
+\input ctxdocstrip.tex
 \keepsilent
 \usedir{tex/latex/tikz-minesweeper}
 
 \preamble
-
 Copyright (C) 2021-2022 by Tian-Yi Pu, Fei-Yu Xiang
 and Yao-Yu Zhu
 
@@ -38,11 +39,16 @@ version. The latest version of this license is in:
 
 and version 1.3 or later is part of all distributions of
 LaTeX version 2005/12/01 or later.
-
 \endpreamble
 
-\askforoverwritefalse
-\generate{\file{tikz-minesweeper.sty}{\from{tikz-minesweeper.dtx}{package}}}
+\postamble
+This package consists of the files tikz-minesweeper.dtx,
+                                   README.md,
+             and the derived files tikz-minesweeper.sty,
+                                   tikz-minesweeper.pdf.
+\endpostamble
+
+\generate{\file{tikz-minesweeper.sty}{\from{\jobname.dtx}{package}}}
 
 \obeyspaces
 \typeout{****************************************************}
@@ -572,6 +578,7 @@ LaTeX version 2005/12/01 or later.
 \newcommand{\colorcell}[2]{\element_colorcell:nn {#1}{#2}}
 
 \ExplSyntaxOff
+
 %</package>
 % \fi
 %
