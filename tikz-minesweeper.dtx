@@ -121,6 +121,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \maketitle
 %
 % \section{绘制示例}
+% 下面是一个\texttt{tikz-minesweeper}宏包的绘制示例, 包含了该宏包中最重要的几个指令.
 %
 % \begin{multicols}{2}
 % \iffalse
@@ -160,14 +161,42 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{multicols}
 % \section{绘制指令介绍}
 %
+% \subsection{基础设定}
+% 本宏包中设定单位长度为\textbf{1pt}, 为了与标准扫雷游戏一致, 一格的边长是\textbf{16pt}. 下文如无特别说明, 所有方格的原点都位于左上角, 所有数据的单位均为\textbf{pt}.
+%
+% 如果需要缩放一个盘面, 推荐使用scope环境中的scale参数, 即采用如下语法:
+% \begin{multicols}{2}
+% \iffalse
+%<*internal>
+% \fi
+\begin{verbatim}
+    \begin{tikzpicture}[scale=2]
+        \board{1}{1}
+        \row{0}{1}
+    \end{tikzpicture}
+\end{verbatim}
+% \iffalse
+%</internal>
+% \fi
+%     \columnbreak
+%     \begin{figure}[H]
+%         \centering
+%         \begin{tikzpicture}[scale=2]
+%              \board[-tlbr]{1}{1}
+%              \row{0}{1}
+%         \end{tikzpicture}
+%         \caption*{示例: 放大一个格子}
+%     \end{figure}
+% \end{multicols}
+%
 % \subsection{配色}
-% \texttt{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色.
+% \texttt{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色. 这些配色均给出了标签, 这些标签均可以直接在文档中使用.
 %
 % \begin{table}[H]
 %     \centering
 %     \begin{tabular}{ccccc}
 %         \toprule
-%         颜色                                        & R   & G   & B   & 场景                              \\
+%         颜色标签                                    & R   & G   & B   & 场景                              \\
 %         \midrule
 %         \textcolor{color0}{color0}                  & 192 & 192 & 192 & 格子内部 / 外边框                 \\
 %         \textcolor{color1}{color1}                  & 0   & 0   & 255 & 数字1                             \\
@@ -186,11 +215,8 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{table}
 %
 % \subsection{方格元素}
-% 本宏包中设定单位长度为\textbf{1pt}, 下文如无特殊说明, 所有数据的单位为\textbf{pt}, 且所有数据不带单位. 如果需要放大一张地图, 请使用\texttt{scope}环境中的\texttt{scale}参数.
 %
-% 为了与标准扫雷游戏一致, 一格的边长是\textbf{16}.
-%
-% \DescribeMacro{\flag} 绘制旗子
+% \DescribeMacro{\flag} 在一个方格中绘制旗子.
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -214,10 +240,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \draw[dashed] (12,0) node[above] {12} -- (12,-12);
 %         \end{scope}
 %     \end{tikzpicture}
-%     \caption*{旗子参数. 方框是一格参考线, 左上角为原点. }
+%     \caption*{示例: 旗子}
 % \end{figure}
 %
-% \DescribeMacro{\mine} 绘制雷
+% \DescribeMacro{\mine} 在一个方格中绘制雷.
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -226,27 +252,39 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \mine
 %         \end{scope}
 %     \end{tikzpicture}
+%     \caption*{示例: 雷}
 % \end{figure}
 %
-% \DescribeMacro{\cellup} 绘制弹起的方块, 左上角原点. 四周形成立体感的宽度为2.
+% \DescribeMacro{\cellup} 绘制一个弹起的方格. 四周形成立体感的宽度为2.
 %
-% \DescribeMacro{\celldown} 绘制按下的方块, 左上角原点. 左和上的边界宽度为1.
+% \DescribeMacro{\celldown} 绘制一个按下的方格. 左和上的边界宽度为1.
+%
+% \textbf{注意:} 弹起的方格和按下的方格的中心点不一致. 弹起的方格中心点为(8,-8), 按下的方格中心点为(8.5,-8.5).
 %
 % \begin{figure}[!htp]
-%     \captionsetup[subfloat]{labelformat=empty}
 %     \centering
-%     \subfloat[弹起的方块]{\begin{tikzpicture}\begin{scope}[scale=5]\cellup\end{scope}\end{tikzpicture}}
+%     \begin{tikzpicture}[scale=6]
+%          \cellup
+%          \draw[thick, cborder] (0,0) rectangle (16, -16);
+%          \fill[red] (8, -8) circle (0.2);
+%     \end{tikzpicture}
 %     \quad
-%     \subfloat[按下的方块]{\begin{tikzpicture}\begin{scope}[scale=5]\celldown\end{scope}\end{tikzpicture}}
+%     \begin{tikzpicture}[scale=6]
+%          \celldown
+%          \draw[thick, cborder] (0,0) rectangle (16, -16);
+%          \fill[red] (8.5, -8.5) circle (0.2);
+%     \end{tikzpicture}
+%     \caption*{示例: 弹起的方格与按下的方格(包含中心点)}
 % \end{figure}
 %
-
-% \DescribeMacro{\cellnum \marg{数字}} 在当前方块中填入带配色的数字\raisebox{-0.5ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}. 数字中心为(8.5,8.5).
+% \DescribeMacro{\cellnum \marg{num}} 在当前方块中填入带配色的数字\raisebox{-0.75ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}.
+%
+% \textbf{注意:} 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与|\celldown|指令一起使用.
 %
 % \subsection{边框元素}
 % 边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和 |\cellup| 同理. 左边和上边的高亮外边缘用cborder封边.
 %
-% \DescribeMacro{\border \oarg{-tlbr}} 绘制以格为单位长度(宽度)的边框. t, r, b, l 分别代表上, 右, 下, 左边框, 如果相邻边框同时绘制, 将自动绘制对应的角.
+% \DescribeMacro{\border \oarg{-tlbr}} 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角.
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -268,13 +306,13 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \subsection{模块}
 %
-% \DescribeMacro{\cell \marg{行} \marg{列} \marg{内容}} 在第[行]行第[列]列交叉处绘制包含[内容]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8,-8). 内容不能为空, 如果内容是-, 方格是按下状态并且无字符, 如果内容中含有多个字符, 将会自动缩小字符, 转化为 |\tiny| 模式. 如果内容是r, g, b, c, y, o, l, t, v, 将给该方格染成对应颜色.
+% \DescribeMacro{\cell \marg{r} \marg{c} \marg{info}} 在第[r]行第[c]列交叉处绘制包含内容[info]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8,-8). 内容不能为空, 如果内容是-, 方格是按下状态并且无字符, 如果内容中含有多个字符, 将会自动缩小字符, 转化为 |\tiny| 模式. 如果内容是r, g, b, c, y, o, l, t, v, 将给该方格染成对应颜色.
 %
-% \DescribeMacro{\row \marg{行} \marg{内容}} 在第[行]行从左到右绘制多个方格. 内容的格式按照顺序输入字符, 每个字符作为 |\cell| 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如|1{23}4|代表1, 23和4这这三个字符.
+% \DescribeMacro{\row \marg{r} \marg{seq:info}} 在第[r]行从左到右绘制多个方格. 内容的格式按照顺序输入字符, 每个字符作为 |\cell| 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如|1{23}4|代表1, 23和4这这三个字符.
 %
-% \DescribeMacro{\col \marg{列} \marg{内容}}  在第[列]列从左到右绘制多个方格, 语法与 |row| 一致.
+% \DescribeMacro{\col \marg{c} \marg{seq:info}}  在第[c]列从左到右绘制多个方格, 语法与 |row| 一致.
 %
-% \DescribeMacro{\board \oarg{-tlbr} \marg{行} \marg{列}} 绘制[行]行[列]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}的可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}.
+% \DescribeMacro{\board \oarg{-tlbr} \marg{r} \marg{c}} 绘制[r]行[c]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}的可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}.
 %
 % \begin{figure}[!htp]
 %     \captionsetup[subfloat]{labelformat=empty}
@@ -288,7 +326,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \subfloat[\texttt{\textbackslash board[tl]}]{\begin{tikzpicture}[scale=2]\border[tl]\end{tikzpicture}}
 % \end{figure}
 %
-% \DescribeMacro{\colorcell \marg{颜色} \marg{位置}} 将[位置]位置的方格染色为[颜色]颜色.
+% \DescribeMacro{\colorcell \marg{color} \\ \marg{seq: pos}} 将[pos]位置的方格染色为[color]颜色.
 % \begin{multicols}{2}
 % \iffalse
 %<*internal>
