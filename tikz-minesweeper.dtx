@@ -136,8 +136,8 @@ This package consists of the files tikz-minesweeper.dtx,
             \row{1}{f-40}
             \row{2}{mn67}
             \row{3}{rgbc}
-            \row{4}{oltv}
-            \col{4}{358y-}
+            \row{4}{ov--}
+            \col{4}{358y?}
         \end{tikzpicture}
     \end{document}
 \end{verbatim}
@@ -153,8 +153,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \row{1}{f-40}
 %             \row{2}{mn67}
 %             \row{3}{rgbc}
-%             \row{4}{oltv}
-%             \col{4}{358y-}
+%             \row{4}{ov--}
+%             \col{4}{358y?}
 %         \end{tikzpicture}
 %         \caption*{示例: 在5x5区域内绘制数字、雷、旗帜、空格和标记}
 %     \end{figure}
@@ -432,8 +432,6 @@ This package consists of the files tikz-minesweeper.dtx,
         c { \tl_set:Nn \l_tmpa_tl {cyan} }
         y { \tl_set:Nn \l_tmpa_tl {yellow} }
         o { \tl_set:Nn \l_tmpa_tl {orange} }
-        l { \tl_set:Nn \l_tmpa_tl {lime} }
-        t { \tl_set:Nn \l_tmpa_tl {teal} }
         v { \tl_set:Nn \l_tmpa_tl {violet} }
     } {
         \begin{scope}
@@ -445,7 +443,7 @@ This package consists of the files tikz-minesweeper.dtx,
 \cs_set:Npn \element_cell:nnn #1#2#3 {
     \sffamily
     \tl_set:Nn \l_tmpa_tl {012345678}
-    \tl_set:Nn \l_tmpb_tl {rgbcyoltv}
+    \tl_set:Nn \l_tmpb_tl {rgbcyov}
     \begin{scope}[xshift=#3*16, yshift=-#2*16]
         \tl_if_single:nTF {#1} {
             % single token
