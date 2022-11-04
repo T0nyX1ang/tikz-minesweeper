@@ -133,7 +133,7 @@ This package consists of the files tikz-minesweeper.dtx,
         \begin{tikzpicture}
             \board{5}{5}
             \row{0}{A{20}12}
-            \row{1}{f-40}
+            \row{1}{fe40}
             \row{2}{mn67}
             \row{3}{rgbc}
             \row{4}{ov--}
@@ -150,7 +150,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %         \begin{tikzpicture}
 %             \board{5}{5}
 %             \row{0}{A{20}12}
-%             \row{1}{f-40}
+%             \row{1}{fe40}
 %             \row{2}{mn67}
 %             \row{3}{rgbc}
 %             \row{4}{ov--}
@@ -418,6 +418,11 @@ This package consists of the files tikz-minesweeper.dtx,
     \fill[cshade] (0, 0) -- (16, 0) -- (16, -1) -- (1, -1) -- (1, -16) -- (0, -16) -- cycle; % border
 }
 
+\cs_set:Nn \element_misflagfail: {
+    \draw[cfail, line~width=1] (2.5, -2.5) -- (14.5, -14.5); % cross line
+    \draw[cfail, line~width=1] (2.5, -14.5) -- (14.5, -2.5); % cross line
+}
+
 \cs_set:Npn \element_cellnum:n #1 {
     \tl_set:Nn \l_tmpa_tl {color}
     \tl_put_right:Nn \l_tmpa_tl {#1}
@@ -455,6 +460,7 @@ This package consists of the files tikz-minesweeper.dtx,
                         f { \element_cellup: \element_flag: } % flag
                         m { \element_celldown: \element_mine: } % mine
                         n { \element_cellfail: \element_mine: } % blasted mine
+                        e { \element_celldown: \element_mine: \element_misflagfail: } % misflagged mine
                         - { \element_cellup: } % empty
                     } { \element_cellup: \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; } % normal label
                 }
