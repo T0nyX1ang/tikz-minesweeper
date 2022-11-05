@@ -133,10 +133,10 @@ This package consists of the files tikz-minesweeper.dtx,
         \begin{tikzpicture}
             \board{5}{5}
             \row{0}{A{20}12}
-            \row{1}{fe40}
+            \row{1}{se40}
             \row{2}{mn67}
             \row{3}{rgbc}
-            \row{4}{ov--}
+            \row{4}{ov-f}
             \col{4}{358y?}
         \end{tikzpicture}
     \end{document}
@@ -150,10 +150,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %         \begin{tikzpicture}
 %             \board{5}{5}
 %             \row{0}{A{20}12}
-%             \row{1}{fe40}
+%             \row{1}{se40}
 %             \row{2}{mn67}
 %             \row{3}{rgbc}
-%             \row{4}{ov--}
+%             \row{4}{ov-f}
 %             \col{4}{358y?}
 %         \end{tikzpicture}
 %         \caption*{示例: 在5x5区域内绘制数字、雷、旗帜、空格和标记}
@@ -402,6 +402,13 @@ This package consists of the files tikz-minesweeper.dtx,
     \shade[ball~color=color7] (8.5,-8.5) circle (4.5); % body
 }
 
+\cs_set:Nn \element_mine_shaded: {
+    \int_step_inline:nnnn {0} {45} {135} {
+        \fill[cshade, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
+    }
+    \shade[ball~color=cshade] (8.5,-8.5) circle (4.5); % body
+}
+
 \cs_set:Nn \element_cellup: {
     \fill[clight] (0, 0) -- (16, 0) -- (14, -2) -- (2, -2) -- (2, -14) -- (0, -16) -- cycle; % highlight
     \fill[cshade] (16, -16) -- (0, -16) -- (2, -14) -- (14, -14) -- (14, -2) -- (16, 0) -- cycle; % shade
@@ -459,6 +466,7 @@ This package consists of the files tikz-minesweeper.dtx,
                     \tl_case:NnF #1 {
                         f { \element_cellup: \element_flag: } % flag
                         m { \element_celldown: \element_mine: } % mine
+                        s { \element_celldown: \element_mine_shaded: } % shaded mine
                         n { \element_cellfail: \element_mine: } % blasted mine
                         e { \element_celldown: \element_mine: \element_misflagfail: } % misflagged mine
                         - { \element_cellup: } % empty
