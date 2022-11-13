@@ -131,7 +131,7 @@ This package consists of the files tikz-minesweeper.dtx,
     \usepackage{tikz-minesweeper}
     \begin{document}
         \begin{tikzpicture}
-            \board{5}{5}
+            \board[-x]{5}{5}
             \row{0}{A{20}12}
             \row{1}{se40}
             \row{2}{mn67}
@@ -148,7 +148,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \begin{figure}[H]
 %         \centering
 %         \begin{tikzpicture}
-%             \board{5}{5}
+%             \board[-x]{5}{5}
 %             \row{0}{A{20}12}
 %             \row{1}{se40}
 %             \row{2}{mn67}
@@ -314,7 +314,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \DescribeMacro{\col \marg{c} \marg{seq:info}}  在第[c]列从左到右绘制多个方格, 语法与 |row| 一致.
 %
-% \DescribeMacro{\board \oarg{-tlbr} \marg{r} \marg{c}} 绘制[r]行[c]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}的可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}.
+% \DescribeMacro{\board \oarg{-tlbrx} \marg{r} \marg{c}} 绘制[r]行[c]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}. x 表示是否显示横纵坐标, 默认为不显示.
 %
 % \begin{figure}[!htp]
 %     \captionsetup[subfloat]{labelformat=empty}
@@ -326,6 +326,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \subfloat[\texttt{\textbackslash board[tlr]} 或 \\ \texttt{\textbackslash board[-b]} ]{\begin{tikzpicture}[scale=2]\border[-b]\end{tikzpicture}}
 %     \quad
 %     \subfloat[\texttt{\textbackslash board[tl]}]{\begin{tikzpicture}[scale=2]\border[tl]\end{tikzpicture}}
+%     \\
+%     \captionsetup[subfloat]{labelformat=empty}
+%     \centering
+%     \subfloat[\texttt{\textbackslash board[-x]}]{\begin{tikzpicture}\board[-x]{3}{3}\end{tikzpicture}}
+%     \quad
+%     \subfloat[\texttt{\textbackslash board[tlx]}]{\begin{tikzpicture}\board[tlx]{3}{3}\end{tikzpicture}}
+%     \quad
+%     \subfloat[\texttt{\textbackslash board[-tlx]}]{\begin{tikzpicture}\board[-tlx]{3}{3}\end{tikzpicture}}
 % \end{figure}
 %
 % \DescribeMacro{\colorcell \marg{color} \\ \marg{seq: pos}} 将[pos]位置的方格染色为[color]颜色.
