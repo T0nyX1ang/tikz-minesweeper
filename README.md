@@ -1,10 +1,10 @@
-# tikz-minesweeper
+# Introduction of `tikz-minesweeper`
 
 Draw a minesweeper board in LaTeX.
 
 ## Installation
 
-### Compliation
+### Compilation
 
 - Clone this repository
 
@@ -30,13 +30,13 @@ Draw a minesweeper board in LaTeX.
 
 - Move `tikz-minesweeper.sty` to your project folder
 
-### Compliation (shortcut)
+### Compilation (shortcut)
 
 - Clone this repository
 
 - Install `VSCode` and `LaTeX Workshop` extension (at least `v8.29.0`)
 
-- Compile `tikz-minesweeper.dtx` in `VSCode`, and all of the steps will be done in one click!
+- Compile `tikz-minesweeper.dtx` in `VSCode`, and all the steps will be done in one click!
 
 ### Install globally on your disk
 
@@ -44,7 +44,7 @@ Draw a minesweeper board in LaTeX.
 
 - Move `tikz-minesweeper.pdf` to `TEXMF/doc/latex/tikz-minesweeper`
 
-- Refresh local database with `texhash` or `mktexlsr` (with texlive)
+- Refresh local database with `texhash` or `mktexlsr` (with TeX Live)
 
 ## Usage
 
@@ -74,7 +74,7 @@ Draw a minesweeper board in LaTeX.
 
 - Issues and PRs are welcomed.
 
-- LaTeX3 is preferred.
+- `LaTeX3` is preferred.
 
 ## Copyright and License
 
