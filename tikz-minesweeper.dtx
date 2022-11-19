@@ -279,14 +279,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \caption*{示例: 弹起的方格与按下的方格(包含中心点)}
 % \end{figure}
 %
-% \DescribeMacro{\cellnum \marg{num}} 在当前方块中填入带配色的数字\raisebox{-0.75ex}{\tikz{\cellnum{0}}\tikz{\cellnum{1}}\tikz{\cellnum{2}}\tikz{\cellnum{3}}\tikz{\cellnum{4}}\tikz{\cellnum{5}}\tikz{\cellnum{6}}\tikz{\cellnum{7}}\tikz{\cellnum{8}}}.
+% \DescribeMacro{\cellnum \marg{num}} 在当前方块中填入带配色的数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}.
 %
 % \textbf{注意:} 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与|\celldown|指令一起使用.
 %
 % \subsection{边框元素}
 % 边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和 |\cellup| 同理. 左边和上边的高亮外边缘用cborder封边.
 %
-% \DescribeMacro{\border \oarg{-tlbr}} 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角.
+% \DescribeMacro{\border \oarg{-tlbrx}} 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角.
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -314,7 +314,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \DescribeMacro{\col \marg{c} \marg{seq:info}}  在第[c]列从左到右绘制多个方格, 语法与 |row| 一致.
 %
-% \DescribeMacro{\board \oarg{-tlbrx} \marg{r} \marg{c}} 绘制[r]行[c]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}. x 表示是否显示横纵坐标, 默认为不显示.
+% \DescribeMacro{\board \oarg{-tlbrx} \\ \marg{r} \marg{c}} 绘制[r]行[c]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}. x 表示是否显示横纵坐标, 默认为不显示.
 %
 % \begin{figure}[!htp]
 %     \captionsetup[subfloat]{labelformat=empty}
@@ -376,8 +376,8 @@ This package consists of the files tikz-minesweeper.dtx,
 % \StopEventually{}
 % \iffalse
 %<*package>
-\RequirePackage{tikz}
 \RequirePackage{expl3}
+\RequirePackage{tikz}
 
 \definecolor{color0}{RGB}{192,192,192} % color for blank cell
 \definecolor{color1}{RGB}{0,0,255} % color for cell 1
@@ -439,9 +439,17 @@ This package consists of the files tikz-minesweeper.dtx,
 }
 
 \cs_set:Npn \element_cellnum:n #1 {
-    \tl_set:Nn \l_tmpa_tl {color}
-    \tl_put_right:Nn \l_tmpa_tl {#1}
-    \node[text~centered, text=\l_tmpa_tl] at (8.5, -8.5) {\textbf{#1}};
+    \tl_case:Nn #1 {
+        % Textures come from https://github.com/Minesweeper-World/MS-Texture/tree/main/svg/cells/WinmineXP, implemented a tikz version instead of SVG
+        1 { \fill[color1, xshift=0, yshift=-0.5] (5, -11) -- (5, -13) -- (12, -13) -- (12, -11) -- (10, -11) -- (10, -3) -- (8.5, -3) -- (5, -6.5) -- (5, -7) -- (7, -7) -- (7, -11) -- cycle; }
+        2 { \fill[color2, xshift=0.5, yshift=-0.5] (3, -6) .. controls (3, -3) .. (6.5, -3) -- (9.5, -3) .. controls (13, -3) .. (13, -6) .. controls (13, -8.5) and (7, -10) .. (6, -11) -- (13, -11) -- (13, -13) -- (3, -13) -- (3, -11.5) .. controls (3, -8) and (10, -8) .. (10, -6) .. controls (10, -5) .. (9, -5) -- (7, -5) .. controls (6, -5) .. (6, -6) -- cycle; }
+        3 { \fill[color3, xshift=0.5, yshift=-0.5] (3, -3) -- (9.5, -3) .. controls (13, -3) .. (13, -6) .. controls (13, -7.5) .. (11.5, -8) .. controls (13, -8.5) .. (13, -10) .. controls (13, -13) .. (9.5, -13) -- (3, -13) -- (3, -11) -- (9, -11) .. controls (10, -11) .. (10, -10) .. controls (10, -9) .. (9, -9) -- (6, -9) -- (6, -7) -- (9, -7) .. controls (10, -7) .. (10, -6) .. controls (10, -5) .. (9, -5) -- (3, -5) -- cycle; }
+        4 { \fill[color4, xshift=0.5, yshift=-0.5] (5.5, -3) -- (3, -8) -- (3, -9) -- (9, -9) -- (9, -13) -- (12, -13) -- (12, -9) -- (13, -9) -- (13, -7) -- (12, -7) -- (12, -3) -- (9, -3) -- (9, -7) -- (6.5, -7) -- (8.5, -3) -- cycle; }
+        5 { \fill[color5, xshift=0.5, yshift=-0.5] (3, -3) -- (13, -3) -- (13, -5) -- (6, -5) -- (6, -7) -- (9.5, -7) .. controls (13, -7) .. (13, -10) .. controls (13, -13) .. (9.5, -13) -- (3, -13) -- (3, -11) -- (9, -11) .. controls (10, -11) .. (10, -10) .. controls (10, -9) .. (9, -9) -- (3, -9) -- cycle; }
+        6 { \fill[color6, xshift=0.5, yshift=-0.5] (12, -3) -- (12, -5) -- (8, -5) .. controls (6, -5) .. (6, -6) -- (6, -10) .. controls (6, -11) .. (8, -11) .. controls (10, -11) .. (10, -10) .. controls (10, -9) .. (8, -9) -- (6, -9) -- (6, -7) -- (9.5, -7) .. controls (13, -7) .. (13, -10) .. controls (13, -13) .. (9.5, -13) -- (6.5, -13) .. controls (3, -13) .. (3, -10) -- (3, -6) .. controls (3, -3) .. (6.5, -3) -- cycle; }
+        7 { \fill[color7, xshift=0.5, yshift=-0.5] (3, -3) -- (13, -3) -- (13, -6) -- (9.5, -13) -- (6.5, -13) -- (10, -6) -- (10, -5) -- (3, -5) -- cycle; }
+        8 { \fill[color8, xshift=0.5, yshift=-0.5] (6.5, -3) -- (9.5, -3) .. controls (13, -3) .. (13, -6) .. controls (13, -7.5) .. (11.5, -8) -- (10, -8) -- (10, -6) .. controls (10, -5) .. (9, -5) -- (7, -5) .. controls (6, -5) .. (6, -6) .. controls (6, -7) .. (7, -7) -- (9, -7) .. controls (10, -7) .. (10, -6) -- (10, -10) .. controls (10, -9) .. (9, -9) -- (7, -9) .. controls (6, -9) .. (6, -10) .. controls (6, -11) .. (7, -11) -- (9, -11) .. controls (10, -11) .. (10, -10) -- (10, -8) -- (11.5, -8) .. controls (13, -8.5) .. (13, -10) .. controls (13, -13) .. (9.5, -13) -- (6.5, -13) .. controls (3, -13) .. (3, -10) .. controls (3, -8.5) .. (4.5, -8) .. controls (3, -7.5) .. (3, -6) .. controls (3, -3) .. (6.5, -3) -- cycle; }
+    }
 }
 
 \cs_set:Npn \element_cellcolored:n #1 {

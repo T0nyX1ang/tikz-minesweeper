@@ -25,10 +25,23 @@ Draw a minesweeper board in LaTeX.
 - Compile `tikz-minesweeper.dtx` with XeLaTeX twice (this step will generate `tikz-minesweeper.pdf`)
 
 ```bash
-    xelatex tikz-minesweeper.dtx (twice)
+    xelatex tikz-minesweeper.dtx # twice
 ```
 
 - Move `tikz-minesweeper.sty` to your project folder
+
+### Compilation (another way)
+
+- Clone this repository
+
+- Install `Python 3` and make sure `xelatex` and `makeindex` is in `PATH`
+
+- Execute the following command (based on your systems):
+
+```bash
+    py -3 script/build.py    # on Windows
+    python3 script/build.py  # on *nix
+```
 
 ### Compilation (shortcut)
 
@@ -36,13 +49,13 @@ Draw a minesweeper board in LaTeX.
 
 - Install `VSCode` and `LaTeX Workshop` extension (at least `v8.29.0`)
 
-- Compile `tikz-minesweeper.dtx` in `VSCode`, and all the steps will be done in one click!
+- Compile `tikz-minesweeper.dtx` in `VSCode` with recipe `Build dtx`, and all the steps will be done in one click!
 
 ### Install globally on your disk
 
-- Move `tikz-minesweeper.sty` to `TEXMF/tex/latex/tikz-minesweeper`
+- Move `tikz-minesweeper.sty` to `TEXMF-LOCAL/tex/latex/tikz-minesweeper`
 
-- Move `tikz-minesweeper.pdf` to `TEXMF/doc/latex/tikz-minesweeper`
+- Move `tikz-minesweeper.pdf` to `TEXMF-LOCAL/doc/latex/tikz-minesweeper`
 
 - Refresh local database with `texhash` or `mktexlsr` (with TeX Live)
 
@@ -58,15 +71,15 @@ Draw a minesweeper board in LaTeX.
 
 - `\cellnum{num}`: draw a cell with a centered number (0-8)
 
-- `\border[-tlbr]`: draw a border with edge options
-
 - `\cell{r}{c}{info}`: draw `info` at (`r`, `c`), see #1 for detailed command discussions
 
 - `\row{r}{seq: info}`: draw a row with a sequence of `info` according to `\cell`
 
 - `\col{c}{seq: info}`: draw a column with a sequence of `info` according to `\cell`
 
-- `\board[-tlbr]{r}{c}`: draw a board with border
+- `\border[-tlbrx]`: draw a border with edge options
+
+- `\board[-tlbrx]{r}{c}`: draw a board with border
 
 - `\colorcell{color}{seq: pos}`: fill an area with a certain color
 
