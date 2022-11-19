@@ -26,11 +26,7 @@ jobs:
     - name: Build dtx
       uses: xu-cheng/texlive-action/full@v1
       with:
-        run: |
-          xelatex -synctex=1 -interaction=nonstopmode -file-line-error tikz-minesweeper.dtx
-          makeindex -s gglo.ist -o tikz-minesweeper.gls tikz-minesweeper.glo
-          xelatex -synctex=1 -interaction=nonstopmode -file-line-error tikz-minesweeper.dtx
-          xelatex -synctex=1 -interaction=nonstopmode -file-line-error tikz-minesweeper.dtx
+        run: python3 script/build.py
 
     # Upload demo to artifacts if the demo is compiled successfully
     - name: Upload artifacts
