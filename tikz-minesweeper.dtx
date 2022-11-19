@@ -286,7 +286,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \subsection{边框元素}
 % 边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和 |\cellup| 同理. 左边和上边的高亮外边缘用cborder封边.
 %
-% \DescribeMacro{\border \oarg{-tlbr}} 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角.
+% \DescribeMacro{\border \oarg{-tlbrx}} 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角.
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -314,7 +314,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \DescribeMacro{\col \marg{c} \marg{seq:info}}  在第[c]列从左到右绘制多个方格, 语法与 |row| 一致.
 %
-% \DescribeMacro{\board \oarg{-tlbrx} \marg{r} \marg{c}} 绘制[r]行[c]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}. x 表示是否显示横纵坐标, 默认为不显示.
+% \DescribeMacro{\board \oarg{-tlbrx} \\ \marg{r} \marg{c}} 绘制[r]行[c]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}. x 表示是否显示横纵坐标, 默认为不显示.
 %
 % \begin{figure}[!htp]
 %     \captionsetup[subfloat]{labelformat=empty}
