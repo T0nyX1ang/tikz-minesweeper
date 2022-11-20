@@ -29,16 +29,31 @@ except Exception as e:
     sys.exit(1)
 
 path = args.path
+original_path = deepcopy(path)
 pyperclip_copy_enabled = args.copy
 
 regex_float = r"(-?\d+\.?\d*)"
 regex_coord = r"[(]\s*" + regex_float + r"\s*,\s*" + regex_float + r"\s*[)]"
+regex_xshift = r"xshift\s*=\s*" + regex_float
+regex_yshift = r"yshift\s*=\s*" + regex_float
 
 float_pattern = re.compile(regex_float)
 coord_pattern = re.compile(regex_coord)
+xshift_pattern = re.compile(regex_xshift)
+yshift_pattern = re.compile(regex_yshift)
+
+# auto detect xshift and yshift by command
+xshift_str = re.search(xshift_pattern, path).group(0)
+if xshift_str is not None:
+    xshift = Decimal(re.search(float_pattern, xshift_str).group(0))
+    path = path.replace(xshift_str, "xshift=0")
+
+yshift_str = re.search(yshift_pattern, path).group(0)
+if yshift_str is not None:
+    yshift = Decimal(re.search(float_pattern, yshift_str).group(0))
+    path = path.replace(yshift_str, "yshift=0")
 
 last_end = 0
-original_path = deepcopy(path)
 for res in re.finditer(coord_pattern, path):
     start, end, matched_str = res.start(), res.end(), res.group(0)
 
