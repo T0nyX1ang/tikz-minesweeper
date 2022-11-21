@@ -418,19 +418,19 @@ This package consists of the files tikz-minesweeper.dtx,
 }
 
 \cs_set:Nn \element_cellup: {
-    \fill[clight] (0, 0) -- (16, 0) -- (14, -2) -- (2, -2) -- (2, -14) -- (0, -16) -- cycle; % highlight
-    \fill[cshade] (16, -16) -- (0, -16) -- (2, -14) -- (14, -14) -- (14, -2) -- (16, 0) -- cycle; % shade
+    \fill[clight] (0, 0) -- (16, 0) -- (0, -16) -- cycle; % highlight
+    \fill[cshade] (16, -16) -- (0, -16) -- (16, 0) -- cycle; % shade
     \fill[color0] (2, -2) rectangle (14, -14); % background, modified to draw later
 }
 
 \cs_set:Nn \element_celldown: {
+    \fill[cshade] (0, -16) rectangle (16, 0); % border
     \fill[color0] (1, -16) rectangle (16, -1); % background
-    \fill[cshade] (0, 0) -- (16, 0) -- (16, -1) -- (1, -1) -- (1, -16) -- (0, -16) -- cycle; % border
 }
 
 \cs_set:Nn \element_cellfail: {
+    \fill[cshade] (0, -16) rectangle (16, 0); % border
     \fill[cfail] (1, -16) rectangle (16, -1); % background
-    \fill[cshade] (0, 0) -- (16, 0) -- (16, -1) -- (1, -1) -- (1, -16) -- (0, -16) -- cycle; % border
 }
 
 \cs_set:Nn \element_misflagfail: {
