@@ -546,35 +546,35 @@ This package consists of the files tikz-minesweeper.dtx,
 
     \bool_if:NT \l__ms_flagt_bool {
         % side case: t
-        \fill[clight] (0, 9) rectangle (#3*16, 12);
-        \fill[color0] (0, 3) rectangle (#3*16, 9);
-        \fill[cborder] (0, 0) rectangle (#3*16, 3);
-        \fill[cborder] (0, 12) rectangle (#3*16, 12.1);
+        \fill[cborder] (0, 0) -- (0, 3) -- (#3*16, 3) -- (#3*16, 0) -- cycle;
+        \fill[color0] (0, 3) -- (0, 9) -- (#3*16, 9) -- (#3*16, 3) -- cycle;
+        \fill[clight] (0, 9) -- (0, 12) -- (#3*16, 12) -- (#3*16, 9) -- cycle;
+        \fill[cborder] (0, 12) -- (0, 12.2) -- (#3*16, 12.2) -- (#3*16, 12) -- cycle;
     }
 
     \bool_if:NT \l__ms_flagl_bool {
         % side case: l
-        \fill[clight] (-9, 0) rectangle (-12, -#2*16);
-        \fill[color0] (-3, 0) rectangle (-9, -#2*16);
-        \fill[cborder] (0, 0) rectangle (-3, -#2*16);
-        \fill[cborder] (-12, 0) rectangle (-12.1, -#2*16);
+        \fill[cborder] (0, 0) -- (-3, 0) -- (-3, -#2*16) -- (0, -#2*16) -- cycle;
+        \fill[color0] (-3, 0) -- (-9, 0) -- (-9, -#2*16) -- (-3, -#2*16) -- cycle;
+        \fill[clight] (-9, 0) -- (-12, 0) -- (-12, -#2*16) -- (-9, -#2*16) -- cycle;
+        \fill[cborder] (-12, 0) -- (-12.2, 0) -- (-12.2, -#2*16) -- (-12, -#2*16) -- cycle;
     }
 
     \bool_if:NT \l__ms_flagb_bool {
         % side case: b
         \begin{scope}[yshift=-#2*16]
-            \fill[cborder] (0, -9) rectangle (#3*16, -12);
-            \fill[color0] (0, -3) rectangle (#3*16, -9);
-            \fill[clight] (0, 0) rectangle (#3*16, -3);
+            \fill[clight] (0, 0) -- (0, -3) -- (#3*16, -3) -- (#3*16, 0) -- cycle;
+            \fill[color0] (0, -3) -- (0, -9) -- (#3*16, -9) -- (#3*16, -3) -- cycle;
+            \fill[cborder] (0, -9) -- (0, -12) -- (#3*16, -12) -- (#3*16, -9) -- cycle;
         \end{scope}
     }
 
     \bool_if:NT \l__ms_flagr_bool {
         % side case: r
         \begin{scope}[xshift=#3*16]
-            \fill[cborder] (9, 0) rectangle (12, -#2*16);
-            \fill[color0] (3, 0) rectangle (9, -#2*16);
-            \fill[clight] (0, 0) rectangle (3, -#2*16);
+            \fill[clight] (0, 0) -- (3, 0) -- (3, -#2*16) -- (0, -#2*16) -- cycle;
+            \fill[color0] (3, 0) -- (9, 0) -- (9, -#2*16) -- (3, -#2*16) -- cycle;
+            \fill[cborder] (9, 0) -- (12, 0) -- (12, -#2*16) -- (9, -#2*16) -- cycle;
         \end{scope}
     }
 
@@ -583,7 +583,7 @@ This package consists of the files tikz-minesweeper.dtx,
         \fill[cborder] (-3, 3) -- (0, 3) -- (1.5, 1.5) -- (-1.5, -1.5) -- (-3, 0) -- cycle;
         \fill[color0] (-9, 9) -- (0, 9) -- (1.5, 6) -- (0, 3) -- (-3, 3) -- (-3, 0) -- (-6, -1.5) -- (-9, 0) -- cycle;
         \fill[clight] (-12, 12) -- (0, 12) -- (1.5, 10.5) -- (0, 9) -- (-9, 9) -- (-9, 0) -- (-10.5, -1.5) -- (-12, 0) -- cycle;
-        \fill[cborder] (-12, 12) -- (0, 12) -- (0.05, 12.05) -- (0, 12.1) -- (-12.1, 12.1) -- (-12.1, 0) -- (-12.05, -0.05) -- (-12, 0) -- cycle;
+        \fill[cborder] (-12, 12) -- (0, 12) -- (0.1, 12.1) -- (0, 12.2) -- (-12.2, 12.2) -- (-12.2, 0) -- (-12.1, -0.1) -- (-12, 0) -- cycle;
     }
 
     \bool_lazy_and:nnT {\l__ms_flagb_bool} {\l__ms_flagl_bool} {
@@ -594,7 +594,7 @@ This package consists of the files tikz-minesweeper.dtx,
             \fill[color0] (-9, -9) -- (0, -9) -- (1.5, -6) -- (0, -3) -- (-3, -3) -- (-3, 0) -- (-6, 1.5) -- (-9, 0) -- cycle;
             \fill[clight] (-9, -9) -- (-12, -12) -- (-12, 0) -- (-10.5, 1.5) -- (-9, 0) -- cycle;
             \fill[cborder] (-9, -9) -- (-12, -12) -- (0, -12) -- (1.5, -10.5) -- (0, -9) -- cycle;
-            \fill[cborder] (-12, -12) -- (-12, 0) -- (-12.05, 0.05) -- (-12.1, 0) -- (-12.1, -12) -- cycle;
+            \fill[cborder] (-12, -12) -- (-12, 0) -- (-12.1, 0.1) -- (-12.2, 0) -- (-12.2, -12) -- cycle;
         \end{scope}
     }
 
@@ -615,7 +615,7 @@ This package consists of the files tikz-minesweeper.dtx,
             \fill[color0] (9, 9) -- (0, 9) -- (-1.5, 6) -- (0, 3) -- (3, 3) -- (3, 0) -- (6, -1.5) -- (9, 0) -- cycle;
             \fill[cborder] (9, 9) -- (12, 12) -- (12, 0) -- (10.5, -1.5) -- (9, 0) -- cycle;
             \fill[clight] (9, 9) -- (12, 12) -- (0, 12) -- (-1.5, 10.5) -- (0, 9) -- cycle;
-            \fill[cborder] (12, 12) -- (0, 12) -- (-0.05, 12.05) -- (0, 12.1) -- (12, 12.1) -- cycle;
+            \fill[cborder] (12, 12) -- (0, 12) -- (-0.1, 12.1) -- (0, 12.2) -- (12, 12.2) -- cycle;
         \end{scope}
     }
 
