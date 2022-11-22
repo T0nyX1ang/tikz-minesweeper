@@ -26,7 +26,7 @@ jobs:
     - name: Build dtx
       uses: xu-cheng/texlive-action/full@v1
       with:
-        run: python3 script/build.py
+        run: l3build ctan
 
     # Upload demo to artifacts if the demo is compiled successfully
     - name: Upload artifacts
@@ -35,5 +35,4 @@ jobs:
       with:
         name: Prebuilt Package
         path: |
-          tikz-minesweeper.sty
-          tikz-minesweeper.pdf
+          ./build/distrib/tds/tikz-minesweeper.tds.zip

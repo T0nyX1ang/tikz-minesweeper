@@ -4,46 +4,7 @@ Draw a minesweeper board in LaTeX.
 
 ## Installation
 
-### Compilation
-
-- Clone this repository
-
-- Change the directory to target folder
-
-- Compile `tikz-minesweeper.dtx` with XeLaTeX once (this step will generate `tikz-minesweeper.sty`, `tikz-minesweeper.glo` and many auxiliary files)
-
-```bash
-    xelatex tikz-minesweeper.dtx
-```
-
-- Compile `tikz-minesweeper.glo` with `makeindex` (this step will generate `tikz-minesweeper.gls`)
-
-```bash
-    makeindex -s gglo.ist -o tikz-minesweeper.gls tikz-minesweeper.glo
-```
-
-- Compile `tikz-minesweeper.dtx` with XeLaTeX twice (this step will generate `tikz-minesweeper.pdf`)
-
-```bash
-    xelatex tikz-minesweeper.dtx # twice
-```
-
-- Move `tikz-minesweeper.sty` to your project folder
-
-### Compilation (another way)
-
-- Clone this repository
-
-- Install `Python 3` and make sure `xelatex` and `makeindex` is in `PATH`
-
-- Execute the following command (based on your systems):
-
-```bash
-    py -3 script/build.py    # on Windows
-    python3 script/build.py  # on *nix
-```
-
-### Compilation (shortcut)
+### Compilation with `VSCode`
 
 - Clone this repository
 
@@ -51,13 +12,31 @@ Draw a minesweeper board in LaTeX.
 
 - Compile `tikz-minesweeper.dtx` in `VSCode` with recipe `Build dtx`, and all the steps will be done in one click!
 
-### Install globally on your disk
-
 - Move `tikz-minesweeper.sty` to `TEXMF-LOCAL/tex/latex/tikz-minesweeper`
 
 - Move `tikz-minesweeper.pdf` to `TEXMF-LOCAL/doc/latex/tikz-minesweeper`
 
 - Refresh local database with `texhash` or `mktexlsr` (with TeX Live)
+
+### Compilation with `l3build`
+
+- Clone this repository
+
+- Run the following commands:
+
+```bash
+    l3build install --full --texmfhome $TEXMF-LOCAL$
+```
+
+- Refresh local database with `texhash` or `mktexlsr` (with TeX Live)
+
+### Using prebuilt artifacts
+
+- See [GitHub Actions](https://github.com/T0nyX1ang/tikz-minesweeper/actions) page
+
+- Click on the latest successful build and download the artifacts
+
+- Unzip the `tds` zip and move all things unzipped to `TEXMF-LOCAL/`
 
 ## Usage
 
