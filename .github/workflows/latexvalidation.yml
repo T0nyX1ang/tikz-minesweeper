@@ -34,7 +34,7 @@ jobs:
       if: success()
       with:
         name:
-          Prebuilt Packages
+          tikz-minesweeper.tds
         path: |
           ./build/distrib/tds/*
           !./build/distrib/tds/*.zip
