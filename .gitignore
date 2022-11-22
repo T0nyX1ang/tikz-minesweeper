@@ -284,3 +284,6 @@ TSWLatexianTemp*
 
 # Testing codes
 test.*
+
+# l3build output files
+build/
