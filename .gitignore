@@ -287,3 +287,4 @@ test.*
 
 # l3build output files
 build/
+*.zip
