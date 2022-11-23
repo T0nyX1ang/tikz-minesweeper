@@ -794,6 +794,27 @@ This package consists of the files tikz-minesweeper.dtx,
         }
     }
 
+    % draw axis
+    \bool_if:NT \l__ms_showaxis_bool {
+        \sffamily
+        \int_set:Nn \l_tmpa_int {6}
+        \int_set:Nn \l_tmpb_int {6}
+        \bool_if:NT \l__ms_flagl_bool { \int_add:Nn \l_tmpa_int {12} }
+        \bool_if:NT \l__ms_flagt_bool { \int_add:Nn \l_tmpb_int {12} }
+
+        % show axis x
+        \int_step_inline:nnn {0} {#3-1} {
+            \node[text~centered, text={color7}, xshift=16*##1] at
+                (8, \l_tmpb_int) {\textbf{\tiny ##1}};
+        }
+
+        % show axis y
+        \int_step_inline:nnn {0} {#2-1} {
+            \node[text~centered, text={color7}, yshift=-16*##1] at
+                (-\l_tmpa_int, -8) {\textbf{\tiny ##1}};
+        }
+    }
+
     % draw outer border with clipping
     \bool_if:NTF \l__ms_flagt_bool { \int_set:Nn \l__ms_flagt_int {1} }
         { \int_set:Nn \l__ms_flagt_int {0} }
@@ -836,26 +857,6 @@ This package consists of the files tikz-minesweeper.dtx,
             (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
             (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) --
             (-0.5, 0.5) -- cycle;
-        }
-    }
-
-    \bool_if:NT \l__ms_showaxis_bool {
-        \sffamily
-        \int_set:Nn \l_tmpa_int {6}
-        \int_set:Nn \l_tmpb_int {6}
-        \bool_if:NT \l__ms_flagl_bool { \int_add:Nn \l_tmpa_int {12} }
-        \bool_if:NT \l__ms_flagt_bool { \int_add:Nn \l_tmpb_int {12} }
-
-        % show axis x
-        \int_step_inline:nnn {0} {#3-1} {
-            \node[text~centered, text={color7}, xshift=16*##1] at
-                (8, \l_tmpb_int) {\textbf{\tiny ##1}};
-        }
-
-        % show axis y
-        \int_step_inline:nnn {0} {#2-1} {
-            \node[text~centered, text={color7}, yshift=-16*##1] at
-                (-\l_tmpa_int, -8) {\textbf{\tiny ##1}};
         }
     }
 }
