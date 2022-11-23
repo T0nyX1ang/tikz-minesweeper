@@ -25,6 +25,17 @@
                 "%DOCFILE%.gls",
                 "%DOCFILE%.glo"
             ],
+        },
+        {
+            "name": "makeindex(idx)",
+            "command": "makeindex",
+            "args": [
+                "-s",
+                "gind.ist",
+                "-o",
+                "%DOCFILE%.ind",
+                "%DOCFILE%.idx"
+            ]
         }
     ],
     "latex-workshop.latex.recipes": [
@@ -33,6 +44,7 @@
             "tools": [
                 "xelatex(dtx)",
                 "makeindex(glo)",
+                "makeindex(idx)",
                 "xelatex(dtx)",
                 "xelatex(dtx)"
             ]
