@@ -192,25 +192,39 @@ This package consists of the files tikz-minesweeper.dtx,
 % \subsection{配色}
 % \texttt{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色. 这些配色均给出了标签, 这些标签均可以直接在文档中使用.
 %
+% \def\ColorTagZero{\textcolor{color0}{|color0|}}
+% \def\ColorTagOne{\textcolor{color1}{|color1|}}
+% \def\ColorTagTwo{\textcolor{color2}{|color2|}}
+% \def\ColorTagThree{\textcolor{color3}{|color3|}}
+% \def\ColorTagFour{\textcolor{color4}{|color4|}}
+% \def\ColorTagFive{\textcolor{color5}{|color5|}}
+% \def\ColorTagSix{\textcolor{color6}{|color6|}}
+% \def\ColorTagSeven{\textcolor{color7}{|color7|}}
+% \def\ColorTagEight{\textcolor{color8}{|color8|}}
+% \def\ColorTagBorder{\textcolor{cborder}{|cborder|}}
+% \def\ColorTagLight{\colorbox{cshade}{\textcolor{clight}{|clight|}}}
+% \def\ColorTagShade{\textcolor{cshade}{|cshade|}}
+% \def\ColorTagFail{\textcolor{cfail}{|cfail|}}
+%
 % \begin{table}[H]
 %     \centering
 %     \begin{tabular}{ccccc}
 %         \toprule
-%         颜色标签                                    & R   & G   & B   & 场景                              \\
+%         颜色标签          & R   & G   & B   & 场景                              \\
 %         \midrule
-%         \textcolor{color0}{color0}                  & 192 & 192 & 192 & 格子内部 / 外边框                 \\
-%         \textcolor{color1}{color1}                  & 0   & 0   & 255 & 数字1                             \\
-%         \textcolor{color2}{color2}                  & 0   & 128 & 0   & 数字2                             \\
-%         \textcolor{color3}{color3}                  & 255 & 0   & 0   & 数字3                             \\
-%         \textcolor{color4}{color4}                  & 0   & 0   & 128 & 数字4                             \\
-%         \textcolor{color5}{color5}                  & 128 & 0   & 0   & 数字5                             \\
-%         \textcolor{color6}{color6}                  & 0   & 128 & 128 & 数字6                             \\
-%         \textcolor{color7}{color7}                  & 0   & 0   & 0   & 数字7                             \\
-%         \textcolor{color8}{color8}                  & 128 & 128 & 128 & 数字8                             \\
-%         \textcolor{cborder}{cborder}                & 160 & 160 & 160 & 边框阴影                          \\
-%         \cellcolor{black}\textcolor{clight}{clight} & 255 & 255 & 255 & 高亮                              \\
-%         \textcolor{cshade}{cshade}                  & 128 & 128 & 128 & 格子阴影 / 按下的格子边界           \\
-%         \textcolor{cfail}{cfail}                    & 255 & 0   & 0   & 导致失败的格子                     \\
+%         \ColorTagZero{}  & 192 & 192 & 192 & 格子内部 / 外边框                 \\
+%         \ColorTagOne{}   & 0   & 0   & 255 & 数字1                             \\
+%         \ColorTagTwo{}   & 0   & 128 & 0   & 数字2                             \\
+%         \ColorTagThree{} & 255 & 0   & 0   & 数字3                             \\
+%         \ColorTagFour{}  & 0   & 0   & 128 & 数字4                             \\
+%         \ColorTagFive{}  & 128 & 0   & 0   & 数字5                             \\
+%         \ColorTagSix{}   & 0   & 128 & 128 & 数字6                             \\
+%         \ColorTagSeven{} & 0   & 0   & 0   & 数字7                             \\
+%         \ColorTagEight{} & 128 & 128 & 128 & 数字8                             \\
+%         \ColorTagBorder{}  & 160 & 160 & 160 & 边框阴影                          \\
+%         \ColorTagLight{} & 255 & 255 & 255 & 高亮                              \\
+%         \ColorTagShade{} & 128 & 128 & 128 & 格子阴影 / 按下的格子边界           \\
+%         \ColorTagFail{}  & 255 & 0   & 0   & 导致失败的格子                     \\
 %         \bottomrule
 %     \end{tabular}
 %     \caption*{颜色对照表}
