@@ -72,7 +72,6 @@ This package consists of the files tikz-minesweeper.dtx,
 \usepackage{tikz-minesweeper}
 \usepackage{verbatim}
 \usepackage{booktabs}
-\usepackage{makecell}
 \usepackage{colortbl}
 \usepackage{subfig}
 \usepackage{float}
@@ -90,6 +89,7 @@ This package consists of the files tikz-minesweeper.dtx,
     \DocInput{tikz-minesweeper.dtx}
     \IndexLayout
     \PrintChanges
+    \PrintIndex
 \end{document}
 %</driver>
 % \fi
@@ -112,16 +112,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %   Right brace   \}     Tilde         \~}
 %
-% \changes{v0.1.0}{2022/01/30}{初始更新版本}
-%
 % \GetFileInfo{tikz-minesweeper.sty}
 %
-% \title{\texttt{tikz-minesweeper}宏包使用手册\thanks{本使用手册适用于\texttt{tikz-minesweeper}~\fileversion, 更新于~\filedate.}}
-% \author{濮天羿~~~~向飞宇~~~~朱耀宇}
+% \title{\pkg{tikz-minesweeper}宏包使用手册}
+% \author{濮天羿~~~~向飞宇\thanks{源代码请参考此仓库: https://github.com/T0nyX1ang/tikz-minesweeper}~~~~朱耀宇}
 % \maketitle
 %
 % \section{绘制示例}
-% 下面是一个\texttt{tikz-minesweeper}宏包的绘制示例, 包含了该宏包中最重要的几个指令.
+% 下面是一个\pkg{tikz-minesweeper}宏包的绘制示例, 包含了该宏包中最重要的几个指令.
 %
 % \begin{multicols}{2}
 % \iffalse
@@ -156,7 +154,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \row{4}{ov-f}
 %             \col{4}{358y?}
 %         \end{tikzpicture}
-%         \caption*{示例: 在5x5区域内绘制数字、雷、旗帜、空格和标记}
+%         \caption{在5x5区域内绘制数字、雷、旗帜、空格和标记}
 %     \end{figure}
 % \end{multicols}
 % \section{绘制指令介绍}
@@ -185,12 +183,12 @@ This package consists of the files tikz-minesweeper.dtx,
 %              \board[-tlbr]{1}{1}
 %              \row{0}{1}
 %         \end{tikzpicture}
-%         \caption*{示例: 放大一个格子}
+%         \caption{放大一个格子}
 %     \end{figure}
 % \end{multicols}
 %
 % \subsection{配色}
-% \texttt{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色. 这些配色均给出了标签, 这些标签均可以直接在文档中使用.
+% \pkg{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色. 这些配色均给出了标签, 这些标签均可以直接在文档中使用.
 %
 % \def\ColorTagZero{\textcolor{color0}{|color0|}}
 % \def\ColorTagOne{\textcolor{color1}{|color1|}}
@@ -227,12 +225,19 @@ This package consists of the files tikz-minesweeper.dtx,
 %         \ColorTagFail{}  & 255 & 0   & 0   & 导致失败的格子                     \\
 %         \bottomrule
 %     \end{tabular}
-%     \caption*{颜色对照表}
+%     \caption{颜色对照表}
 % \end{table}
 %
 % \subsection{方格元素}
 %
-% \DescribeMacro{\flag} 在一个方格中绘制旗子.
+% \changes{v0.1.0}{2022/01/30}{新增旗帜命令 \tn{flag}.}
+%
+% \begin{function}[added=2022-01-30]{\flag}
+%   \begin{syntax}
+%      \tn{flag}
+%   \end{syntax}
+% \qquad 绘制旗子. 首先用 \ColorTagSeven{} 绘制两层旗子的底座, 然后用 \ColorTagSeven{} 绘制旗子的旗杆, 最后用 \ColorTagThree{} 绘制旗帜本身.
+% \end{function}
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -255,27 +260,39 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \draw[dashed] (10.5,-16) node[below] {10.5} -- (10.5,-13);
 %             \draw[dashed] (12,0) node[above] {12} -- (12,-12);
 %         \end{scope}
-%     \end{tikzpicture}
-%     \caption*{示例: 旗子}
-% \end{figure}
-%
-% \DescribeMacro{\mine} 在一个方格中绘制雷.
-%
-% \begin{figure}[!htp]
-%     \centering
+%     \end{tikzpicture} \quad
 %     \begin{tikzpicture}
-%         \begin{scope}[scale=10]
+%         \begin{scope}[scale=12]
 %             \mine
 %         \end{scope}
 %     \end{tikzpicture}
-%     \caption*{示例: 雷}
+%     \caption{旗子和雷的细节图}
 % \end{figure}
 %
-% \DescribeMacro{\cellup} 绘制一个弹起的方格. 四周形成立体感的宽度为2.
+% \changes{v0.1.0}{2022/01/30}{新增地雷命令 \tn{mine}.}
 %
-% \DescribeMacro{\celldown} 绘制一个按下的方格. 左和上的边界宽度为1.
+% \begin{function}[added=2022-01-30]{\mine}
+%   \begin{syntax}
+%      \tn{mine}
+%   \end{syntax}
+% \qquad 绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影.
+% \end{function}
 %
-% \textbf{注意:} 弹起的方格和按下的方格的中心点不一致. 弹起的方格中心点为(8,-8), 按下的方格中心点为(8.5,-8.5).
+% \changes{v0.1.0}{2022/01/30}{新增方格弹起时和按下时的命令 \tn{cellup} 和 \tn{celldown}.}
+%
+% \begin{function}[added=2022-01-30]{\cellup}
+%   \begin{syntax}
+%      \tn{cellup}
+%   \end{syntax}
+% \qquad 绘制鼠标弹起时的方格. 首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面, 营造立体感, 亮面和暗面的宽度均为2, 然后用 \ColorTagZero{} 绘制底色. 需要注意的是, 该方格的中心点为 (8.5, -8.5), 与 \tn{celldown} 指令对应方格的中心点不同.
+% \end{function}
+%
+% \begin{function}[added=2022-01-30]{\celldown}
+%   \begin{syntax}
+%      \tn{celldown}
+%   \end{syntax}
+% \qquad 绘制鼠标按下时的方格. 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagZero{} 绘制底色, 左和上的边界宽度均为1. 需要注意的是, c此时方格的中心点为 (8, -8), 与 \tn{cellup} 指令对应方格的中心点不同.
+% \end{function}
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -290,17 +307,27 @@ This package consists of the files tikz-minesweeper.dtx,
 %          \draw[thick, cborder] (0,0) rectangle (16, -16);
 %          \fill[red] (8.5, -8.5) circle (0.2);
 %     \end{tikzpicture}
-%     \caption*{示例: 弹起的方格与按下的方格(包含中心点)}
+%     \caption{弹起的方格与按下的方格(包含中心点)}
 % \end{figure}
 %
-% \DescribeMacro{\cellnum \marg{num}} 在当前方块中填入带配色的数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}.
+% \changes{v0.1.0}{2022/01/30}{新增数字命令 \tn{cellnum}.}
+% \changes{v0.2.0}{2022/11/23}{将普通数字 1 至 8 调整为矢量化数字 1 至 8.}
 %
-% \textbf{注意:} 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与|\celldown|指令一起使用.
+% \begin{function}[added=2022-01-30, updated=2022-11-23]{\cellnum}
+%   \begin{syntax}
+%      \tn{cellnum} \marg{num=1|2|3|4|5|6|7|8}
+%   \end{syntax}
+% \qquad 在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. 如果 \marg{num} 不为 1 至 8, 则该指令不起作用. 需要注意的是, 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与 \tn{celldown} 指令一起使用.
+% \end{function}
 %
 % \subsection{边框元素}
-% 边框分为三层, 中间层是color0, 宽度是6, 内外层用clight/cborder提供立体感, 宽度3. 提供立体感的方式和 |\cellup| 同理. 左边和上边的高亮外边缘用cborder封边.
 %
-% \DescribeMacro{\border \oarg{-tlbrx}} 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角.
+% \begin{function}[added=2022-01-30, updated=2022-11-23]{\border}
+%   \begin{syntax}
+%      \tn{border} \oarg{border\_type=-|t|l|b|r}
+%   \end{syntax}
+% \qquad 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角. 边框分为三层, 中间层使用 \ColorTagZero{} 绘制, 宽度为 6, 内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感, 宽度为 3. 提供立体感的方式和 \tn{cellup} 同理. 左边和上边的高亮外边缘用 \ColorTagBorder{} 封边. 默认参数为 -, 即绘制全部边框.
+% \end{function}
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -317,30 +344,81 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \node at (-6, -8) {l};
 %         \end{scope}
 %     \end{tikzpicture}
-%     \caption*{边框组装效果}
+%     \caption{边框组装效果}
 % \end{figure}
 %
-% \subsection{模块}
+% \subsection{综合模块}
 %
-% \DescribeMacro{\cell \marg{r} \marg{c} \marg{info}} 在第[r]行第[c]列交叉处绘制包含内容[info]的方格, 行列从0开始编号. 如果内容是0-8的数字, 方格是按下状态并且数字会上色. 如果内容是f, 方格是弹起状态并且会插旗. 如果内容是其他单个字符, 方格是弹起状态并包含该字符. 方格弹起状态时的字符中心是(8,-8). 内容不能为空, 如果内容是-, 方格是按下状态并且无字符, 如果内容中含有多个字符, 将会自动缩小字符, 转化为 |\tiny| 模式. 如果内容是r, g, b, c, y, o, l, t, v, 将给该方格染成对应颜色.
+% 这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块, 如果没有特定的设计需求，推荐仅使用这一部分提供的模块.
 %
-% \DescribeMacro{\row \marg{r} \marg{seq:info}} 在第[r]行从左到右绘制多个方格. 内容的格式按照顺序输入字符, 每个字符作为 |\cell| 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如|1{23}4|代表1, 23和4这这三个字符.
+% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \marg{info} 选项: 数字 0-8.}
+% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \marg{info} 选项: 九种颜色指令 r, g, b, c, y, o, t, l, v.}
+% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \marg{info} 选项: 旗帜 f, 雷 m.}
+% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \marg{info} 输入单字符和多字符.}
+% \changes{v0.2.0}{2022/11/23}{由于颜色 teal 和 lime 难以与其它颜色分辨, \tn{cell} 参数 \marg{info} 选项取消 t, l.}
+% \changes{v0.2.0}{2022/11/23}{\tn{cell} 支持参数 \marg{info} 选项: 半透明雷 s, 踩雷 n 和标记错误 e.}
 %
-% \DescribeMacro{\col \marg{c} \marg{seq:info}}  在第[c]列从左到右绘制多个方格, 语法与 |row| 一致.
+% \begin{function}[added=2022-01-30, updated=2022-11-23]{\cell}
+%   \begin{syntax}
+%      \tn{cell} \marg{r} \marg{c} \marg{info}
+%   \end{syntax}
+% \qquad 在第 \marg{r} 行第 \marg{c} 列交叉处绘制包含内容 \marg{info} 的方格, 行列均从 0 开始编号. \marg{info} 的检查顺序如下:
+% \begin{itemize}
+%     \item 如果 \marg{info} 是 0-8 的数字, 方格是按下状态并且数字会上色;
+%     \item 如果 \marg{info} 是 r(红色, red), g(绿色, green), b(蓝色, blue), c(cyan, 湖蓝色), y(yellow, 黄色), o(orange, 橘色), v(violet, 紫色) 中的一个, 方格是抬起状态, 且会染成对应颜色, 方格颜色的透明度为\textbf{0.2};
+%     \item 如果 \marg{info} 是 f, 方格是弹起状态并且会插旗.
+%     \item 如果 \marg{info} 是 m, 方格是按下状态并且会显示地雷.
+%     \item 如果 \marg{info} 是 s, 方格是按下状态并且会显示半透明的地雷, 即将地雷的颜色调整为 \ColorTagShade{}.
+%     \item 如果 \marg{info} 是 n, 方格是按下状态并且会显示踩到地雷, 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagFail{} 绘制底色.
+%     \item 如果 \marg{info} 是 e, 方格是按下状态并且会显示标记错误的地雷, 即在普通地雷的基础上, 进一步用 \ColorTagFail{} 绘制一个叉.
+%     \item 如果 \marg{info} 是 -, 方格是弹起状态并且无字符.
+%     \item 如果 \marg{info} 是其他\textbf{单个}字符, 方格是弹起状态并包含该字符, 字符中心为 (8, -8).
+%     \item 如果 \marg{info} 包含\textbf{多个}字符, 将会自动缩小字符, 转化为 |\tiny| 模式.
+% \end{itemize}
+% \end{function}
 %
-% \DescribeMacro{\board \oarg{-tlbrx} \\ \marg{r} \marg{c}} 绘制[r]行[c]列的边框, t, r, b, l 为与 \texttt{\textbackslash border} 对应\footnote{\texttt{\textbackslash board[-tlbr]\{1\}\{1\}}与\texttt{\textbackslash border[-tlbr]}等价.}可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了\texttt{-}标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制\footnote{解析器只会解析最后一个\texttt{-}标志的位置, 即\texttt{\textbackslash border[-tlbr-tlb-lb-b]}会被解析为\texttt{\textbackslash border[-b]}. 解析器不会解析重复的参数, 即\texttt{\textbackslash border[ttblbtlb]}会被解析为\texttt{\textbackslash border[tlb]}.}. x 表示是否显示横纵坐标, 默认为不显示.
+% \changes{v0.1.0}{2022/01/30}{提供 \tn{row} 命令和 \tn{col} 命令.}
+%
+% \begin{function}[added=2022-01-30]{\row}
+%   \begin{syntax}
+%      \tn{row} \marg{r} \marg{seq:info}
+%   \end{syntax}
+% \qquad 在第 \marg{r} 行从左到右绘制多个方格. \marg{seq:info} 为一个含有 \marg{info} 的序列, 序列中的每个元素作为 \tn{cell} 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如|1{23}4|的序列长度为3, 该序列中的元素分别为 1, 23 和 4.
+% \end{function}
+%
+% \begin{function}[added=2022-01-30]{\col}
+%   \begin{syntax}
+%      \tn{col} \marg{c} \marg{seq:info}
+%   \end{syntax}
+% \qquad 在第 \marg{c} 列从上到下绘制多个方格, 语法与 \tn{row} 一致.
+% \end{function}
+%
+% \changes{v0.1.0}{2022/01/30}{提供\tn{board}指令与四种边界类型.}
+% \changes{v0.2.0}{2022/11/23}{新增标记行列坐标选项 x.}
+% \changes{v0.2.0}{2022/11/23}{提前绘制同色邻接区域, 以避免格子的同色邻接区域导致的渲染问题.}
+% \begin{function}[added=2022-01-30, updated=2022-11-23]{\board}
+%   \begin{syntax}
+%      \tn{board} \oarg{border\_type=-|t|l|b|r|x} \marg{r} \marg{c}
+%   \end{syntax}
+% \qquad 绘制[r]行[c]列的边框, t, r, b, l 为与 |\border| 对应可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了 - 标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制. 解析器只会解析最后一个 - 标志的位置, 即 |\border[-br-tl-lb-b]| 会被解析为 |\border[-b]|. 解析器不会解析重复的参数, 即 |\border[ttblbtlb]| 会被解析为 |\border[tlb]|. 可选指令 x 表示是否显示横纵坐标, 默认为不显示.
+%
+% 在绘制边框的过程中, 该指令会根据边框类型, 利用 |tikz| 宏包的截取指令, 自动以 \ColorTagBorder{} 为颜色, 绘制一个\textbf{0.2pt}的外边框. 同时, 为了避免格子的同色邻接区域导致的渲染问题, 该指令会提前绘制同色邻接区域.
+% \end{function}
 %
 % \begin{figure}[!htp]
 %     \captionsetup[subfloat]{labelformat=empty}
 %     \centering
-%     \subfloat[\texttt{\textbackslash board}]{\begin{tikzpicture}[scale=2]\board{1}{1}\end{tikzpicture}}
+%     \subfloat[\texttt{\textbackslash board}]{\begin{tikzpicture}[scale=2.5]\board{1}{1}\end{tikzpicture}}
 %     \quad
-%     \subfloat[\texttt{\textbackslash board[tlb]} 或 \\ \texttt{\textbackslash board[-r]} ]{\begin{tikzpicture}[scale=2]\border[-r]\end{tikzpicture}}
+%     \subfloat[\texttt{\textbackslash board[tlb]} 或 \\ \texttt{\textbackslash board[-r]} ]{\begin{tikzpicture}[scale=2.5]\border[-r]\end{tikzpicture}}
 %     \quad
-%     \subfloat[\texttt{\textbackslash board[tlr]} 或 \\ \texttt{\textbackslash board[-b]} ]{\begin{tikzpicture}[scale=2]\border[-b]\end{tikzpicture}}
+%     \subfloat[\texttt{\textbackslash board[tlr]} 或 \\ \texttt{\textbackslash board[-b]} ]{\begin{tikzpicture}[scale=2.5]\border[-b]\end{tikzpicture}}
 %     \quad
-%     \subfloat[\texttt{\textbackslash board[tl]}]{\begin{tikzpicture}[scale=2]\border[tl]\end{tikzpicture}}
-%     \\
+%     \subfloat[\texttt{\textbackslash board[tl]}]{\begin{tikzpicture}[scale=2.5]\border[tl]\end{tikzpicture}}
+%     \caption{边框指令示例}
+% \end{figure}
+%
+% \begin{figure}[!htp]
 %     \captionsetup[subfloat]{labelformat=empty}
 %     \centering
 %     \subfloat[\texttt{\textbackslash board[-x]}]{\begin{tikzpicture}\board[-x]{3}{3}\end{tikzpicture}}
@@ -348,9 +426,27 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \subfloat[\texttt{\textbackslash board[tlx]}]{\begin{tikzpicture}\board[tlx]{3}{3}\end{tikzpicture}}
 %     \quad
 %     \subfloat[\texttt{\textbackslash board[-tlx]}]{\begin{tikzpicture}\board[-tlx]{3}{3}\end{tikzpicture}}
+%     \caption{横纵坐标显示示例}
 % \end{figure}
 %
-% \DescribeMacro{\colorcell \marg{color} \\ \marg{seq: pos}} 将[pos]位置的方格染色为[color]颜色.
+% \changes{v0.1.0}{2022/01/30}{提供\tn{colorcell}指令.}
+% \begin{function}[added=2022-01-30]{\colorcell}
+%   \begin{syntax}
+%      \tn{colorcell} \marg{color} \marg{seq: pos}
+%   \end{syntax}
+% % \qquad 将\marg{seq: pos}位置的方格染色为\marg{color}颜色. \marg{color} 仅能传入 |\cell| 中接受的颜色类型. \marg{seq: pos} 定义了一个位置序列, 格式如下:
+% \begin{itemize}
+%     \item 序列中的每个元素以分号(;)分隔.
+%     \item 对于每个元素, 以逗号(,)分隔行区间和列区间.
+%     \item 对于每个区间, 如果它是\textbf{单字符}, 则表示区间的起始位置和终止位置相同, 均为该字符; 否则需要以减号(-)分隔起始位置和终止位置.
+% \end{itemize}
+% 下面给出一些示例:
+%  \begin{ctexexam}
+%    \colorcell{g}{0,0-1;0-1,3} % 代表用绿色染色0行, 0-1列和0-1行, 3列的一共4个格子.
+%    \colorcell{r}{0,4;1-2,0-2} % 代表用红色染色0行, 4列和1-2行, 0-2列的一共7个格子.
+%  \end{ctexexam}
+% \end{function}
+%
 % \begin{multicols}{2}
 % \iffalse
 %<*internal>
@@ -383,16 +479,27 @@ This package consists of the files tikz-minesweeper.dtx,
 %                 0,4;1-2,0-2
 %             }
 %         \end{tikzpicture}
-%         \caption*{方格染色}
+%         \caption{方格染色示例}
 %     \end{figure}
 % \end{multicols}
 %
 % \StopEventually{}
-% \iffalse
-%<*package>
+%
+% \begin{implementation}
+%
+% \clearpage
+%
+% \section{代码实现}
+% 定义 \pkg{tikz-minesweeper} 宏包的依赖, 分别为 \LaTeXiii{} 和 \pkg{tikz} 宏包.
+%    \begin{macrocode}
+
 \RequirePackage{expl3}
 \RequirePackage{tikz}
 
+%    \end{macrocode}
+%
+% 定义 \pkg{tikz-minesweeper} 宏包的配色方案. 在实际使用该宏包时, 可以使用类似方法定义自己的配色方案.
+%    \begin{macrocode}
 \definecolor{color0}{RGB}{192,192,192} % color for blank cell
 \definecolor{color1}{RGB}{0,0,255} % color for cell 1
 \definecolor{color2}{RGB}{0,128,0} % color for cell 2
@@ -407,9 +514,23 @@ This package consists of the files tikz-minesweeper.dtx,
 \definecolor{cshade}{RGB}{128,128,128} % color for shades
 \definecolor{cfail}{RGB}{255,0,0} % color for failed cells
 
+%    \end{macrocode}
+%
+% 定义 \pkg{tikz-minesweeper} 宏包的基本单位, 即\textbf{1pt}.
+%    \begin{macrocode}
 \tikzset{x=1pt, y=1pt} % Default unit
 
+%    \end{macrocode}
+%
+% 打开\LaTeXiii{}编程环境.
+%    \begin{macrocode}
 \ExplSyntaxOn
+
+%    \end{macrocode}
+%
+% \begin{macro}{\element_flag:}
+% \qquad 绘制旗子.
+%    \begin{macrocode}
 \cs_set:Nn \element_flag: {
     \fill[color7] (5, -13) rectangle (12, -12); % lower base
     \fill[color7] (6.5, -13) rectangle (10.5, -11); % upper base
@@ -417,56 +538,153 @@ This package consists of the files tikz-minesweeper.dtx,
     \fill[color3] (8.5, -4.5) -- (4, -6.5) -- (8.5, -8.5) -- cycle; % red flag
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_mine:}
+% \qquad 绘制地雷.
+%    \begin{macrocode}
 \cs_set:Nn \element_mine: {
     \int_step_inline:nnnn {0} {45} {135} {
-        \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
+        \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) --
+            (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) --
+            (-6.5, -0.4) -- cycle; % spikes
     }
     \shade[ball~color=color7] (8.5,-8.5) circle (4.5); % body
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_mine_shaded:}
+% \qquad 绘制半透明的地雷. 需要注意的是, 半透明的雷的颜色没有与其它颜色解耦, 如果定义了不同的配色方案, 请谨慎绘制这种地雷.
+%    \begin{macrocode}
 \cs_set:Nn \element_mine_shaded: {
     \int_step_inline:nnnn {0} {45} {135} {
-        \fill[cshade, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
+        \fill[cshade, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) --
+            (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) --
+            (-6.5, -0.4) -- cycle; % spikes
     }
     \shade[ball~color=cshade] (8.5,-8.5) circle (4.5); % body
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_cellup:}
+% \qquad 绘制鼠标弹起时的方格.
+%    \begin{macrocode}
 \cs_set:Nn \element_cellup: {
     \fill[clight] (0, 0) -- (16, 0) -- (0, -16) -- cycle; % highlight
     \fill[cshade] (16, -16) -- (0, -16) -- (16, 0) -- cycle; % shade
-    \fill[color0] (2, -2) rectangle (14, -14); % background, modified to draw later
+    \fill[color0] (2, -2) rectangle (14, -14); % background
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_celldown:}
+% \qquad 绘制鼠标按下后的方格.
+%    \begin{macrocode}
 \cs_set:Nn \element_celldown: {
     \fill[cshade] (0, -16) rectangle (16, 0); % border
     \fill[color0] (1, -16) rectangle (16, -1); % background
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_cellfail:}
+% \qquad 绘制由于踩雷而失败的方格.
+%    \begin{macrocode}
 \cs_set:Nn \element_cellfail: {
     \fill[cshade] (0, -16) rectangle (16, 0); % border
     \fill[cfail] (1, -16) rectangle (16, -1); % background
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_misflagfail:}
+% \qquad 绘制由于标记错误而失败的方格.
+%    \begin{macrocode}
 \cs_set:Nn \element_misflagfail: {
+    \element_mine:
     \draw[cfail, line~width=1] (2.5, -2.5) -- (14.5, -14.5); % cross line
     \draw[cfail, line~width=1] (2.5, -14.5) -- (14.5, -2.5); % cross line
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_cellnum:n}
+% \qquad 用 \ColorTagOne{} 至 \ColorTagEight{} 绘制给定的矢量化数字 1 至 8, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 1 至 8, 传入其它值将会被忽略.
+%    \begin{macrocode}
 \cs_set:Npn \element_cellnum:n #1 {
     \tl_case:Nn #1 {
-        % Textures come from https://github.com/Minesweeper-World/MS-Texture/tree/main/svg/cells/WinmineXP
+        % Textures come from https://github.com/Minesweeper-World/MS-Texture/
         % Positions tweaked by ./script/tikz-path-xyshift.py
-        1 { \fill[color1] (5, -11.5) -- (5, -13.5) -- (12, -13.5) -- (12, -11.5) -- (10, -11.5) -- (10, -3.5) -- (8.5, -3.5) -- (5, -7.0) -- (5, -7.5) -- (7, -7.5) -- (7, -11.5) -- cycle; }
-        2 { \fill[color2] (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) .. (13.5, -6.5) .. controls (13.5, -9.0) and (7.5, -10.5) .. (6.5, -11.5) -- (13.5, -11.5) -- (13.5, -13.5) -- (3.5, -13.5) -- (3.5, -12.0) .. controls (3.5, -8.5) and (10.5, -8.5) .. (10.5, -6.5) .. controls (10.5, -5.5) .. (9.5, -5.5) -- (7.5, -5.5) .. controls (6.5, -5.5) .. (6.5, -6.5) -- cycle; }
-        3 { \fill[color3] (3.5, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) .. (13.5, -6.5) .. controls (13.5, -8.0) .. (12.0, -8.5) .. controls (13.5, -9.0) .. (13.5, -10.5) .. controls (13.5, -13.5) .. (10.0, -13.5) -- (3.5, -13.5) -- (3.5, -11.5) -- (9.5, -11.5) .. controls (10.5, -11.5) .. (10.5, -10.5) .. controls (10.5, -9.5) .. (9.5, -9.5) -- (6.5, -9.5) -- (6.5, -7.5) -- (9.5, -7.5) .. controls (10.5, -7.5) .. (10.5, -6.5) .. controls (10.5, -5.5) .. (9.5, -5.5) -- (3.5, -5.5) -- cycle; }
-        4 { \fill[color4] (6.0, -3.5) -- (3.5, -8.5) -- (3.5, -9.5) -- (9.5, -9.5) -- (9.5, -13.5) -- (12.5, -13.5) -- (12.5, -9.5) -- (13.5, -9.5) -- (13.5, -7.5) -- (12.5, -7.5) -- (12.5, -3.5) -- (9.5, -3.5) -- (9.5, -7.5) -- (7.0, -7.5) -- (9.0, -3.5) -- cycle; }
-        5 { \fill[color5] (3.5, -3.5) -- (13.5, -3.5) -- (13.5, -5.5) -- (6.5, -5.5) -- (6.5, -7.5) -- (10.0, -7.5) .. controls (13.5, -7.5) .. (13.5, -10.5) .. controls (13.5, -13.5) .. (10.0, -13.5) -- (3.5, -13.5) -- (3.5, -11.5) -- (9.5, -11.5) .. controls (10.5, -11.5) .. (10.5, -10.5) .. controls (10.5, -9.5) .. (9.5, -9.5) -- (3.5, -9.5) -- cycle; }
-        6 { \fill[color6] (12.5, -3.5) -- (12.5, -5.5) -- (8.5, -5.5) .. controls (6.5, -5.5) .. (6.5, -6.5) -- (6.5, -10.5) .. controls (6.5, -11.5) .. (8.5, -11.5) .. controls (10.5, -11.5) .. (10.5, -10.5) .. controls (10.5, -9.5) .. (8.5, -9.5) -- (6.5, -9.5) -- (6.5, -7.5) -- (10.0, -7.5) .. controls (13.5, -7.5) .. (13.5, -10.5) .. controls (13.5, -13.5) .. (10.0, -13.5) -- (7.0, -13.5) .. controls (3.5, -13.5) .. (3.5, -10.5) -- (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) -- cycle; }
-        7 { \fill[color7] (3.5, -3.5) -- (13.5, -3.5) -- (13.5, -6.5) -- (10.0, -13.5) -- (7.0, -13.5) -- (10.5, -6.5) -- (10.5, -5.5) -- (3.5, -5.5) -- cycle; }
-        8 { \fill[color8] (7.0, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) .. (13.5, -6.5) .. controls (13.5, -8.0) .. (12.0, -8.5) -- (10.5, -8.5) -- (10.5, -6.5) .. controls (10.5, -5.5) .. (9.5, -5.5) -- (7.5, -5.5) .. controls (6.5, -5.5) .. (6.5, -6.5) .. controls (6.5, -7.5) .. (7.5, -7.5) -- (9.5, -7.5) .. controls (10.5, -7.5) .. (10.5, -6.5) -- (10.5, -10.5) .. controls (10.5, -9.5) .. (9.5, -9.5) -- (7.5, -9.5) .. controls (6.5, -9.5) .. (6.5, -10.5) .. controls (6.5, -11.5) .. (7.5, -11.5) -- (9.5, -11.5) .. controls (10.5, -11.5) .. (10.5, -10.5) -- (10.5, -8.5) -- (12.0, -8.5) .. controls (13.5, -9.0) .. (13.5, -10.5) .. controls (13.5, -13.5) .. (10.0, -13.5) -- (7.0, -13.5) .. controls (3.5, -13.5) .. (3.5, -10.5) .. controls (3.5, -9.0) .. (5.0, -8.5) .. controls (3.5, -8.0) .. (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) -- cycle; }
+        1 { \fill[color1] (5, -11.5) -- (5, -13.5) -- (12, -13.5) -- (12, -11.5) --
+            (10, -11.5) -- (10, -3.5) -- (8.5, -3.5) -- (5, -7.0) -- (5, -7.5) --
+            (7, -7.5) -- (7, -11.5) -- cycle; }
+        2 { \fill[color2] (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) --
+            (10.0, -3.5) .. controls (13.5, -3.5) .. (13.5, -6.5) .. controls
+            (13.5, -9.0) and (7.5, -10.5) .. (6.5, -11.5) -- (13.5, -11.5) --
+            (13.5, -13.5) -- (3.5, -13.5) -- (3.5, -12.0) .. controls (3.5, -8.5)
+            and (10.5, -8.5) .. (10.5, -6.5) .. controls (10.5, -5.5) ..
+            (9.5, -5.5) -- (7.5, -5.5) .. controls (6.5, -5.5) ..
+            (6.5, -6.5) -- cycle; }
+        3 { \fill[color3] (3.5, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) ..
+            (13.5, -6.5) .. controls (13.5, -8.0) .. (12.0, -8.5) .. controls
+            (13.5, -9.0) .. (13.5, -10.5) .. controls (13.5, -13.5) ..
+            (10.0, -13.5) -- (3.5, -13.5) -- (3.5, -11.5) -- (9.5, -11.5) ..
+            controls (10.5, -11.5) .. (10.5, -10.5) .. controls (10.5, -9.5) ..
+            (9.5, -9.5) -- (6.5, -9.5) -- (6.5, -7.5) -- (9.5, -7.5) .. controls
+            (10.5, -7.5) .. (10.5, -6.5) .. controls (10.5, -5.5) .. (9.5, -5.5) --
+            (3.5, -5.5) -- cycle; }
+        4 { \fill[color4] (6.0, -3.5) -- (3.5, -8.5) -- (3.5, -9.5) --
+            (9.5, -9.5) -- (9.5, -13.5) -- (12.5, -13.5) -- (12.5, -9.5) --
+            (13.5, -9.5) -- (13.5, -7.5) -- (12.5, -7.5) -- (12.5, -3.5) --
+            (9.5, -3.5) -- (9.5, -7.5) -- (7.0, -7.5) -- (9.0, -3.5) -- cycle; }
+        5 { \fill[color5] (3.5, -3.5) -- (13.5, -3.5) -- (13.5, -5.5) --
+            (6.5, -5.5) -- (6.5, -7.5) -- (10.0, -7.5) .. controls (13.5, -7.5) ..
+            (13.5, -10.5) .. controls (13.5, -13.5) .. (10.0, -13.5) --
+            (3.5, -13.5) -- (3.5, -11.5) -- (9.5, -11.5) .. controls
+            (10.5, -11.5) .. (10.5, -10.5) .. controls (10.5, -9.5) ..
+            (9.5, -9.5) -- (3.5, -9.5) -- cycle; }
+        6 { \fill[color6] (12.5, -3.5) -- (12.5, -5.5) -- (8.5, -5.5) ..
+            controls (6.5, -5.5) .. (6.5, -6.5) -- (6.5, -10.5) .. controls
+            (6.5, -11.5) .. (8.5, -11.5) .. controls (10.5, -11.5) ..
+            (10.5, -10.5) .. controls (10.5, -9.5) .. (8.5, -9.5) -- (6.5, -9.5) --
+            (6.5, -7.5) -- (10.0, -7.5) .. controls (13.5, -7.5) ..
+            (13.5, -10.5) .. controls (13.5, -13.5) .. (10.0, -13.5) --
+            (7.0, -13.5) .. controls (3.5, -13.5) .. (3.5, -10.5) --
+            (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) -- cycle; }
+        7 { \fill[color7] (3.5, -3.5) -- (13.5, -3.5) -- (13.5, -6.5) --
+            (10.0, -13.5) -- (7.0, -13.5) -- (10.5, -6.5) -- (10.5, -5.5) --
+            (3.5, -5.5) -- cycle; }
+        8 { \fill[color8] (7.0, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) ..
+            (13.5, -6.5) .. controls (13.5, -8.0) .. (12.0, -8.5) -- (10.5, -8.5) --
+            (10.5, -6.5) .. controls (10.5, -5.5) .. (9.5, -5.5) -- (7.5, -5.5) ..
+            controls (6.5, -5.5) .. (6.5, -6.5) .. controls (6.5, -7.5) ..
+            (7.5, -7.5) -- (9.5, -7.5) .. controls (10.5, -7.5) .. (10.5, -6.5) --
+            (10.5, -10.5) .. controls (10.5, -9.5) .. (9.5, -9.5) -- (7.5, -9.5) ..
+            controls (6.5, -9.5) .. (6.5, -10.5) .. controls (6.5, -11.5) ..
+            (7.5, -11.5) -- (9.5, -11.5) .. controls (10.5, -11.5) ..
+            (10.5, -10.5) -- (10.5, -8.5) -- (12.0, -8.5) .. controls
+            (13.5, -9.0) .. (13.5, -10.5) .. controls (13.5, -13.5) ..
+            (10.0, -13.5) -- (7.0, -13.5) .. controls (3.5, -13.5) .. (3.5, -10.5) ..
+            controls (3.5, -9.0) .. (5.0, -8.5) .. controls (3.5, -8.0) ..
+            (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) -- cycle; }
     }
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_cellcolored:n}
+% \qquad 绘制鼠标按下时的染色方格, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 r, g, b, c, y, o, v 中的一个, 传入其它值将会被忽略.
+%    \begin{macrocode}
 \cs_set:Npn \element_cellcolored:n #1 {
     \tl_case:NnT #1 {
         r { \tl_set:Nn \l_tmpa_tl {red} }
@@ -483,6 +701,12 @@ This package consists of the files tikz-minesweeper.dtx,
     }
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_cell:nnn}
+% \qquad 绘制方格, 接受三个参数 |#1|, |#2|, |#3|. 在坐标(|#3|, |#2|)处绘制一个方格, 方格中的内容由 |#1| 决定, |#1|可以传入任意参数. 该函数依次检查 |#1| 是否为数字参数 (012345678), 颜色参数 (rgbcyov), 雷与旗帜参数 (fmsne-), 除上述字符外的单字符参数以及多字符参数.
+%    \begin{macrocode}
 \cs_set:Npn \element_cell:nnn #1#2#3 {
     \sffamily
     \tl_set:Nn \l_tmpa_tl {012345678}
@@ -490,24 +714,38 @@ This package consists of the files tikz-minesweeper.dtx,
     \begin{scope}[xshift=#3*16, yshift=-#2*16]
         \tl_if_single:nTF {#1} {
             % single token
-            \tl_if_in:NnTF \l_tmpa_tl {#1} { \element_celldown: \element_cellnum:n {#1} } % number
-            {
-                \tl_if_in:NnTF \l_tmpb_tl {#1} { \element_cellup: \element_cellcolored:n {#1} } % color
-                {
+            \tl_if_in:NnTF \l_tmpa_tl {#1} {
+                \element_celldown: \element_cellnum:n {#1} % number
+            } {
+                \tl_if_in:NnTF \l_tmpb_tl {#1} {
+                    \element_cellup: \element_cellcolored:n {#1} % color
+                } {
                     \tl_case:NnF #1 {
                         f { \element_cellup: \element_flag: } % flag
                         m { \element_celldown: \element_mine: } % mine
-                        s { \element_celldown: \element_mine_shaded: } % shaded mine
-                        n { \element_cellfail: \element_mine: } % blasted mine
-                        e { \element_celldown: \element_mine: \element_misflagfail: } % misflagged mine
+                        s { \element_celldown: \element_mine_shaded: } % shaded
+                        n { \element_cellfail: \element_mine: } % blasted
+                        e { \element_celldown: \element_misflagfail: } % misflagged
                         - { \element_cellup: } % empty
-                    } { \element_cellup: \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}}; } % normal label
+                    } {
+                        \element_cellup:
+                        \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}};
+                    } % normal label
                 }
             }
-        } { \element_cellup: \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}}; } % tiny label
+        } {
+            \element_cellup:
+            \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}};
+        } % tiny label
     \end{scope}
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_line:nnn}
+% \qquad 绘制一行或者一列的格子, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为行号或者列号, |#2| 为按行首(r)或者按列首(c)依次绘制格子, 其余参数将不会绘制, |#3| 为格子内容.
+%    \begin{macrocode}
 \cs_set:Npn \element_line:nn #1#2#3 {
     \tl_set:Nn \l_tmpa_tl {#2}
     \int_zero:N \l_tmpa_int
@@ -520,6 +758,12 @@ This package consists of the files tikz-minesweeper.dtx,
     }
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_border:nnn}
+% \qquad 绘制边框, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为边框种类参数, |#2| 为行数, |#3| 为列数. 参数 |#1| 可以传入 t, l, b, r, -, x 中的任意多个值.
+%    \begin{macrocode}
 \cs_set:Npn \element_border:nnn #1#2#3 {
     \bool_set_false:N \l_tmpa_bool
     \bool_set_false:N \l__ms_flagt_bool
@@ -551,28 +795,47 @@ This package consists of the files tikz-minesweeper.dtx,
     }
 
     % draw outer border with clipping
-    \bool_if:NTF \l__ms_flagt_bool { \int_set:Nn \l__ms_flagt_int {1} } { \int_set:Nn \l__ms_flagt_int {0} }
-    \bool_if:NTF \l__ms_flagl_bool { \int_set:Nn \l__ms_flagl_int {-1} } { \int_set:Nn \l__ms_flagl_int {0} }
-    \bool_if:NTF \l__ms_flagb_bool { \int_set:Nn \l__ms_flagb_int {-1} } { \int_set:Nn \l__ms_flagb_int {0} }
-    \bool_if:NTF \l__ms_flagr_bool { \int_set:Nn \l__ms_flagr_int {1} } { \int_set:Nn \l__ms_flagr_int {0} }
-    \draw[cborder, line~width=0.4pt] (0 + \l__ms_flagl_int * 12, 0 + \l__ms_flagt_int * 12) rectangle (#3*16 + \l__ms_flagr_int * 12, -#2*16 + \l__ms_flagb_int * 12);  % draw global outer border before clipping
-    \clip (0 + \l__ms_flagl_int * 12, 0 + \l__ms_flagt_int * 12) rectangle (#3*16 + \l__ms_flagr_int * 12, -#2*16 + \l__ms_flagb_int * 12);
-    \fill[clight] (-12, 12) -- (#3*16+12, 12) -- (#3*16, 0) -- (0, 0) -- (0, -#2*16) -- (-12, -#2*16-12) -- cycle;
-    \fill[cborder] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+12, 12) -- (#3*16+12, -#2*16-12) -- (-12, -#2*16-12) -- (0, -#2*16) -- cycle;
-    \fill[color0] (-9, 9) -- (#3*16+9, 9) -- (#3*16+9, 0) -- (0, 0) -- (0, -#2*16) -- (-9, -#2*16-9) -- cycle;
-    \fill[color0] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+9, 9) -- (#3*16+9, -#2*16-9) -- (-9, -#2*16-9) -- (-9, -#2*16) -- cycle;
-    \fill[cborder] (-3, 3) -- (#3*16+3, 3) -- (#3*16, 0) -- (0, 0) -- (0, -#2*16) -- (-3, -#2*16-3) -- cycle;
-    \fill[clight] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+3, 3) -- (#3*16+3, -#2*16-3) -- (-3, -#2*16-3) -- (0, -#2*16) -- cycle;
+    \bool_if:NTF \l__ms_flagt_bool { \int_set:Nn \l__ms_flagt_int {1} }
+        { \int_set:Nn \l__ms_flagt_int {0} }
+    \bool_if:NTF \l__ms_flagl_bool { \int_set:Nn \l__ms_flagl_int {-1} }
+        { \int_set:Nn \l__ms_flagl_int {0} }
+    \bool_if:NTF \l__ms_flagb_bool { \int_set:Nn \l__ms_flagb_int {-1} }
+        { \int_set:Nn \l__ms_flagb_int {0} }
+    \bool_if:NTF \l__ms_flagr_bool { \int_set:Nn \l__ms_flagr_int {1} }
+        { \int_set:Nn \l__ms_flagr_int {0} }
+    \draw[cborder, line~width=0.4pt] (0 + \l__ms_flagl_int * 12,
+        0 + \l__ms_flagt_int * 12) rectangle (#3*16 + \l__ms_flagr_int * 12,
+        -#2*16 + \l__ms_flagb_int * 12);  % draw global outer border before clipping
+    \clip (0 + \l__ms_flagl_int * 12, 0 + \l__ms_flagt_int * 12) rectangle
+        (#3*16 + \l__ms_flagr_int * 12, -#2*16 + \l__ms_flagb_int * 12);
+    \fill[clight] (-12, 12) -- (#3*16+12, 12) -- (#3*16, 0) -- (0, 0) --
+        (0, -#2*16) -- (-12, -#2*16-12) -- cycle;
+    \fill[cborder] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+12, 12) --
+        (#3*16+12, -#2*16-12) -- (-12, -#2*16-12) -- (0, -#2*16) -- cycle;
+    \fill[color0] (-9, 9) -- (#3*16+9, 9) -- (#3*16+9, 0) -- (0, 0) --
+        (0, -#2*16) -- (-9, -#2*16-9) -- cycle;
+    \fill[color0] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+9, 9) --
+        (#3*16+9, -#2*16-9) -- (-9, -#2*16-9) -- (-9, -#2*16) -- cycle;
+    \fill[cborder] (-3, 3) -- (#3*16+3, 3) -- (#3*16, 0) -- (0, 0) --
+        (0, -#2*16) -- (-3, -#2*16-3) -- cycle;
+    \fill[clight] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+3, 3) --
+        (#3*16+3, -#2*16-3) -- (-3, -#2*16-3) -- (0, -#2*16) -- cycle;
 
     % draw lines in advance to avoid gaps
     \int_step_inline:nnn {1} {#3-1} {
         \int_step_variable:nnNn {1} {#2} \l_tmpb_tl {
-            \fill[cshade, xshift=##1*16, yshift=-\l_tmpb_tl*16] (0, 0) -- (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) -- (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
+            \fill[cshade, xshift=##1*16, yshift=-\l_tmpb_tl*16] (0, 0) --
+                (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) --
+                (0, 16) -- (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) --
+                (0.5, 0.5) -- cycle;
         }
     }
     \int_step_inline:nnn {1} {#2-1} {
         \int_step_variable:nnNn {1} {#3} \l_tmpb_tl {
-            \fill[cshade, xshift=\l_tmpb_tl*16, yshift=-##1*16] (0, 0) -- (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) -- (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) -- (-0.5, 0.5) -- cycle;
+            \fill[cshade, xshift=\l_tmpb_tl*16, yshift=-##1*16] (0, 0) --
+            (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
+            (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) --
+            (-0.5, 0.5) -- cycle;
         }
     }
 
@@ -585,16 +848,24 @@ This package consists of the files tikz-minesweeper.dtx,
 
         % show axis x
         \int_step_inline:nnn {0} {#3-1} {
-            \node[text~centered, text={color7}, xshift=16*##1] at (8, \l_tmpb_int) {\textbf{\tiny ##1}};
+            \node[text~centered, text={color7}, xshift=16*##1] at
+                (8, \l_tmpb_int) {\textbf{\tiny ##1}};
         }
 
         % show axis y
         \int_step_inline:nnn {0} {#2-1} {
-            \node[text~centered, text={color7}, yshift=-16*##1] at (-\l_tmpa_int, -8) {\textbf{\tiny ##1}};
+            \node[text~centered, text={color7}, yshift=-16*##1] at
+                (-\l_tmpa_int, -8) {\textbf{\tiny ##1}};
         }
     }
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\element_colorcell:nn}
+% \qquad 给多个区域的方格染色, 接受两个参数 |#1|, |#2|. |#1| 仅能传入 \tn{element_cellcolored:n} 中接受的颜色, |#2| 传入待绘制的多个区域.
+%    \begin{macrocode}
 \cs_set:Npn \element_colorcell:nn #1#2 {
     \tl_set:Nn \l_tmpa_tl {#2}
     \seq_set_split:NnV \l_tmpa_seq {;} \l_tmpa_tl
@@ -619,6 +890,11 @@ This package consists of the files tikz-minesweeper.dtx,
     }
 }
 
+%    \end{macrocode}
+% \end{macro}
+%
+% 提供不显式调用 \LaTeXiii{} 的用户接口.
+%    \begin{macrocode}
 \newcommand{\flag}{\element_flag:}
 \newcommand{\mine}{\element_mine:}
 \newcommand{\cellup}{\element_cellup:}
@@ -631,10 +907,15 @@ This package consists of the files tikz-minesweeper.dtx,
 \newcommand{\board}[3][-]{\element_border:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\element_colorcell:nn {#1}{#2}}
 
+%    \end{macrocode}
+%
+% 关闭 \LaTeXiii{} 编程环境.
+%    \begin{macrocode}
 \ExplSyntaxOff
 
-%</package>
-% \fi
+%    \end{macrocode}
+%
+% \end{implementation}
 %
 % \Finale
 %
