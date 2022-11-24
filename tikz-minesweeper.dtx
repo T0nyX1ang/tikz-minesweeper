@@ -89,6 +89,11 @@ This package consists of the files tikz-minesweeper.dtx,
     \DocInput{tikz-minesweeper.dtx}
     \IndexLayout
     \PrintChanges
+    \IndexPrologue{%
+    \section{\indexname}
+    \textit{意大利体的数字表示描述对应索引项的页码,
+    带下划线的数字表示定义对应索引项的代码行号,
+    罗马字体的数字表示使用对应索引项的代码行号.}}
     \PrintIndex
 \end{document}
 %</driver>
@@ -230,9 +235,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \subsection{方格元素}
 %
-% \changes{v0.1.0}{2022/01/30}{新增旗帜命令 \tn{flag}.}
-%
 % \begin{function}[added=2022-01-30]{\flag}
+% \changes{v0.1.0}{2022/01/30}{新增旗帜命令 \tn{flag}.}
 %   \begin{syntax}
 %      \tn{flag}
 %   \end{syntax}
@@ -269,29 +273,27 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \caption{旗子和雷的细节图}
 % \end{figure}
 %
-% \changes{v0.1.0}{2022/01/30}{新增地雷命令 \tn{mine}.}
-%
 % \begin{function}[added=2022-01-30]{\mine}
+% \changes{v0.1.0}{2022/01/30}{新增地雷命令 \tn{mine}.}
 %   \begin{syntax}
 %      \tn{mine}
 %   \end{syntax}
 % \qquad 绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影.
 % \end{function}
 %
-% \changes{v0.1.0}{2022/01/30}{新增方格弹起时和按下时的命令 \tn{cellup} 和 \tn{celldown}.}
-%
 % \begin{function}[added=2022-01-30]{\cellup}
+% \changes{v0.1.0}{2022/01/30}{新增方格弹起时和按下时的命令 \tn{cellup} 和 \tn{celldown}.}
 %   \begin{syntax}
 %      \tn{cellup}
 %   \end{syntax}
-% \qquad 绘制鼠标弹起时的方格. 首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面, 营造立体感, 亮面和暗面的宽度均为2, 然后用 \ColorTagZero{} 绘制底色. 需要注意的是, 该方格的中心点为 (8.5, -8.5), 与 \tn{celldown} 指令对应方格的中心点不同.
+% \qquad 绘制鼠标弹起时的方格. 首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面, 营造立体感, 亮面和暗面的宽度均为2, 然后用 \ColorTagZero{} 绘制底色. 需要注意的是, 该方格的中心点为 (8.5, -8.5), 与 |\celldown| 指令对应方格的中心点不同.
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\celldown}
 %   \begin{syntax}
 %      \tn{celldown}
 %   \end{syntax}
-% \qquad 绘制鼠标按下时的方格. 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagZero{} 绘制底色, 左和上的边界宽度均为1. 需要注意的是, c此时方格的中心点为 (8, -8), 与 \tn{cellup} 指令对应方格的中心点不同.
+% \qquad 绘制鼠标按下时的方格. 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagZero{} 绘制底色, 左和上的边界宽度均为1. 需要注意的是, c此时方格的中心点为 (8, -8), 与 |\cellup| 指令对应方格的中心点不同.
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -310,14 +312,13 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \caption{弹起的方格与按下的方格(包含中心点)}
 % \end{figure}
 %
+% \begin{function}[added=2022-01-30, updated=2022-11-23]{\cellnum}
 % \changes{v0.1.0}{2022/01/30}{新增数字命令 \tn{cellnum}.}
 % \changes{v0.2.0}{2022/11/23}{将普通数字 1 至 8 调整为矢量化数字 1 至 8.}
-%
-% \begin{function}[added=2022-01-30, updated=2022-11-23]{\cellnum}
 %   \begin{syntax}
 %      \tn{cellnum} \marg{num=1|2|3|4|5|6|7|8}
 %   \end{syntax}
-% \qquad 在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. 如果 \marg{num} 不为 1 至 8, 则该指令不起作用. 需要注意的是, 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与 \tn{celldown} 指令一起使用.
+% \qquad 在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. 如果 \meta{num} 不为 1 至 8, 则该指令不起作用. 需要注意的是, 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与 |\celldown| 指令一起使用.
 % \end{function}
 %
 % \subsection{边框元素}
@@ -326,7 +327,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %   \begin{syntax}
 %      \tn{border} \oarg{border\_type=-|t|l|b|r}
 %   \end{syntax}
-% \qquad 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角. 边框分为三层, 中间层使用 \ColorTagZero{} 绘制, 宽度为 6, 内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感, 宽度为 3. 提供立体感的方式和 \tn{cellup} 同理. 左边和上边的高亮外边缘用 \ColorTagBorder{} 封边. 默认参数为 -, 即绘制全部边框.
+% \qquad 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角. 边框分为三层, 中间层使用 \ColorTagZero{} 绘制, 宽度为 6, 内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感, 宽度为 3. 提供立体感的方式和 |\cellup| 同理. 左边和上边的高亮外边缘用 \ColorTagBorder{} 封边. 默认参数为 -, 即绘制全部边框.
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -351,58 +352,56 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % 这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块, 如果没有特定的设计需求，推荐仅使用这一部分提供的模块.
 %
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \marg{info} 选项: 数字 0-8.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \marg{info} 选项: 九种颜色指令 r, g, b, c, y, o, t, l, v.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \marg{info} 选项: 旗帜 f, 雷 m.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \marg{info} 输入单字符和多字符.}
-% \changes{v0.2.0}{2022/11/23}{由于颜色 teal 和 lime 难以与其它颜色分辨, \tn{cell} 参数 \marg{info} 选项取消 t, l.}
-% \changes{v0.2.0}{2022/11/23}{\tn{cell} 支持参数 \marg{info} 选项: 半透明雷 s, 踩雷 n 和标记错误 e.}
-%
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cell}
+% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 数字 0-8.}
+% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 九种颜色指令 r, g, b, c, y, o, t, l, v.}
+% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 旗帜 f, 雷 m.}
+% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 输入单字符和多字符.}
+% \changes{v0.2.0}{2022/11/23}{由于颜色 teal 和 lime 难以与其它颜色分辨, \tn{cell} 参数 \meta{info} 选项取消 t, l.}
+% \changes{v0.2.0}{2022/11/23}{\tn{cell} 支持参数 \meta{info} 选项: 半透明雷 s, 踩雷 n 和标记错误 e.}
 %   \begin{syntax}
 %      \tn{cell} \marg{r} \marg{c} \marg{info}
 %   \end{syntax}
-% \qquad 在第 \marg{r} 行第 \marg{c} 列交叉处绘制包含内容 \marg{info} 的方格, 行列均从 0 开始编号. \marg{info} 的检查顺序如下:
+% \qquad 在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格, 行列均从 0 开始编号. \meta{info} 的检查顺序如下:
 % \begin{itemize}
-%     \item 如果 \marg{info} 是 0-8 的数字, 方格是按下状态并且数字会上色;
-%     \item 如果 \marg{info} 是 r(红色, red), g(绿色, green), b(蓝色, blue), c(cyan, 湖蓝色), y(yellow, 黄色), o(orange, 橘色), v(violet, 紫色) 中的一个, 方格是抬起状态, 且会染成对应颜色, 方格颜色的透明度为\textbf{0.2};
-%     \item 如果 \marg{info} 是 f, 方格是弹起状态并且会插旗.
-%     \item 如果 \marg{info} 是 m, 方格是按下状态并且会显示地雷.
-%     \item 如果 \marg{info} 是 s, 方格是按下状态并且会显示半透明的地雷, 即将地雷的颜色调整为 \ColorTagShade{}.
-%     \item 如果 \marg{info} 是 n, 方格是按下状态并且会显示踩到地雷, 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagFail{} 绘制底色.
-%     \item 如果 \marg{info} 是 e, 方格是按下状态并且会显示标记错误的地雷, 即在普通地雷的基础上, 进一步用 \ColorTagFail{} 绘制一个叉.
-%     \item 如果 \marg{info} 是 -, 方格是弹起状态并且无字符.
-%     \item 如果 \marg{info} 是其他\textbf{单个}字符, 方格是弹起状态并包含该字符, 字符中心为 (8, -8).
-%     \item 如果 \marg{info} 包含\textbf{多个}字符, 将会自动缩小字符, 转化为 |\tiny| 模式.
+%     \item 如果 \meta{info} 是 0-8 的数字, 方格是按下状态并且数字会上色;
+%     \item 如果 \meta{info} 是 r(红色, red), g(绿色, green), b(蓝色, blue), c(cyan, 湖蓝色), y(yellow, 黄色), o(orange, 橘色), v(violet, 紫色) 中的一个, 方格是抬起状态, 且会染成对应颜色, 方格颜色的透明度为\textbf{0.2};
+%     \item 如果 \meta{info} 是 f, 方格是弹起状态并且会插旗.
+%     \item 如果 \meta{info} 是 m, 方格是按下状态并且会显示地雷.
+%     \item 如果 \meta{info} 是 s, 方格是按下状态并且会显示半透明的地雷, 即将地雷的颜色调整为 \ColorTagShade{}.
+%     \item 如果 \meta{info} 是 n, 方格是按下状态并且会显示踩到地雷, 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagFail{} 绘制底色.
+%     \item 如果 \meta{info} 是 e, 方格是按下状态并且会显示标记错误的地雷, 即在普通地雷的基础上, 进一步用 \ColorTagFail{} 绘制一个叉.
+%     \item 如果 \meta{info} 是 -, 方格是弹起状态并且无字符.
+%     \item 如果 \meta{info} 是其他\textbf{单个}字符, 方格是弹起状态并包含该字符, 字符中心为 (8, -8).
+%     \item 如果 \meta{info} 包含\textbf{多个}字符, 将会自动缩小字符, 转化为 |\tiny| 模式.
 % \end{itemize}
 % \end{function}
 %
-% \changes{v0.1.0}{2022/01/30}{提供 \tn{row} 命令和 \tn{col} 命令.}
-%
 % \begin{function}[added=2022-01-30]{\row}
+% \changes{v0.1.0}{2022/01/30}{新增 \tn{row} 命令和 \tn{col} 命令.}
 %   \begin{syntax}
 %      \tn{row} \marg{r} \marg{seq:info}
 %   \end{syntax}
-% \qquad 在第 \marg{r} 行从左到右绘制多个方格. \marg{seq:info} 为一个含有 \marg{info} 的序列, 序列中的每个元素作为 \tn{cell} 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如|1{23}4|的序列长度为3, 该序列中的元素分别为 1, 23 和 4.
+% \qquad 在第 \meta{r} 行从左到右绘制多个方格. \meta{seq:info} 为一个含有 \meta{info} 的序列, 序列中的每个元素作为 |\cell| 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如 |1{23}4| 的序列长度为3, 该序列中的元素分别为 1, 23 和 4.
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\col}
 %   \begin{syntax}
 %      \tn{col} \marg{c} \marg{seq:info}
 %   \end{syntax}
-% \qquad 在第 \marg{c} 列从上到下绘制多个方格, 语法与 \tn{row} 一致.
+% \qquad 在第 \meta{c} 列从上到下绘制多个方格, 语法与 |\row| 一致.
 % \end{function}
 %
-% \changes{v0.1.0}{2022/01/30}{提供\tn{board}指令与四种边界类型.}
+% \begin{function}[added=2022-01-30, updated=2022-11-23]{\board}
+% \changes{v0.1.0}{2022/01/30}{新增 \tn{board} 指令与四种边界类型.}
 % \changes{v0.2.0}{2022/11/23}{新增标记行列坐标选项 x.}
 % \changes{v0.2.0}{2022/11/23}{提前绘制同色邻接区域, 以避免格子的同色邻接区域导致的渲染问题.}
-% \begin{function}[added=2022-01-30, updated=2022-11-23]{\board}
 %   \begin{syntax}
 %      \tn{board} \oarg{border\_type=-|t|l|b|r|x} \marg{r} \marg{c}
 %   \end{syntax}
-% \qquad 绘制[r]行[c]列的边框, t, r, b, l 为与 |\border| 对应可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了 - 标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制. 解析器只会解析最后一个 - 标志的位置, 即 |\border[-br-tl-lb-b]| 会被解析为 |\border[-b]|. 解析器不会解析重复的参数, 即 |\border[ttblbtlb]| 会被解析为 |\border[tlb]|. 可选指令 x 表示是否显示横纵坐标, 默认为不显示.
+% \qquad 绘制 \meta{r} 行 \meta{c} 列的边框, t, r, b, l 为与 |\border| 对应可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了 - 标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制. 解析器只会解析最后一个 - 标志的位置, 即 |\border[-br-tl-lb-b]| 会被解析为 |\border[-b]|. 解析器不会解析重复的参数, 即 |\border[ttblbtlb]| 会被解析为 |\border[tlb]|. 可选指令 x 表示是否显示横纵坐标, 默认为不显示.
 %
-% 在绘制边框的过程中, 该指令会根据边框类型, 利用 |tikz| 宏包的截取指令, 自动以 \ColorTagBorder{} 为颜色, 绘制一个\textbf{0.2pt}的外边框. 同时, 为了避免格子的同色邻接区域导致的渲染问题, 该指令会提前绘制同色邻接区域.
+% 在绘制边框的过程中, 该指令会根据边框类型, 利用 \pkg{tikz} 宏包的截取指令, 自动以 \ColorTagBorder{} 为颜色, 绘制一个\textbf{0.2pt}的外边框. 同时, 为了避免格子的同色邻接区域导致的渲染问题, 该指令会提前绘制同色邻接区域.
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -429,12 +428,12 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \caption{横纵坐标显示示例}
 % \end{figure}
 %
-% \changes{v0.1.0}{2022/01/30}{提供\tn{colorcell}指令.}
 % \begin{function}[added=2022-01-30]{\colorcell}
+% \changes{v0.1.0}{2022/01/30}{新增 \tn{colorcell} 指令.}
 %   \begin{syntax}
 %      \tn{colorcell} \marg{color} \marg{seq: pos}
 %   \end{syntax}
-% % \qquad 将\marg{seq: pos}位置的方格染色为\marg{color}颜色. \marg{color} 仅能传入 |\cell| 中接受的颜色类型. \marg{seq: pos} 定义了一个位置序列, 格式如下:
+% \qquad 将\meta{seq: pos}位置的方格染色为\meta{color}颜色. \meta{color} 仅能传入 |\cell| 中接受的颜色类型. \meta{seq: pos} 定义了一个位置序列, 格式如下:
 % \begin{itemize}
 %     \item 序列中的每个元素以分号(;)分隔.
 %     \item 对于每个元素, 以逗号(,)分隔行区间和列区间.
@@ -865,7 +864,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\element_colorcell:nn}
-% \qquad 给多个区域的方格染色, 接受两个参数 |#1|, |#2|. |#1| 仅能传入 \tn{element_cellcolored:n} 中接受的颜色, |#2| 传入待绘制的多个区域.
+% \qquad 给多个区域的方格染色, 接受两个参数 |#1|, |#2|. |#1| 仅能传入 |\element_cellcolored:n| 中接受的颜色, |#2| 传入待绘制的多个区域.
 %    \begin{macrocode}
 \cs_set:Npn \element_colorcell:nn #1#2 {
     \tl_set:Nn \l_tmpa_tl {#2}
