@@ -50,7 +50,7 @@ Draw a minesweeper board in LaTeX.
 
 - `\cellnum{num}`: draw a cell with a centered number (0-8)
 
-- `\cell{r}{c}{info}`: draw `info` at (`r`, `c`), see #1 for detailed command discussions
+- `\cell{r}{c}{info}`: draw `info` at (`r`, `c`), see [here](https://github.com/T0nyX1ang/tikz-minesweeper/discussions/16) for detailed command discussions
 
 - `\row{r}{seq: info}`: draw a row with a sequence of `info` according to `\cell`
 
@@ -74,8 +74,8 @@ Draw a minesweeper board in LaTeX.
 
 - This file may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version.
 
-- The latest version of this license is in: <http://www.latex-project.org/lppl.txt> and version 1.3 or later is part of all distributions of LaTeX version 2005/12/01 or later.
+- The latest version of this license is at: <http://www.latex-project.org/lppl.txt> and version 1.3 or later is part of all distributions of LaTeX version 2005/12/01 or later.
 
 ## Other notes
 
-- `tikz-minesweeper.pdf` is fully in Chinese, and we don't have the efforts to translate it into other languages now.
+- `tikz-minesweeper.pdf` is fully in Chinese, and we don't have the effort to translate it into other languages now.
