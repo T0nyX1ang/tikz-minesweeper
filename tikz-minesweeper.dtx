@@ -527,10 +527,10 @@ This package consists of the files tikz-minesweeper.dtx,
 
 %    \end{macrocode}
 %
-% \begin{macro}{\element_flag:}
+% \begin{macro}{\msweeper_flag:}
 % \qquad 绘制旗子.
 %    \begin{macrocode}
-\cs_set:Nn \element_flag: {
+\cs_set:Nn \msweeper_flag: {
     \fill[color7] (5, -13) rectangle (12, -12); % lower base
     \fill[color7] (6.5, -13) rectangle (10.5, -11); % upper base
     \fill[color7] (8.5, -13) rectangle (9.5, -4); % pole
@@ -540,10 +540,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_mine:}
+% \begin{macro}{\msweeper_mine:}
 % \qquad 绘制地雷.
 %    \begin{macrocode}
-\cs_set:Nn \element_mine: {
+\cs_set:Nn \msweeper_mine: {
     \int_step_inline:nnnn {0} {45} {135} {
         \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) --
             (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) --
@@ -555,10 +555,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_mine_shaded:}
+% \begin{macro}{\msweeper_mine_shaded:}
 % \qquad 绘制半透明的地雷. 需要注意的是, 半透明的雷的颜色没有与其它颜色解耦, 如果定义了不同的配色方案, 请谨慎绘制这种地雷.
 %    \begin{macrocode}
-\cs_set:Nn \element_mine_shaded: {
+\cs_set:Nn \msweeper_mine_shaded: {
     \int_step_inline:nnnn {0} {45} {135} {
         \fill[cshade, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) --
             (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) --
@@ -570,10 +570,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_cellup:}
+% \begin{macro}{\msweeper_cellup:}
 % \qquad 绘制鼠标弹起时的方格.
 %    \begin{macrocode}
-\cs_set:Nn \element_cellup: {
+\cs_set:Nn \msweeper_cellup: {
     \fill[clight] (0, 0) -- (16, 0) -- (0, -16) -- cycle; % highlight
     \fill[cshade] (16, -16) -- (0, -16) -- (16, 0) -- cycle; % shade
     \fill[color0] (2, -2) rectangle (14, -14); % background
@@ -582,10 +582,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_celldown:}
+% \begin{macro}{\msweeper_celldown:}
 % \qquad 绘制鼠标按下后的方格.
 %    \begin{macrocode}
-\cs_set:Nn \element_celldown: {
+\cs_set:Nn \msweeper_celldown: {
     \fill[cshade] (0, -16) rectangle (16, 0); % border
     \fill[color0] (1, -16) rectangle (16, -1); % background
 }
@@ -593,10 +593,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_cellfail:}
+% \begin{macro}{\msweeper_cellfail:}
 % \qquad 绘制由于踩雷而失败的方格.
 %    \begin{macrocode}
-\cs_set:Nn \element_cellfail: {
+\cs_set:Nn \msweeper_cellfail: {
     \fill[cshade] (0, -16) rectangle (16, 0); % border
     \fill[cfail] (1, -16) rectangle (16, -1); % background
 }
@@ -604,11 +604,11 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_misflagfail:}
+% \begin{macro}{\msweeper_misflagfail:}
 % \qquad 绘制由于标记错误而失败的方格.
 %    \begin{macrocode}
-\cs_set:Nn \element_misflagfail: {
-    \element_mine:
+\cs_set:Nn \msweeper_misflagfail: {
+    \msweeper_mine:
     \draw[cfail, line~width=1] (2.5, -2.5) -- (14.5, -14.5); % cross line
     \draw[cfail, line~width=1] (2.5, -14.5) -- (14.5, -2.5); % cross line
 }
@@ -616,13 +616,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_cellnum:n}
+% \begin{macro}{\msweeper_cellnum:n}
 % \qquad 用 \ColorTagOne{} 至 \ColorTagEight{} 绘制给定的矢量化数字 1 至 8, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 1 至 8, 传入其它值将会被忽略.
 %    \begin{macrocode}
-\cs_set:Npn \element_cellnum:n #1 {
+\cs_set:Npn \msweeper_cellnum:n #1 {
     \tl_case:Nn #1 {
         % Textures come from https://github.com/Minesweeper-World/MS-Texture/
         % Positions tweaked by ./support/tikz-path-xyshift.py
+        % If the user pass into values other than 1-8, the input will be ignored.
         1 { \fill[color1] (5, -11.5) -- (5, -13.5) -- (12, -13.5) -- (12, -11.5) --
             (10, -11.5) -- (10, -3.5) -- (8.5, -3.5) -- (5, -7.0) -- (5, -7.5) --
             (7, -7.5) -- (7, -11.5) -- cycle; }
@@ -681,10 +682,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_cellcolored:n}
+% \begin{macro}{\msweeper_cellcolored:n}
 % \qquad 绘制鼠标按下时的染色方格, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 r, g, b, c, y, o, v 中的一个, 传入其它值将会被忽略.
 %    \begin{macrocode}
-\cs_set:Npn \element_cellcolored:n #1 {
+\cs_set:Npn \msweeper_cellcolored:n #1 {
     \tl_case:NnT #1 {
         r { \tl_set:Nn \l_tmpa_tl {red} }
         g { \tl_set:Nn \l_tmpa_tl {green} }
@@ -703,10 +704,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_cell:nnn}
+% \begin{macro}{\msweeper_cell:nnn}
 % \qquad 绘制方格, 接受三个参数 |#1|, |#2|, |#3|. 在坐标(|#3|, |#2|)处绘制一个方格, 方格中的内容由 |#1| 决定, |#1|可以传入任意参数. 该函数依次检查 |#1| 是否为数字参数 (012345678), 颜色参数 (rgbcyov), 雷与旗帜参数 (fmsne-), 除上述字符外的单字符参数以及多字符参数.
 %    \begin{macrocode}
-\cs_set:Npn \element_cell:nnn #1#2#3 {
+\cs_set:Npn \msweeper_cell:nnn #1#2#3 {
     \sffamily
     \tl_set:Nn \l_tmpa_tl {012345678}
     \tl_set:Nn \l_tmpb_tl {rgbcyov}
@@ -714,26 +715,26 @@ This package consists of the files tikz-minesweeper.dtx,
         \tl_if_single:nTF {#1} {
             % single token
             \tl_if_in:NnTF \l_tmpa_tl {#1} {
-                \element_celldown: \element_cellnum:n {#1} % number
+                \msweeper_celldown: \msweeper_cellnum:n {#1} % number
             } {
                 \tl_if_in:NnTF \l_tmpb_tl {#1} {
-                    \element_cellup: \element_cellcolored:n {#1} % color
+                    \msweeper_cellup: \msweeper_cellcolored:n {#1} % color
                 } {
                     \tl_case:NnF #1 {
-                        f { \element_cellup: \element_flag: } % flag
-                        m { \element_celldown: \element_mine: } % mine
-                        s { \element_celldown: \element_mine_shaded: } % shaded
-                        n { \element_cellfail: \element_mine: } % blasted
-                        e { \element_celldown: \element_misflagfail: } % misflagged
-                        - { \element_cellup: } % empty
+                        f { \msweeper_cellup: \msweeper_flag: } % flag
+                        m { \msweeper_celldown: \msweeper_mine: } % mine
+                        s { \msweeper_celldown: \msweeper_mine_shaded: } % shaded
+                        n { \msweeper_cellfail: \msweeper_mine: } % blasted
+                        e { \msweeper_celldown: \msweeper_misflagfail: } % misflagged
+                        - { \msweeper_cellup: } % empty
                     } {
-                        \element_cellup:
+                        \msweeper_cellup:
                         \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}};
                     } % normal label
                 }
             }
         } {
-            \element_cellup:
+            \msweeper_cellup:
             \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}};
         } % tiny label
     \end{scope}
@@ -742,16 +743,16 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_line:nnn}
+% \begin{macro}{\msweeper_line:nnn}
 % \qquad 绘制一行或者一列的格子, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为行号或者列号, |#2| 为按行首(r)或者按列首(c)依次绘制格子, 其余参数将不会绘制, |#3| 为格子内容.
 %    \begin{macrocode}
-\cs_set:Npn \element_line:nn #1#2#3 {
+\cs_set:Npn \msweeper_line:nn #1#2#3 {
     \tl_set:Nn \l_tmpa_tl {#2}
     \int_zero:N \l_tmpa_int
     \tl_map_inline:Nn \l_tmpa_tl {
         \tl_case:Nn #3 {
-            r { \element_cell:nnn {##1}{#1}{\l_tmpa_int} }
-            c { \element_cell:nnn {##1}{\l_tmpa_int}{#1} }
+            r { \msweeper_cell:nnn {##1}{#1}{\l_tmpa_int} }
+            c { \msweeper_cell:nnn {##1}{\l_tmpa_int}{#1} }
         }
         \int_incr:N \l_tmpa_int
     }
@@ -760,10 +761,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_border:nnn}
+% \begin{macro}{\msweeper_border:nnn}
 % \qquad 绘制边框, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为边框种类参数, |#2| 为行数, |#3| 为列数. 参数 |#1| 可以传入 t, l, b, r, -, x 中的任意多个值.
 %    \begin{macrocode}
-\cs_set:Npn \element_border:nnn #1#2#3 {
+\cs_set:Npn \msweeper_border:nnn #1#2#3 {
     \bool_set_false:N \l_tmpa_bool
     \bool_set_false:N \l__ms_flagt_bool
     \bool_set_false:N \l__ms_flagl_bool
@@ -868,10 +869,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\element_colorcell:nn}
-% \qquad 给多个区域的方格染色, 接受两个参数 |#1|, |#2|. |#1| 仅能传入 |\element_cellcolored:n| 中接受的颜色, |#2| 传入待绘制的多个区域.
+% \begin{macro}{\msweeper_colorcell:nn}
+% \qquad 给多个区域的方格染色, 接受两个参数 |#1|, |#2|. |#1| 仅能传入 |\msweeper_cellcolored:n| 中接受的颜色, |#2| 传入待绘制的多个区域.
 %    \begin{macrocode}
-\cs_set:Npn \element_colorcell:nn #1#2 {
+\cs_set:Npn \msweeper_colorcell:nn #1#2 {
     \tl_set:Nn \l_tmpa_tl {#2}
     \seq_set_split:NnV \l_tmpa_seq {;} \l_tmpa_tl
     \seq_map_inline:Nn \l_tmpa_seq {
@@ -888,7 +889,7 @@ This package consists of the files tikz-minesweeper.dtx,
         \int_step_variable:nnNn {\l__ms_widthx_tl} {\l__ms_widthy_tl} \l_tmpc_tl {
             \int_step_variable:nnNn {\l__ms_heightx_tl} {\l__ms_heighty_tl} \l_tmpd_tl {
                 \begin{scope}[xshift=\l_tmpd_tl*16,yshift=-\l_tmpc_tl*16]
-                    \element_cellcolored:n {#1}
+                    \msweeper_cellcolored:n {#1}
                 \end{scope}
             }
         }
@@ -900,17 +901,17 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % 提供不显式调用 \LaTeXiii{} 的用户接口.
 %    \begin{macrocode}
-\newcommand{\flag}{\element_flag:}
-\newcommand{\mine}{\element_mine:}
-\newcommand{\cellup}{\element_cellup:}
-\newcommand{\celldown}{\element_celldown:}
-\newcommand{\cellnum}[1]{\element_cellnum:n {#1}}
-\newcommand{\cell}[3]{\element_cell:nnn {#1}{#2}{#3}}
-\newcommand{\row}[2]{\element_line:nn {#1}{#2}{r}}
-\newcommand{\col}[2]{\element_line:nn {#1}{#2}{c}}
-\newcommand{\border}[1][-]{\element_border:nnn {#1}{1}{1}}
-\newcommand{\board}[3][-]{\element_border:nnn {#1}{#2}{#3}}
-\newcommand{\colorcell}[2]{\element_colorcell:nn {#1}{#2}}
+\newcommand{\flag}{\msweeper_flag:}
+\newcommand{\mine}{\msweeper_mine:}
+\newcommand{\cellup}{\msweeper_cellup:}
+\newcommand{\celldown}{\msweeper_celldown:}
+\newcommand{\cellnum}[1]{\msweeper_cellnum:n {#1}}
+\newcommand{\cell}[3]{\msweeper_cell:nnn {#1}{#2}{#3}}
+\newcommand{\row}[2]{\msweeper_line:nn {#1}{#2}{r}}
+\newcommand{\col}[2]{\msweeper_line:nn {#1}{#2}{c}}
+\newcommand{\border}[1][-]{\msweeper_border:nnn {#1}{1}{1}}
+\newcommand{\board}[3][-]{\msweeper_border:nnn {#1}{#2}{#3}}
+\newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
 
 %    \end{macrocode}
 %
