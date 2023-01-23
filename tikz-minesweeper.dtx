@@ -99,7 +99,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{356}
+% \CheckSum{408}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -532,6 +532,10 @@ This package consists of the files tikz-minesweeper.dtx,
 \str_const:Nn \c__msweeper_valid_numbers_str {012345678}
 \str_const:Nn \c__msweeper_valid_colors_str {rgbcyov}
 \str_new:N \l__msweeper_cellcolor_str
+\int_new:N \l__msweeper_rows_int
+\int_new:N \l__msweeper_cols_int
+\int_new:N \l__msweeper_cur_row_int
+\int_new:N \l__msweeper_cur_col_int
 
 %    \end{macrocode}
 %
@@ -631,7 +635,6 @@ This package consists of the files tikz-minesweeper.dtx,
     \str_case:nn {#1} {
         % Textures come from https://github.com/Minesweeper-World/MS-Texture/
         % Positions tweaked by ./support/tikz-path-xyshift.py
-        % If the user pass into values other than 1-8, the input will be ignored.
         {1} { \fill[color1] (5, -11.5) -- (5, -13.5) -- (12, -13.5) -- (12, -11.5) --
             (10, -11.5) -- (10, -3.5) -- (8.5, -3.5) -- (5, -7.0) -- (5, -7.5) --
             (7, -7.5) -- (7, -11.5) -- cycle; }
@@ -751,15 +754,14 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_line:nnn}
-% \qquad 绘制一行或者一列的格子, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为行号或者列号, |#3| 为按行首(r)或者按列首(c)依次绘制格子, 其余参数将不会绘制, |#2| 为格子内容.
+% \qquad 绘制一行或者一列的格子, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为行号或者列号, |#2| 为格子内容, |#3| 为按行首(r)或者按列首(c)依次绘制格子, 其余参数将不会绘制.
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_line:nn #1#2#3 {
-    \tl_set:Nn \l_tmpa_tl {#2}
     \int_zero:N \l_tmpa_int
-    \tl_map_inline:Nn \l_tmpa_tl {
-        \tl_case:Nn #3 {
-            r { \msweeper_cell:nnn {##1}{#1}{\l_tmpa_int} }
-            c { \msweeper_cell:nnn {##1}{\l_tmpa_int}{#1} }
+    \tl_map_inline:nn {#2} {
+        \str_case:nn {#3} {
+            {r} { \msweeper_cell:nnn {##1}{#1}{\l_tmpa_int} }
+            {c} { \msweeper_cell:nnn {##1}{\l_tmpa_int}{#1} }
         }
         \int_incr:N \l_tmpa_int
     }
@@ -782,9 +784,11 @@ This package consists of the files tikz-minesweeper.dtx,
     \int_zero_new:N \l__ms_flagl_int
     \int_zero_new:N \l__ms_flagb_int
     \int_zero_new:N \l__ms_flagr_int
-    \tl_set:Nn \l_tmpa_tl {#1}
 
-    \tl_map_inline:Nn \l_tmpa_tl {
+    \int_set:Nn \l__msweeper_rows_int {#2}
+    \int_set:Nn \l__msweeper_cols_int {#3}
+
+    \tl_map_inline:nn {#1} {
         \tl_case:Nn ##1 {
             - {
                 \bool_set_true:N \l_tmpa_bool
@@ -810,13 +814,13 @@ This package consists of the files tikz-minesweeper.dtx,
         \bool_if:NT \l__ms_flagt_bool { \int_add:Nn \l_tmpb_int {12} }
 
         % show axis x
-        \int_step_inline:nnn {0} {#3-1} {
+        \int_step_inline:nnn {0} {\l__msweeper_cols_int - 1} {
             \node[text~centered, text={color7}, xshift=16*##1] at
                 (8, \l_tmpb_int) {\textbf{\tiny ##1}};
         }
 
         % show axis y
-        \int_step_inline:nnn {0} {#2-1} {
+        \int_step_inline:nnn {0} {\l__msweeper_rows_int - 1} {
             \node[text~centered, text={color7}, yshift=-16*##1] at
                 (-\l_tmpa_int, -8) {\textbf{\tiny ##1}};
         }
@@ -835,38 +839,56 @@ This package consists of the files tikz-minesweeper.dtx,
     % clipping the area inside of a scope to avoid side effects
     \begin{scope}
         \clip (0 + \l__ms_flagl_int * 12, 0 + \l__ms_flagt_int * 12) rectangle
-            (#3*16 + \l__ms_flagr_int * 12, -#2*16 + \l__ms_flagb_int * 12);
-        \fill[clight] (-12, 12) -- (#3*16+12, 12) -- (#3*16, 0) -- (0, 0) --
-            (0, -#2*16) -- (-12, -#2*16-12) -- cycle;
-        \fill[cborder] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+12, 12) --
-            (#3*16+12, -#2*16-12) -- (-12, -#2*16-12) -- (0, -#2*16) -- cycle;
-        \fill[color0] (-9, 9) -- (#3*16+9, 9) -- (#3*16+9, 0) -- (0, 0) --
-            (0, -#2*16) -- (-9, -#2*16-9) -- cycle;
-        \fill[color0] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+9, 9) --
-            (#3*16+9, -#2*16-9) -- (-9, -#2*16-9) -- (-9, -#2*16) -- cycle;
-        \fill[cborder] (-3, 3) -- (#3*16+3, 3) -- (#3*16, 0) -- (0, 0) --
-            (0, -#2*16) -- (-3, -#2*16-3) -- cycle;
-        \fill[clight] (#3*16, -#2*16) -- (#3*16, 0) -- (#3*16+3, 3) --
-            (#3*16+3, -#2*16-3) -- (-3, -#2*16-3) -- (0, -#2*16) -- cycle;
+            (\l__msweeper_cols_int * 16 + \l__ms_flagr_int * 12,
+            -\l__msweeper_rows_int * 16 + \l__ms_flagb_int * 12);
+        \fill[clight] (-12, 12) -- (\l__msweeper_cols_int * 16 + 12, 12) --
+            (\l__msweeper_cols_int * 16, 0) -- (0, 0) --
+            (0, -\l__msweeper_rows_int * 16) --
+            (-12, -\l__msweeper_rows_int * 16 - 12) -- cycle;
+        \fill[cborder] (\l__msweeper_cols_int * 16, -\l__msweeper_rows_int * 16) --
+            (\l__msweeper_cols_int * 16, 0) --
+            (\l__msweeper_cols_int * 16 + 12, 12) --
+            (\l__msweeper_cols_int * 16 + 12, -\l__msweeper_rows_int * 16 - 12) --
+            (-12, -\l__msweeper_rows_int * 16 - 12) --
+            (0, -\l__msweeper_rows_int * 16) -- cycle;
+        \fill[color0] (-9, 9) -- (\l__msweeper_cols_int * 16+9, 9) --
+            (\l__msweeper_cols_int * 16+9, 0) -- (0, 0) --
+            (0, -\l__msweeper_rows_int * 16) --
+            (-9, -\l__msweeper_rows_int * 16-9) -- cycle;
+        \fill[color0] (\l__msweeper_cols_int * 16, -\l__msweeper_rows_int * 16) --
+            (\l__msweeper_cols_int * 16, 0) -- (\l__msweeper_cols_int * 16 + 9, 9) --
+            (\l__msweeper_cols_int * 16 + 9, -\l__msweeper_rows_int * 16 - 9) --
+            (-9, -\l__msweeper_rows_int * 16 - 9) --
+            (-9, -\l__msweeper_rows_int * 16) -- cycle;
+        \fill[cborder] (-3, 3) -- (\l__msweeper_cols_int * 16 + 3, 3) --
+            (\l__msweeper_cols_int * 16, 0) -- (0, 0) --
+            (0, -\l__msweeper_rows_int * 16) --
+            (-3, -\l__msweeper_rows_int * 16 - 3) -- cycle;
+        \fill[clight] (\l__msweeper_cols_int * 16, -\l__msweeper_rows_int * 16) --
+            (\l__msweeper_cols_int * 16, 0) -- (\l__msweeper_cols_int * 16 + 3, 3) --
+            (\l__msweeper_cols_int * 16 + 3, -\l__msweeper_rows_int * 16 - 3) --
+            (-3, -\l__msweeper_rows_int * 16 - 3) --
+            (0, -\l__msweeper_rows_int * 16) -- cycle;
     \end{scope}
 
-    \draw[cborder, line~width=0.4pt] (0 + \l__ms_flagl_int * 12,
-        0 + \l__ms_flagt_int * 12) rectangle (#3*16 + \l__ms_flagr_int * 12,
-        -#2*16 + \l__ms_flagb_int * 12);
+    \draw[cborder, line~width=0.4pt]
+        (0 + \l__ms_flagl_int * 12, 0 + \l__ms_flagt_int * 12) rectangle
+        (\l__msweeper_cols_int * 16 + \l__ms_flagr_int * 12,
+        -\l__msweeper_rows_int * 16 + \l__ms_flagb_int * 12);
 
     % draw lines in advance to avoid gaps
-    \int_step_inline:nnn {1} {#3-1} {
-        \int_step_variable:nnNn {1} {#2} \l_tmpb_tl {
-            \fill[cshade, xshift=##1*16, yshift=-\l_tmpb_tl*16] (0, 0) --
-                (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) --
+    \int_step_inline:nnn {1} {\l__msweeper_cols_int - 1} {
+        \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l__msweeper_cur_row_int {
+            \fill[cshade, xshift=##1*16, yshift=-\l__msweeper_cur_row_int * 16]
+                (0, 0) -- (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) --
                 (0, 16) -- (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) --
                 (0.5, 0.5) -- cycle;
         }
     }
-    \int_step_inline:nnn {1} {#2-1} {
-        \int_step_variable:nnNn {1} {#3} \l_tmpb_tl {
-            \fill[cshade, xshift=\l_tmpb_tl*16, yshift=-##1*16] (0, 0) --
-            (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
+    \int_step_inline:nnn {1} {\l__msweeper_rows_int - 1} {
+        \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l__msweeper_cur_col_int {
+            \fill[cshade, xshift=\l__msweeper_cur_col_int * 16, yshift=-##1 * 16]
+            (0, 0) -- (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
             (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) --
             (-0.5, 0.5) -- cycle;
         }
