@@ -99,7 +99,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{354}
+% \CheckSum{356}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -527,6 +527,14 @@ This package consists of the files tikz-minesweeper.dtx,
 
 %    \end{macrocode}
 %
+% 定义 \pkg{tikz-minesweeper} 宏包中的变量.
+%    \begin{macrocode}
+\tl_const:Nn \c__msweeper_valid_numbers_tl {012345678}
+\tl_const:Nn \c__msweeper_valid_colors_tl {rgbcyov}
+\tl_new:N \l__msweeper_cellcolor_tl
+
+%    \end{macrocode}
+%
 % \begin{macro}{\msweeper_flag:}
 % \qquad 绘制旗子.
 %    \begin{macrocode}
@@ -687,16 +695,17 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cellcolored:n #1 {
     \tl_case:NnT #1 {
-        r { \tl_set:Nn \l_tmpa_tl {red} }
-        g { \tl_set:Nn \l_tmpa_tl {green} }
-        b { \tl_set:Nn \l_tmpa_tl {blue} }
-        c { \tl_set:Nn \l_tmpa_tl {cyan} }
-        y { \tl_set:Nn \l_tmpa_tl {yellow} }
-        o { \tl_set:Nn \l_tmpa_tl {orange} }
-        v { \tl_set:Nn \l_tmpa_tl {violet} }
+        r { \tl_set:Nn \l__msweeper_cellcolor_tl {red} }
+        g { \tl_set:Nn \l__msweeper_cellcolor_tl {green} }
+        b { \tl_set:Nn \l__msweeper_cellcolor_tl {blue} }
+        c { \tl_set:Nn \l__msweeper_cellcolor_tl {cyan} }
+        y { \tl_set:Nn \l__msweeper_cellcolor_tl {yellow} }
+        o { \tl_set:Nn \l__msweeper_cellcolor_tl {orange} }
+        v { \tl_set:Nn \l__msweeper_cellcolor_tl {violet} }
     } {
         \begin{scope}
-            \fill[color=\l_tmpa_tl, opacity=0.2] (0, 0) rectangle (16, -16);
+            \fill[color=\l__msweeper_cellcolor_tl, opacity=0.2]
+                (0, 0) rectangle (16, -16);
         \end{scope}
     }
 }
@@ -709,15 +718,13 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cell:nnn #1#2#3 {
     \sffamily
-    \tl_set:Nn \l_tmpa_tl {012345678}
-    \tl_set:Nn \l_tmpb_tl {rgbcyov}
     \begin{scope}[xshift=#3*16, yshift=-#2*16]
         \tl_if_single:nTF {#1} {
             % single token
-            \tl_if_in:NnTF \l_tmpa_tl {#1} {
+            \tl_if_in:NnTF \c__msweeper_valid_numbers_tl {#1} {
                 \msweeper_celldown: \msweeper_cellnum:n {#1} % number
             } {
-                \tl_if_in:NnTF \l_tmpb_tl {#1} {
+                \tl_if_in:NnTF \c__msweeper_valid_colors_tl {#1} {
                     \msweeper_cellup: \msweeper_cellcolored:n {#1} % color
                 } {
                     \tl_case:NnF #1 {
