@@ -529,9 +529,9 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % 定义 \pkg{tikz-minesweeper} 宏包中的变量.
 %    \begin{macrocode}
-\tl_const:Nn \c__msweeper_valid_numbers_tl {012345678}
-\tl_const:Nn \c__msweeper_valid_colors_tl {rgbcyov}
-\tl_new:N \l__msweeper_cellcolor_tl
+\str_const:Nn \c__msweeper_valid_numbers_str {012345678}
+\str_const:Nn \c__msweeper_valid_colors_str {rgbcyov}
+\str_new:N \l__msweeper_cellcolor_str
 
 %    \end{macrocode}
 %
@@ -628,21 +628,21 @@ This package consists of the files tikz-minesweeper.dtx,
 % \qquad 用 \ColorTagOne{} 至 \ColorTagEight{} 绘制给定的矢量化数字 1 至 8, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 1 至 8, 传入其它值将会被忽略.
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cellnum:n #1 {
-    \tl_case:Nn #1 {
+    \str_case:nn {#1} {
         % Textures come from https://github.com/Minesweeper-World/MS-Texture/
         % Positions tweaked by ./support/tikz-path-xyshift.py
         % If the user pass into values other than 1-8, the input will be ignored.
-        1 { \fill[color1] (5, -11.5) -- (5, -13.5) -- (12, -13.5) -- (12, -11.5) --
+        {1} { \fill[color1] (5, -11.5) -- (5, -13.5) -- (12, -13.5) -- (12, -11.5) --
             (10, -11.5) -- (10, -3.5) -- (8.5, -3.5) -- (5, -7.0) -- (5, -7.5) --
             (7, -7.5) -- (7, -11.5) -- cycle; }
-        2 { \fill[color2] (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) --
+        {2} { \fill[color2] (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) --
             (10.0, -3.5) .. controls (13.5, -3.5) .. (13.5, -6.5) .. controls
             (13.5, -9.0) and (7.5, -10.5) .. (6.5, -11.5) -- (13.5, -11.5) --
             (13.5, -13.5) -- (3.5, -13.5) -- (3.5, -12.0) .. controls (3.5, -8.5)
             and (10.5, -8.5) .. (10.5, -6.5) .. controls (10.5, -5.5) ..
             (9.5, -5.5) -- (7.5, -5.5) .. controls (6.5, -5.5) ..
             (6.5, -6.5) -- cycle; }
-        3 { \fill[color3] (3.5, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) ..
+        {3} { \fill[color3] (3.5, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) ..
             (13.5, -6.5) .. controls (13.5, -8.0) .. (12.0, -8.5) .. controls
             (13.5, -9.0) .. (13.5, -10.5) .. controls (13.5, -13.5) ..
             (10.0, -13.5) -- (3.5, -13.5) -- (3.5, -11.5) -- (9.5, -11.5) ..
@@ -650,17 +650,17 @@ This package consists of the files tikz-minesweeper.dtx,
             (9.5, -9.5) -- (6.5, -9.5) -- (6.5, -7.5) -- (9.5, -7.5) .. controls
             (10.5, -7.5) .. (10.5, -6.5) .. controls (10.5, -5.5) .. (9.5, -5.5) --
             (3.5, -5.5) -- cycle; }
-        4 { \fill[color4] (6.0, -3.5) -- (3.5, -8.5) -- (3.5, -9.5) --
+        {4} { \fill[color4] (6.0, -3.5) -- (3.5, -8.5) -- (3.5, -9.5) --
             (9.5, -9.5) -- (9.5, -13.5) -- (12.5, -13.5) -- (12.5, -9.5) --
             (13.5, -9.5) -- (13.5, -7.5) -- (12.5, -7.5) -- (12.5, -3.5) --
             (9.5, -3.5) -- (9.5, -7.5) -- (7.0, -7.5) -- (9.0, -3.5) -- cycle; }
-        5 { \fill[color5] (3.5, -3.5) -- (13.5, -3.5) -- (13.5, -5.5) --
+        {5} { \fill[color5] (3.5, -3.5) -- (13.5, -3.5) -- (13.5, -5.5) --
             (6.5, -5.5) -- (6.5, -7.5) -- (10.0, -7.5) .. controls (13.5, -7.5) ..
             (13.5, -10.5) .. controls (13.5, -13.5) .. (10.0, -13.5) --
             (3.5, -13.5) -- (3.5, -11.5) -- (9.5, -11.5) .. controls
             (10.5, -11.5) .. (10.5, -10.5) .. controls (10.5, -9.5) ..
             (9.5, -9.5) -- (3.5, -9.5) -- cycle; }
-        6 { \fill[color6] (12.5, -3.5) -- (12.5, -5.5) -- (8.5, -5.5) ..
+        {6} { \fill[color6] (12.5, -3.5) -- (12.5, -5.5) -- (8.5, -5.5) ..
             controls (6.5, -5.5) .. (6.5, -6.5) -- (6.5, -10.5) .. controls
             (6.5, -11.5) .. (8.5, -11.5) .. controls (10.5, -11.5) ..
             (10.5, -10.5) .. controls (10.5, -9.5) .. (8.5, -9.5) -- (6.5, -9.5) --
@@ -668,10 +668,10 @@ This package consists of the files tikz-minesweeper.dtx,
             (13.5, -10.5) .. controls (13.5, -13.5) .. (10.0, -13.5) --
             (7.0, -13.5) .. controls (3.5, -13.5) .. (3.5, -10.5) --
             (3.5, -6.5) .. controls (3.5, -3.5) .. (7.0, -3.5) -- cycle; }
-        7 { \fill[color7] (3.5, -3.5) -- (13.5, -3.5) -- (13.5, -6.5) --
+        {7} { \fill[color7] (3.5, -3.5) -- (13.5, -3.5) -- (13.5, -6.5) --
             (10.0, -13.5) -- (7.0, -13.5) -- (10.5, -6.5) -- (10.5, -5.5) --
             (3.5, -5.5) -- cycle; }
-        8 { \fill[color8] (7.0, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) ..
+        {8} { \fill[color8] (7.0, -3.5) -- (10.0, -3.5) .. controls (13.5, -3.5) ..
             (13.5, -6.5) .. controls (13.5, -8.0) .. (12.0, -8.5) -- (10.5, -8.5) --
             (10.5, -6.5) .. controls (10.5, -5.5) .. (9.5, -5.5) -- (7.5, -5.5) ..
             controls (6.5, -5.5) .. (6.5, -6.5) .. controls (6.5, -7.5) ..
@@ -694,17 +694,17 @@ This package consists of the files tikz-minesweeper.dtx,
 % \qquad 绘制鼠标按下时的染色方格, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 r, g, b, c, y, o, v 中的一个, 传入其它值将会被忽略.
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cellcolored:n #1 {
-    \tl_case:NnT #1 {
-        r { \tl_set:Nn \l__msweeper_cellcolor_tl {red} }
-        g { \tl_set:Nn \l__msweeper_cellcolor_tl {green} }
-        b { \tl_set:Nn \l__msweeper_cellcolor_tl {blue} }
-        c { \tl_set:Nn \l__msweeper_cellcolor_tl {cyan} }
-        y { \tl_set:Nn \l__msweeper_cellcolor_tl {yellow} }
-        o { \tl_set:Nn \l__msweeper_cellcolor_tl {orange} }
-        v { \tl_set:Nn \l__msweeper_cellcolor_tl {violet} }
+    \str_case:nnT {#1} {
+        {r} { \str_set:Nn \l__msweeper_cellcolor_str {red} }
+        {g} { \str_set:Nn \l__msweeper_cellcolor_str {green} }
+        {b} { \str_set:Nn \l__msweeper_cellcolor_str {blue} }
+        {c} { \str_set:Nn \l__msweeper_cellcolor_str {cyan} }
+        {y} { \str_set:Nn \l__msweeper_cellcolor_str {yellow} }
+        {o} { \str_set:Nn \l__msweeper_cellcolor_str {orange} }
+        {v} { \str_set:Nn \l__msweeper_cellcolor_str {violet} }
     } {
         \begin{scope}
-            \fill[color=\l__msweeper_cellcolor_tl, opacity=0.2]
+            \fill[color=\l__msweeper_cellcolor_str, opacity=0.2]
                 (0, 0) rectangle (16, -16);
         \end{scope}
     }
@@ -721,19 +721,19 @@ This package consists of the files tikz-minesweeper.dtx,
     \begin{scope}[xshift=#3*16, yshift=-#2*16]
         \tl_if_single:nTF {#1} {
             % single token
-            \tl_if_in:NnTF \c__msweeper_valid_numbers_tl {#1} {
+            \str_if_in:NnTF \c__msweeper_valid_numbers_str {#1} {
                 \msweeper_celldown: \msweeper_cellnum:n {#1} % number
             } {
-                \tl_if_in:NnTF \c__msweeper_valid_colors_tl {#1} {
+                \str_if_in:NnTF \c__msweeper_valid_colors_str {#1} {
                     \msweeper_cellup: \msweeper_cellcolored:n {#1} % color
                 } {
-                    \tl_case:NnF #1 {
-                        f { \msweeper_cellup: \msweeper_flag: } % flag
-                        m { \msweeper_celldown: \msweeper_mine: } % mine
-                        s { \msweeper_celldown: \msweeper_mine_shaded: } % shaded
-                        n { \msweeper_cellfail: \msweeper_mine: } % blasted
-                        e { \msweeper_celldown: \msweeper_misflagfail: } % misflagged
-                        - { \msweeper_cellup: } % empty
+                    \str_case:nnF {#1} {
+                        {f} { \msweeper_cellup: \msweeper_flag: } % flag
+                        {m} { \msweeper_celldown: \msweeper_mine: } % mine
+                        {s} { \msweeper_celldown: \msweeper_mine_shaded: } % shaded
+                        {n} { \msweeper_cellfail: \msweeper_mine: } % blasted
+                        {e} { \msweeper_celldown: \msweeper_misflagfail: } % misflagged
+                        {-} { \msweeper_cellup: } % empty
                     } {
                         \msweeper_cellup:
                         \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}};
@@ -751,7 +751,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_line:nnn}
-% \qquad 绘制一行或者一列的格子, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为行号或者列号, |#2| 为按行首(r)或者按列首(c)依次绘制格子, 其余参数将不会绘制, |#3| 为格子内容.
+% \qquad 绘制一行或者一列的格子, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为行号或者列号, |#3| 为按行首(r)或者按列首(c)依次绘制格子, 其余参数将不会绘制, |#2| 为格子内容.
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_line:nn #1#2#3 {
     \tl_set:Nn \l_tmpa_tl {#2}
