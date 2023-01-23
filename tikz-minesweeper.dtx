@@ -756,7 +756,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \begin{macro}{\msweeper_line:nnn}
 % \qquad 绘制一行或者一列的格子, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为行号或者列号, |#2| 为格子内容, |#3| 为按行首(r)或者按列首(c)依次绘制格子, 其余参数将不会绘制.
 %    \begin{macrocode}
-\cs_set:Npn \msweeper_line:nn #1#2#3 {
+\cs_set:Npn \msweeper_line:nnn #1#2#3 {
     \int_zero:N \l_tmpa_int
     \tl_map_inline:nn {#2} {
         \str_case:nn {#3} {
@@ -936,8 +936,8 @@ This package consists of the files tikz-minesweeper.dtx,
 \newcommand{\celldown}{\msweeper_celldown:}
 \newcommand{\cellnum}[1]{\msweeper_cellnum:n {#1}}
 \newcommand{\cell}[3]{\msweeper_cell:nnn {#1}{#2}{#3}}
-\newcommand{\row}[2]{\msweeper_line:nn {#1}{#2}{r}}
-\newcommand{\col}[2]{\msweeper_line:nn {#1}{#2}{c}}
+\newcommand{\row}[2]{\msweeper_line:nnn {#1}{#2}{r}}
+\newcommand{\col}[2]{\msweeper_line:nnn {#1}{#2}{c}}
 \newcommand{\border}[1][-]{\msweeper_border:nnn {#1}{1}{1}}
 \newcommand{\board}[3][-]{\msweeper_border:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
