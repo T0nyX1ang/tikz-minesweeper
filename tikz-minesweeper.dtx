@@ -99,7 +99,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{408}
+% \CheckSum{413}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -534,8 +534,6 @@ This package consists of the files tikz-minesweeper.dtx,
 \str_new:N \l__msweeper_cellcolor_str
 \int_new:N \l__msweeper_rows_int
 \int_new:N \l__msweeper_cols_int
-\int_new:N \l__msweeper_cur_row_int
-\int_new:N \l__msweeper_cur_col_int
 
 %    \end{macrocode}
 %
@@ -770,6 +768,34 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\msweeper_gap_filler:}
+% \qquad 由于渲染问题, 绘制格子时, 同色区域之间可能会出现一个空白的缝隙, 该函数用于提前填充这些缝隙.
+%    \begin{macrocode}
+\cs_set:Nn \msweeper_gap_filler: {
+    % draw lines in advance to avoid gaps
+    % \l__msweeper_cur_col_tl and \l__msweeper_cur_row_tl are temporary variables
+    \int_step_variable:nnNn {1} {\l__msweeper_cols_int - 1} \l__msweeper_cur_col_tl {
+        \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l__msweeper_cur_row_tl {
+            \fill[cshade, xshift=\l__msweeper_cur_col_tl * 16,
+                  yshift=-\l__msweeper_cur_row_tl * 16] (0, 0) -- (-0.5, 0.5) --
+            (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) -- (0.5, 15.5) --
+            (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
+        }
+    }
+
+    \int_step_variable:nnNn {1} {\l__msweeper_rows_int - 1} \l__msweeper_cur_row_tl {
+        \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l__msweeper_cur_col_tl {
+            \fill[cshade, xshift=\l__msweeper_cur_col_tl * 16,
+                  yshift=-\l__msweeper_cur_row_tl * 16] (0, 0) -- (-0.5, -0.5) --
+            (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) -- (-16, 0) -- (-15.5, 0.5) --
+            (-15, 0) -- (-14.5, 0.5) -- (-0.5, 0.5) -- cycle;
+        }
+    }
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\msweeper_border:nnn}
 % \qquad 绘制边框, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为边框种类参数, |#2| 为行数, |#3| 为列数. 参数 |#1| 可以传入 t, l, b, r, -, x 中的任意多个值.
 %    \begin{macrocode}
@@ -876,23 +902,7 @@ This package consists of the files tikz-minesweeper.dtx,
         (\l__msweeper_cols_int * 16 + \l__ms_flagr_int * 12,
         -\l__msweeper_rows_int * 16 + \l__ms_flagb_int * 12);
 
-    % draw lines in advance to avoid gaps
-    \int_step_inline:nnn {1} {\l__msweeper_cols_int - 1} {
-        \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l__msweeper_cur_row_int {
-            \fill[cshade, xshift=##1*16, yshift=-\l__msweeper_cur_row_int * 16]
-                (0, 0) -- (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) --
-                (0, 16) -- (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) --
-                (0.5, 0.5) -- cycle;
-        }
-    }
-    \int_step_inline:nnn {1} {\l__msweeper_rows_int - 1} {
-        \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l__msweeper_cur_col_int {
-            \fill[cshade, xshift=\l__msweeper_cur_col_int * 16, yshift=-##1 * 16]
-            (0, 0) -- (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
-            (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) --
-            (-0.5, 0.5) -- cycle;
-        }
-    }
+    \msweeper_gap_filler:
 }
 
 %    \end{macrocode}
