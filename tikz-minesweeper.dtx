@@ -99,7 +99,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{413}
+% \CheckSum{374}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -534,6 +534,10 @@ This package consists of the files tikz-minesweeper.dtx,
 \str_new:N \l__msweeper_cellcolor_str
 \int_new:N \l__msweeper_rows_int
 \int_new:N \l__msweeper_cols_int
+\int_new:N \l__msweeper_tborder_int
+\int_new:N \l__msweeper_lborder_int
+\int_new:N \l__msweeper_bborder_int
+\int_new:N \l__msweeper_rborder_int
 
 %    \end{macrocode}
 %
@@ -766,6 +770,27 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\msweeper_row_col_marker:}
+% \qquad 绘制行列坐标数字.
+%    \begin{macrocode}
+\cs_set:Nn \msweeper_row_col_marker: {
+    \sffamily
+    % show axis x
+    \int_step_inline:nnn {0} {\l__msweeper_cols_int - 1} {
+        \node[text~centered, text={color7}, xshift=16*##1] at
+            (8, 6 + \l__msweeper_tborder_int*12) {\textbf{\tiny ##1}};
+    }
+
+    % show axis y
+    \int_step_inline:nnn {0} {\l__msweeper_rows_int - 1} {
+        \node[text~centered, text={color7}, yshift=-16*##1] at
+            (-6 - \l__msweeper_lborder_int*12, -8) {\textbf{\tiny ##1}};
+    }
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\msweeper_gap_filler:}
 % \qquad 由于渲染问题, 绘制格子时, 同色区域之间可能会出现一个空白的缝隙, 该函数用于提前填充这些缝隙.
 %    \begin{macrocode}
@@ -774,7 +799,7 @@ This package consists of the files tikz-minesweeper.dtx,
     % \l__msweeper_cur_col_tl and \l__msweeper_cur_row_tl are temporary variables
     \int_step_variable:nnNn {1} {\l__msweeper_cols_int - 1} \l__msweeper_cur_col_tl {
         \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l__msweeper_cur_row_tl {
-            \fill[cshade, xshift=\l__msweeper_cur_col_tl * 16,
+            \fill[cshade, xshift=\l__msweeper_cur_col_tl*16,
                   yshift=-\l__msweeper_cur_row_tl * 16] (0, 0) -- (-0.5, 0.5) --
                 (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) -- (0.5, 15.5) --
                 (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
@@ -783,7 +808,7 @@ This package consists of the files tikz-minesweeper.dtx,
 
     \int_step_variable:nnNn {1} {\l__msweeper_rows_int - 1} \l__msweeper_cur_row_tl {
         \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l__msweeper_cur_col_tl {
-            \fill[cshade, xshift=\l__msweeper_cur_col_tl * 16,
+            \fill[cshade, xshift=\l__msweeper_cur_col_tl*16,
                   yshift=-\l__msweeper_cur_row_tl * 16] (0, 0) -- (-0.5, -0.5) --
                 (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) -- (-16, 0) --
                 (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) -- (-0.5, 0.5) -- cycle;
@@ -798,107 +823,71 @@ This package consists of the files tikz-minesweeper.dtx,
 % \qquad 绘制边框, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为边框种类参数, |#2| 为行数, |#3| 为列数. 参数 |#1| 可以传入 t, l, b, r, -, x 中的任意多个值.
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_border:nnn #1#2#3 {
-    \bool_set_false:N \l_tmpa_bool
-    \bool_set_false:N \l__ms_flagt_bool
-    \bool_set_false:N \l__ms_flagl_bool
-    \bool_set_false:N \l__ms_flagb_bool
-    \bool_set_false:N \l__ms_flagr_bool
-    \bool_set_false:N \l__ms_showaxis_bool
-    \int_zero_new:N \l__ms_flagt_int
-    \int_zero_new:N \l__ms_flagl_int
-    \int_zero_new:N \l__ms_flagb_int
-    \int_zero_new:N \l__ms_flagr_int
-
     \int_set:Nn \l__msweeper_rows_int {#2}
     \int_set:Nn \l__msweeper_cols_int {#3}
 
+    \bool_set_false:N \l_tmpa_bool
+    \int_zero:N \l__msweeper_tborder_int
+    \int_zero:N \l__msweeper_lborder_int
+    \int_zero:N \l__msweeper_bborder_int
+    \int_zero:N \l__msweeper_rborder_int
+
     \tl_map_inline:nn {#1} {
-        \tl_case:Nn ##1 {
-            - {
+        \str_case:nn {##1} {
+            {-} {
                 \bool_set_true:N \l_tmpa_bool
-                \bool_set_true:N \l__ms_flagt_bool
-                \bool_set_true:N \l__ms_flagl_bool
-                \bool_set_true:N \l__ms_flagb_bool
-                \bool_set_true:N \l__ms_flagr_bool
+                \int_set:Nn \l__msweeper_tborder_int {1}
+                \int_set:Nn \l__msweeper_lborder_int {1}
+                \int_set:Nn \l__msweeper_bborder_int {1}
+                \int_set:Nn \l__msweeper_rborder_int {1}
             }
-            t { \bool_set:Nn \l__ms_flagt_bool {!\l_tmpa_bool} }
-            l { \bool_set:Nn \l__ms_flagl_bool {!\l_tmpa_bool} }
-            b { \bool_set:Nn \l__ms_flagb_bool {!\l_tmpa_bool} }
-            r { \bool_set:Nn \l__ms_flagr_bool {!\l_tmpa_bool} }
-            x { \bool_set_true:N \l__ms_showaxis_bool }
-        }
-    }
-
-    % draw axis
-    \bool_if:NT \l__ms_showaxis_bool {
-        \sffamily
-        \int_set:Nn \l_tmpa_int {6}
-        \int_set:Nn \l_tmpb_int {6}
-        \bool_if:NT \l__ms_flagl_bool { \int_add:Nn \l_tmpa_int {12} }
-        \bool_if:NT \l__ms_flagt_bool { \int_add:Nn \l_tmpb_int {12} }
-
-        % show axis x
-        \int_step_inline:nnn {0} {\l__msweeper_cols_int - 1} {
-            \node[text~centered, text={color7}, xshift=16*##1] at
-                (8, \l_tmpb_int) {\textbf{\tiny ##1}};
-        }
-
-        % show axis y
-        \int_step_inline:nnn {0} {\l__msweeper_rows_int - 1} {
-            \node[text~centered, text={color7}, yshift=-16*##1] at
-                (-\l_tmpa_int, -8) {\textbf{\tiny ##1}};
+            {t} { \int_set:Nn \l__msweeper_tborder_int {1 - \l_tmpa_bool} }
+            {l} { \int_set:Nn \l__msweeper_lborder_int {1 - \l_tmpa_bool} }
+            {b} { \int_set:Nn \l__msweeper_bborder_int {1 - \l_tmpa_bool} }
+            {r} { \int_set:Nn \l__msweeper_rborder_int {1 - \l_tmpa_bool} }
+            {x} { \msweeper_row_col_marker: } % draw row and column numbers
         }
     }
 
     % draw outer border with clipping
-    \bool_if:NTF \l__ms_flagt_bool { \int_set:Nn \l__ms_flagt_int {1} }
-        { \int_set:Nn \l__ms_flagt_int {0} }
-    \bool_if:NTF \l__ms_flagl_bool { \int_set:Nn \l__ms_flagl_int {-1} }
-        { \int_set:Nn \l__ms_flagl_int {0} }
-    \bool_if:NTF \l__ms_flagb_bool { \int_set:Nn \l__ms_flagb_int {-1} }
-        { \int_set:Nn \l__ms_flagb_int {0} }
-    \bool_if:NTF \l__ms_flagr_bool { \int_set:Nn \l__ms_flagr_int {1} }
-        { \int_set:Nn \l__ms_flagr_int {0} }
-
-    % clipping the area inside of a scope to avoid side effects
+    % clip the area inside of a scope to avoid side effects
     \begin{scope}
-        \clip (0 + \l__ms_flagl_int * 12, 0 + \l__ms_flagt_int * 12) rectangle
-            (\l__msweeper_cols_int * 16 + \l__ms_flagr_int * 12,
-            -\l__msweeper_rows_int * 16 + \l__ms_flagb_int * 12);
-        \fill[clight] (-12, 12) -- (\l__msweeper_cols_int * 16 + 12, 12) --
-            (\l__msweeper_cols_int * 16, 0) -- (0, 0) --
-            (0, -\l__msweeper_rows_int * 16) --
-            (-12, -\l__msweeper_rows_int * 16 - 12) -- cycle;
-        \fill[cborder] (\l__msweeper_cols_int * 16, -\l__msweeper_rows_int * 16) --
-            (\l__msweeper_cols_int * 16, 0) --
-            (\l__msweeper_cols_int * 16 + 12, 12) --
-            (\l__msweeper_cols_int * 16 + 12, -\l__msweeper_rows_int * 16 - 12) --
-            (-12, -\l__msweeper_rows_int * 16 - 12) --
-            (0, -\l__msweeper_rows_int * 16) -- cycle;
-        \fill[color0] (-9, 9) -- (\l__msweeper_cols_int * 16+9, 9) --
-            (\l__msweeper_cols_int * 16+9, 0) -- (0, 0) --
-            (0, -\l__msweeper_rows_int * 16) --
-            (-9, -\l__msweeper_rows_int * 16-9) -- cycle;
-        \fill[color0] (\l__msweeper_cols_int * 16, -\l__msweeper_rows_int * 16) --
-            (\l__msweeper_cols_int * 16, 0) -- (\l__msweeper_cols_int * 16 + 9, 9) --
-            (\l__msweeper_cols_int * 16 + 9, -\l__msweeper_rows_int * 16 - 9) --
-            (-9, -\l__msweeper_rows_int * 16 - 9) --
-            (-9, -\l__msweeper_rows_int * 16) -- cycle;
-        \fill[cborder] (-3, 3) -- (\l__msweeper_cols_int * 16 + 3, 3) --
-            (\l__msweeper_cols_int * 16, 0) -- (0, 0) --
-            (0, -\l__msweeper_rows_int * 16) --
-            (-3, -\l__msweeper_rows_int * 16 - 3) -- cycle;
-        \fill[clight] (\l__msweeper_cols_int * 16, -\l__msweeper_rows_int * 16) --
-            (\l__msweeper_cols_int * 16, 0) -- (\l__msweeper_cols_int * 16 + 3, 3) --
-            (\l__msweeper_cols_int * 16 + 3, -\l__msweeper_rows_int * 16 - 3) --
-            (-3, -\l__msweeper_rows_int * 16 - 3) --
-            (0, -\l__msweeper_rows_int * 16) -- cycle;
+        \clip (-\l__msweeper_lborder_int*12, \l__msweeper_tborder_int*12) rectangle
+            (\l__msweeper_cols_int*16 + \l__msweeper_rborder_int*12,
+            -\l__msweeper_rows_int*16 - \l__msweeper_bborder_int*12);
+        \fill[clight] (-12, 12) -- (\l__msweeper_cols_int*16 + 12, 12) --
+            (\l__msweeper_cols_int*16, 0) -- (0, 0) --
+            (0, -\l__msweeper_rows_int*16) --
+            (-12, -\l__msweeper_rows_int*16 - 12) -- cycle;
+        \fill[cborder] (\l__msweeper_cols_int*16, -\l__msweeper_rows_int*16) --
+            (\l__msweeper_cols_int*16, 0) -- (\l__msweeper_cols_int*16 + 12, 12) --
+            (\l__msweeper_cols_int*16 + 12, -\l__msweeper_rows_int*16 - 12) --
+            (-12, -\l__msweeper_rows_int*16 - 12) --
+            (0, -\l__msweeper_rows_int*16) -- cycle;
+        \fill[color0] (-9, 9) -- (\l__msweeper_cols_int*16 + 9, 9) --
+            (\l__msweeper_cols_int*16 + 9, 0) -- (0, 0) --
+            (0, -\l__msweeper_rows_int*16) --
+            (-9, -\l__msweeper_rows_int*16 - 9) -- cycle;
+        \fill[color0] (\l__msweeper_cols_int*16, -\l__msweeper_rows_int*16) --
+            (\l__msweeper_cols_int*16, 0) -- (\l__msweeper_cols_int*16 + 9, 9) --
+            (\l__msweeper_cols_int*16 + 9, -\l__msweeper_rows_int*16 - 9) --
+            (-9, -\l__msweeper_rows_int*16 - 9) --
+            (-9, -\l__msweeper_rows_int*16) -- cycle;
+        \fill[cborder] (-3, 3) -- (\l__msweeper_cols_int*16 + 3, 3) --
+            (\l__msweeper_cols_int*16, 0) -- (0, 0) --
+            (0, -\l__msweeper_rows_int*16) --
+            (-3, -\l__msweeper_rows_int*16 - 3) -- cycle;
+        \fill[clight] (\l__msweeper_cols_int*16, -\l__msweeper_rows_int*16) --
+            (\l__msweeper_cols_int*16, 0) -- (\l__msweeper_cols_int*16 + 3, 3) --
+            (\l__msweeper_cols_int*16 + 3, -\l__msweeper_rows_int*16 - 3) --
+            (-3, -\l__msweeper_rows_int*16 - 3) --
+            (0, -\l__msweeper_rows_int*16) -- cycle;
     \end{scope}
 
     \draw[cborder, line~width=0.4pt]
-        (0 + \l__ms_flagl_int * 12, 0 + \l__ms_flagt_int * 12) rectangle
-        (\l__msweeper_cols_int * 16 + \l__ms_flagr_int * 12,
-        -\l__msweeper_rows_int * 16 + \l__ms_flagb_int * 12);
+        (-\l__msweeper_lborder_int*12, \l__msweeper_tborder_int*12) rectangle
+        (\l__msweeper_cols_int*16 + \l__msweeper_rborder_int*12,
+        -\l__msweeper_rows_int*16 - \l__msweeper_bborder_int*12);
 
     \msweeper_gap_filler:
 }
