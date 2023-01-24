@@ -555,9 +555,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_mine: {
     \int_step_inline:nnnn {0} {45} {135} {
-        \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) --
-            (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) --
-            (-6.5, -0.4) -- cycle; % spikes
+        \fill[color7, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) --
+            (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
     }
     \shade[ball~color=color7] (8.5,-8.5) circle (4.5); % body
 }
@@ -570,9 +569,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_mine_shaded: {
     \int_step_inline:nnnn {0} {45} {135} {
-        \fill[cshade, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) --
-            (0, 1.5) -- (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) --
-            (-6.5, -0.4) -- cycle; % spikes
+        \fill[cshade, xshift=8.5, yshift=-8.5, rotate=##1] (-6.5, 0.4) -- (0, 1.5) --
+            (6.5, 0.4) -- (6.5, -0.4) -- (0, -1.5) -- (-6.5, -0.4) -- cycle; % spikes
     }
     \shade[ball~color=cshade] (8.5,-8.5) circle (4.5); % body
 }
@@ -778,8 +776,8 @@ This package consists of the files tikz-minesweeper.dtx,
         \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l__msweeper_cur_row_tl {
             \fill[cshade, xshift=\l__msweeper_cur_col_tl * 16,
                   yshift=-\l__msweeper_cur_row_tl * 16] (0, 0) -- (-0.5, 0.5) --
-            (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) -- (0.5, 15.5) --
-            (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
+                (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) -- (0.5, 15.5) --
+                (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
         }
     }
 
@@ -787,8 +785,8 @@ This package consists of the files tikz-minesweeper.dtx,
         \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l__msweeper_cur_col_tl {
             \fill[cshade, xshift=\l__msweeper_cur_col_tl * 16,
                   yshift=-\l__msweeper_cur_row_tl * 16] (0, 0) -- (-0.5, -0.5) --
-            (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) -- (-16, 0) -- (-15.5, 0.5) --
-            (-15, 0) -- (-14.5, 0.5) -- (-0.5, 0.5) -- cycle;
+                (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) -- (-16, 0) --
+                (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) -- (-0.5, 0.5) -- cycle;
         }
     }
 }
