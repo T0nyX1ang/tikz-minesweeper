@@ -99,7 +99,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{364}
+% \CheckSum{357}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -791,7 +791,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\msweeper_full_border:}
+% \begin{macro}{\msweeper_raw_border:}
 % \qquad 绘制原始的边框, 用户在绘制盘面时传入的边框参数将会影响最终边框的形状.
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_raw_border: {
@@ -877,16 +877,12 @@ This package consists of the files tikz-minesweeper.dtx,
     % draw outer border with clipping
     % clip the area inside of a scope to avoid side effects
     \begin{scope}
-        \clip (-\l__msweeper_lmargin_int, \l__msweeper_tmargin_int) rectangle
+        \clip[preaction={draw, color=cborder, line~width=0.8}]
+            (-\l__msweeper_lmargin_int, \l__msweeper_tmargin_int) rectangle
             (\l__msweeper_cols_int*16 + \l__msweeper_rmargin_int,
             -\l__msweeper_rows_int*16 - \l__msweeper_bmargin_int);
         \msweeper_raw_border:
     \end{scope}
-
-    \draw[cborder, line~width=0.4]
-        (-\l__msweeper_lmargin_int, \l__msweeper_tmargin_int) rectangle
-        (\l__msweeper_cols_int*16 + \l__msweeper_rmargin_int,
-        -\l__msweeper_rows_int*16 - \l__msweeper_bmargin_int);
 
     \msweeper_gap_filler:
 }
