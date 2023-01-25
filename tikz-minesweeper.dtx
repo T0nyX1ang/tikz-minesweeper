@@ -534,10 +534,10 @@ This package consists of the files tikz-minesweeper.dtx,
 \str_new:N \l__msweeper_cellcolor_str
 \int_new:N \l__msweeper_rows_int
 \int_new:N \l__msweeper_cols_int
-\int_new:N \l__msweeper_tborder_int
-\int_new:N \l__msweeper_lborder_int
-\int_new:N \l__msweeper_bborder_int
-\int_new:N \l__msweeper_rborder_int
+\int_new:N \l__msweeper_tmargin_int
+\int_new:N \l__msweeper_lmargin_int
+\int_new:N \l__msweeper_bmargin_int
+\int_new:N \l__msweeper_rmargin_int
 
 %    \end{macrocode}
 %
@@ -778,13 +778,13 @@ This package consists of the files tikz-minesweeper.dtx,
     % show axis x
     \int_step_inline:nnn {0} {\l__msweeper_cols_int - 1} {
         \node[text~centered, text={color7}, xshift=16*##1] at
-            (8, 6 + \l__msweeper_tborder_int*12) {\textbf{\tiny ##1}};
+            (8, 6 + \l__msweeper_tmargin_int) {\textbf{\tiny ##1}};
     }
 
     % show axis y
     \int_step_inline:nnn {0} {\l__msweeper_rows_int - 1} {
         \node[text~centered, text={color7}, yshift=-16*##1] at
-            (-6 - \l__msweeper_lborder_int*12, -8) {\textbf{\tiny ##1}};
+            (-6 - \l__msweeper_lmargin_int, -8) {\textbf{\tiny ##1}};
     }
 }
 
@@ -796,22 +796,20 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_gap_filler: {
     % draw lines in advance to avoid gaps
-    % \l__msweeper_cur_col_tl and \l__msweeper_cur_row_tl are temporary variables
-    \int_step_variable:nnNn {1} {\l__msweeper_cols_int - 1} \l__msweeper_cur_col_tl {
-        \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l__msweeper_cur_row_tl {
-            \fill[cshade, xshift=\l__msweeper_cur_col_tl*16,
-                  yshift=-\l__msweeper_cur_row_tl * 16] (0, 0) -- (-0.5, 0.5) --
-                (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) -- (0.5, 15.5) --
-                (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
+    \int_step_variable:nnNn {1} {\l__msweeper_cols_int - 1} \l_tmpa_tl {
+        \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l_tmpb_tl {
+            \fill[cshade, xshift=\l_tmpa_tl*16, yshift=-\l_tmpb_tl * 16] (0, 0) --
+                (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) --
+                (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
         }
     }
 
-    \int_step_variable:nnNn {1} {\l__msweeper_rows_int - 1} \l__msweeper_cur_row_tl {
-        \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l__msweeper_cur_col_tl {
-            \fill[cshade, xshift=\l__msweeper_cur_col_tl*16,
-                  yshift=-\l__msweeper_cur_row_tl * 16] (0, 0) -- (-0.5, -0.5) --
-                (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) -- (-16, 0) --
-                (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) -- (-0.5, 0.5) -- cycle;
+    \int_step_variable:nnNn {1} {\l__msweeper_rows_int - 1} \l_tmpb_tl {
+        \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l_tmpa_tl {
+            \fill[cshade, xshift=\l_tmpa_tl*16, yshift=-\l_tmpb_tl * 16] (0, 0) --
+                (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
+                (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) --
+                (-0.5, 0.5) -- cycle;
         }
     }
 }
@@ -827,34 +825,34 @@ This package consists of the files tikz-minesweeper.dtx,
     \int_set:Nn \l__msweeper_cols_int {#3}
 
     \bool_set_false:N \l_tmpa_bool
-    \int_zero:N \l__msweeper_tborder_int
-    \int_zero:N \l__msweeper_lborder_int
-    \int_zero:N \l__msweeper_bborder_int
-    \int_zero:N \l__msweeper_rborder_int
+    \int_zero:N \l__msweeper_tmargin_int
+    \int_zero:N \l__msweeper_lmargin_int
+    \int_zero:N \l__msweeper_bmargin_int
+    \int_zero:N \l__msweeper_rmargin_int
 
     \tl_map_inline:nn {#1} {
         \str_case:nn {##1} {
             {-} {
                 \bool_set_true:N \l_tmpa_bool
-                \int_set:Nn \l__msweeper_tborder_int {1}
-                \int_set:Nn \l__msweeper_lborder_int {1}
-                \int_set:Nn \l__msweeper_bborder_int {1}
-                \int_set:Nn \l__msweeper_rborder_int {1}
+                \int_set:Nn \l__msweeper_tmargin_int {12}
+                \int_set:Nn \l__msweeper_lmargin_int {12}
+                \int_set:Nn \l__msweeper_bmargin_int {12}
+                \int_set:Nn \l__msweeper_rmargin_int {12}
             }
-            {t} { \int_set:Nn \l__msweeper_tborder_int {1 - \l_tmpa_bool} }
-            {l} { \int_set:Nn \l__msweeper_lborder_int {1 - \l_tmpa_bool} }
-            {b} { \int_set:Nn \l__msweeper_bborder_int {1 - \l_tmpa_bool} }
-            {r} { \int_set:Nn \l__msweeper_rborder_int {1 - \l_tmpa_bool} }
             {x} { \msweeper_row_col_marker: } % draw row and column numbers
+            {t} { \int_set:Nn \l__msweeper_tmargin_int {12 - 12 * \l_tmpa_bool} }
+            {l} { \int_set:Nn \l__msweeper_lmargin_int {12 - 12 * \l_tmpa_bool} }
+            {b} { \int_set:Nn \l__msweeper_bmargin_int {12 - 12 * \l_tmpa_bool} }
+            {r} { \int_set:Nn \l__msweeper_rmargin_int {12 - 12 * \l_tmpa_bool} }
         }
     }
 
     % draw outer border with clipping
     % clip the area inside of a scope to avoid side effects
     \begin{scope}
-        \clip (-\l__msweeper_lborder_int*12, \l__msweeper_tborder_int*12) rectangle
-            (\l__msweeper_cols_int*16 + \l__msweeper_rborder_int*12,
-            -\l__msweeper_rows_int*16 - \l__msweeper_bborder_int*12);
+        \clip (-\l__msweeper_lmargin_int, \l__msweeper_tmargin_int) rectangle
+            (\l__msweeper_cols_int*16 + \l__msweeper_rmargin_int,
+            -\l__msweeper_rows_int*16 - \l__msweeper_bmargin_int);
         \fill[clight] (-12, 12) -- (\l__msweeper_cols_int*16 + 12, 12) --
             (\l__msweeper_cols_int*16, 0) -- (0, 0) --
             (0, -\l__msweeper_rows_int*16) --
@@ -885,9 +883,9 @@ This package consists of the files tikz-minesweeper.dtx,
     \end{scope}
 
     \draw[cborder, line~width=0.4pt]
-        (-\l__msweeper_lborder_int*12, \l__msweeper_tborder_int*12) rectangle
-        (\l__msweeper_cols_int*16 + \l__msweeper_rborder_int*12,
-        -\l__msweeper_rows_int*16 - \l__msweeper_bborder_int*12);
+        (-\l__msweeper_lmargin_int, \l__msweeper_tmargin_int) rectangle
+        (\l__msweeper_cols_int*16 + \l__msweeper_rmargin_int,
+        -\l__msweeper_rows_int*16 - \l__msweeper_bmargin_int);
 
     \msweeper_gap_filler:
 }
