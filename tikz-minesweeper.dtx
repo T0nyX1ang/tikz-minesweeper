@@ -99,7 +99,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{374}
+% \CheckSum{373}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -839,13 +839,15 @@ This package consists of the files tikz-minesweeper.dtx,
                 \int_set:Nn \l__msweeper_bmargin_int {12}
                 \int_set:Nn \l__msweeper_rmargin_int {12}
             }
-            {x} { \msweeper_row_col_marker: } % draw row and column numbers
             {t} { \int_set:Nn \l__msweeper_tmargin_int {12 - 12 * \l_tmpa_bool} }
             {l} { \int_set:Nn \l__msweeper_lmargin_int {12 - 12 * \l_tmpa_bool} }
             {b} { \int_set:Nn \l__msweeper_bmargin_int {12 - 12 * \l_tmpa_bool} }
             {r} { \int_set:Nn \l__msweeper_rmargin_int {12 - 12 * \l_tmpa_bool} }
         }
     }
+
+    % draw row and column numbers
+    \str_if_in:nnT {#1} {x} { \msweeper_row_col_marker: }
 
     % draw outer border with clipping
     % clip the area inside of a scope to avoid side effects
