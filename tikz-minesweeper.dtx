@@ -76,6 +76,10 @@ This package consists of the files tikz-minesweeper.dtx,
 \usepackage{subfig}
 \usepackage{float}
 \usepackage{multicol}
+
+\def\lang{en}
+\def\zhlang{zh}\newcommand{\zh}[1]{\ifx\lang\zhlang#1\fi}
+\def\enlang{en}\newcommand{\en}[1]{\ifx\lang\enlang#1\fi}
 \ctexset{
     section = {
         name = {,},
@@ -119,12 +123,13 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \GetFileInfo{tikz-minesweeper.sty}
 %
-% \title{\pkg{tikz-minesweeper}宏包使用手册}
+% \title{\pkg{tikz-minesweeper}\zh{宏包使用手册}\en{ Manual}}
 % \author{濮天羿~~~~向飞宇\thanks{源代码请参考此仓库: https://github.com/T0nyX1ang/tikz-minesweeper}~~~~朱耀宇}
 % \maketitle
 %
-% \section{绘制示例}
-% 下面是一个\pkg{tikz-minesweeper}宏包的绘制示例, 包含了该宏包中最重要的几个指令.
+% \section{\zh{绘制示例}\en{Usage}}
+% \zh{下面是一个\pkg{tikz-minesweeper}宏包的绘制示例，包含了该宏包中最重要的几个指令。}
+% \en{Below is an example which includes the most important commands within the \pkg{tikz-minesweeper} package.}
 %
 % \begin{multicols}{2}
 % \iffalse
@@ -159,10 +164,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \row{4}{ov-f}
 %             \col{4}{358y?}
 %         \end{tikzpicture}
-%         \caption{在5x5区域内绘制数字、雷、旗帜、空格和标记}
+%         \caption{\zh{在5x5区域内绘制数字、雷、旗帜、空格和标记}\en{Rendering numbers, mines, flags, cells and marks on a 5x5 board}}
 %     \end{figure}
 % \end{multicols}
-% \section{绘制指令介绍}
+% \section{\zh{绘制指令介绍}\en{References}}
 %
 % \subsection{基础设定}
 % 本宏包中设定单位长度为\textbf{1pt}, 为了与标准扫雷游戏一致, 一格的边长是\textbf{16pt}. 下文如无特别说明, 所有方格的原点都位于左上角, 所有数据的单位均为\textbf{pt}.
