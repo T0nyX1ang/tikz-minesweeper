@@ -177,15 +177,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \end{figure}
 % \end{multicols}
 %
-% \section{
-%     \zh{绘制指令介绍}
-%     \en{References}
-% }
+% \section{\zh{绘制指令介绍}\en{References}}
 %
-% \subsection{基础设定}
-% 本宏包中设定单位长度为\textbf{1pt}, 为了与标准扫雷游戏一致, 一格的边长是\textbf{16pt}. 下文如无特别说明, 所有方格的原点都位于左上角, 所有数据的单位均为\textbf{pt}.
+% \subsection{\zh{基础设定}\en{Fundamental rules}}
+% \zh{本宏包中设定单位长度为\textbf{1pt}。为了与标准扫雷游戏一致，一格的边长是\textbf{16pt}。下文如无特别说明，所有方格的原点都位于左上角，所有数据的单位均为\textbf{pt}。}
+% \en{This package sets the unit length to \textbf{1pt}. The edge length for cells is \textbf{16pt} to match the standard minesweeper game. Henceforth, without explicit note, the origin of a cell is its top-left corner and all lengths are in \textbf{pt}. }
 %
-% 如果需要缩放一个盘面, 推荐使用scope环境中的scale参数, 即采用如下语法:
+% \zh{如果需要缩放一个盘面，推荐使用scope环境中的scale参数，即采用如下语法：}
+% \en{To scale a board, it's recommended to use the scale parameter from scope environment, that is: }
 % \begin{multicols}{2}
 % \iffalse
 %<*internal>
@@ -206,12 +205,13 @@ This package consists of the files tikz-minesweeper.dtx,
 %              \board[-tlbr]{1}{1}
 %              \row{0}{1}
 %         \end{tikzpicture}
-%         \caption{放大一个格子}
+%         \caption{\zh{放大一个格子}\en{A zoomed cell}}
 %     \end{figure}
 % \end{multicols}
 %
-% \subsection{配色}
-% \pkg{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色. 这些配色均给出了标签, 这些标签均可以直接在文档中使用.
+% \subsection{\zh{配色}\en{Color scheme}}
+% \zh{\pkg{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色。这些配色均给出了标签，这些标签均可以直接在文档中使用。}
+% \en{The \pkg{tikz-minesweeper} package defines the colors for numbers and boards in minesweeper. The colors have labels that can be called in the documentation. }
 %
 % \def\ColorTagZero{\textcolor{color0}{|color0|}}
 % \def\ColorTagOne{\textcolor{color1}{|color1|}}
@@ -231,34 +231,36 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \centering
 %     \begin{tabular}{ccccc}
 %         \toprule
-%         颜色标签          & R   & G   & B   & 场景                              \\
+%         \zh{颜色标签}\en{Color label} & R   & G   & B   & \zh{场景}        \en{Use case}                          \\
 %         \midrule
-%         \ColorTagZero{}  & 192 & 192 & 192 & 格子内部 / 外边框                 \\
-%         \ColorTagOne{}   & 0   & 0   & 255 & 数字1                             \\
-%         \ColorTagTwo{}   & 0   & 128 & 0   & 数字2                             \\
-%         \ColorTagThree{} & 255 & 0   & 0   & 数字3                             \\
-%         \ColorTagFour{}  & 0   & 0   & 128 & 数字4                             \\
-%         \ColorTagFive{}  & 128 & 0   & 0   & 数字5                             \\
-%         \ColorTagSix{}   & 0   & 128 & 128 & 数字6                             \\
-%         \ColorTagSeven{} & 0   & 0   & 0   & 数字7                             \\
-%         \ColorTagEight{} & 128 & 128 & 128 & 数字8                             \\
-%         \ColorTagBorder{}  & 160 & 160 & 160 & 边框阴影                          \\
-%         \ColorTagLight{} & 255 & 255 & 255 & 高亮                              \\
-%         \ColorTagShade{} & 128 & 128 & 128 & 格子阴影 / 按下的格子边界           \\
-%         \ColorTagFail{}  & 255 & 0   & 0   & 导致失败的格子                     \\
+%         \ColorTagZero{}  & 192 & 192 & 192 & \zh{格子内部 / 外边框}        \en{cell interior/border interior}     \\
+%         \ColorTagOne{}   & 0   & 0   & 255 & \zh{数字1}                   \en{number 1}                          \\
+%         \ColorTagTwo{}   & 0   & 128 & 0   & \zh{数字2}                   \en{number 2}                          \\
+%         \ColorTagThree{} & 255 & 0   & 0   & \zh{数字3}                   \en{number 3}                          \\
+%         \ColorTagFour{}  & 0   & 0   & 128 & \zh{数字4}                   \en{number 4}                          \\
+%         \ColorTagFive{}  & 128 & 0   & 0   & \zh{数字5}                   \en{number 5}                          \\
+%         \ColorTagSix{}   & 0   & 128 & 128 & \zh{数字6}                   \en{number 6}                          \\
+%         \ColorTagSeven{} & 0   & 0   & 0   & \zh{数字7}                   \en{number 7}                          \\
+%         \ColorTagEight{} & 128 & 128 & 128 & \zh{数字8}                   \en{number 8}                          \\
+%         \ColorTagBorder{}& 160 & 160 & 160 & \zh{边框阴影}                \en{border shade}                      \\
+%         \ColorTagLight{} & 255 & 255 & 255 & \zh{高亮}                    \en{highlight}                         \\
+%         \ColorTagShade{} & 128 & 128 & 128 & \zh{格子阴影 / 按下的格子边界} \en{cell shade/border of opened cell}  \\
+%         \ColorTagFail{}  & 255 & 0   & 0   & \zh{导致失败的格子}           \en{blasted cell}                      \\
 %         \bottomrule
 %     \end{tabular}
-%     \caption{颜色对照表}
+%     \caption{\zh{颜色对照表}\en{Look-up table of colors}}
 % \end{table}
 %
-% \subsection{方格元素}
+% \subsection{\zh{方格元素}\en{Cell elements}}
 %
 % \begin{function}[added=2022-01-30]{\flag}
-% \changes{v0.1.0}{2022/01/30}{新增旗帜命令 \tn{flag}.}
+% \changes{v0.1.0}{2022/01/30}{\zh{新增旗帜命令 \tn{flag}。}\en{Add \tn{flag} for drawing flags.}}
 %   \begin{syntax}
 %      \tn{flag}
 %   \end{syntax}
-% \qquad 绘制旗子. 首先用 \ColorTagSeven{} 绘制两层旗子的底座, 然后用 \ColorTagSeven{} 绘制旗子的旗杆, 最后用 \ColorTagThree{} 绘制旗帜本身.
+% \qquad
+% \zh{绘制旗子。首先用 \ColorTagSeven{} 绘制两层旗子的底座，然后用 \ColorTagSeven{} 绘制旗子的旗杆，最后用 \ColorTagThree{} 绘制旗帜本身。}
+% \en{Draw the flag. Draw the 2-layer base of the flag with \ColorTagSeven{} first, then draw the flag pole with \ColorTagSeven{}. In the end, draw the flag with \ColorTagThree{}.}
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -288,15 +290,17 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \mine
 %         \end{scope}
 %     \end{tikzpicture}
-%     \caption{旗子和雷的细节图}
+%     \caption{\zh{旗子和雷的细节图}\en{Sketch of the flag and the mine}}
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30]{\mine}
-% \changes{v0.1.0}{2022/01/30}{新增地雷命令 \tn{mine}.}
+% \changes{v0.1.0}{2022/01/30}{\zh{新增地雷命令 \tn{mine}。}\en{Add \tn{mine} for drawing mines.}}
 %   \begin{syntax}
 %      \tn{mine}
 %   \end{syntax}
-% \qquad 绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影.
+% \qquad
+% \zh{绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影.}
+% \en{Draw the mine. Draw the trapezoidal spikes with \ColorTagSeven{} first, then draw the circular body and the highlight with \ColorTagSeven{}.}
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\cellup}
