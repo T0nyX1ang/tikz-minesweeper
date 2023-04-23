@@ -76,7 +76,7 @@ Draw a minesweeper board in LaTeX.
 
 ## Copyright and License
 
-- Copyright (C) 2021-2022 by Tian-Yi Pu, Fei-Yu Xiang and Yao-Yu Zhu
+- Copyright (C) 2021-2023 by Tian-Yi Pu, Fei-Yu Xiang and Yao-Yu Zhu
 
 - This file may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version.
 
