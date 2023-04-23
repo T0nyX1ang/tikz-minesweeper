@@ -22,12 +22,14 @@ jobs:
     - name: Extract sty file
       uses: xu-cheng/texlive-action/full@v1
       with:
-        run: l3build unpack
+        run: l3build doc
 
     # Release sty file
     - name: Release sty file
       uses: softprops/action-gh-release@v0.1.15
       with:
-        files: ./build/unpacked/tikz-minesweeper.sty
+        files: |
+          ./build/doc/tikz-minesweeper.sty
+          ./build/doc/tikz-minesweeper.pdf
         fail_on_unmatched_files: true
         generate_release_notes: true
