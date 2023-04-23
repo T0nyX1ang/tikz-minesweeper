@@ -28,7 +28,7 @@ jobs:
       with:
         run: l3build ctan
 
-    # Upload demo to artifacts if the demo is compiled successfully
+    # Upload tds to artifacts if it is compiled successfully
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       if: success()
