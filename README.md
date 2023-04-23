@@ -30,6 +30,12 @@ Draw a minesweeper board in LaTeX.
 
 - Refresh local database with `texhash` or `mktexlsr` (with TeX Live)
 
+### Using `sty` releases
+
+- See [GitHub Releases](https://github.com/T0nyX1ang/tikz-minesweeper/releases) page.
+
+- Download the latest `sty` file, and use it for your projects.
+
 ### Using prebuilt artifacts
 
 - See [GitHub Actions](https://github.com/T0nyX1ang/tikz-minesweeper/actions) page
