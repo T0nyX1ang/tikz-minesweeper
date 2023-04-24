@@ -5,6 +5,15 @@
     ],
     "latex-workshop.latex.tools": [
         {
+            "name": "update_checksum",
+            "command": "texlua",
+            "args": [
+                "support/update_checksum.lua",
+                "%DOCFILE%.dtx"
+            ],
+            "env": {}
+        },
+        {
             "name": "xelatex(dtx)",
             "command": "xelatex",
             "args": [
@@ -42,6 +51,7 @@
         {
             "name": "Build dtx",
             "tools": [
+                "update_checksum",
                 "xelatex(dtx)",
                 "makeindex(glo)",
                 "makeindex(idx)",
