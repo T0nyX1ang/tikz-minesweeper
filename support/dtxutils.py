@@ -1,4 +1,11 @@
-"""A tool to calculate checksums and tag dtx files."""
+"""
+A tool to calculate checksums and tag dtx files.
+
+This file will be deprecated in next patch version (0.2.3).
+The checksum update has been integrated with `texlua`
+which ships with a modern LaTeX distribution.
+Please use the lua version (update_checksum.lua) instead.
+"""
 
 import argparse
 import datetime
