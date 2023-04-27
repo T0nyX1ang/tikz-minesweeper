@@ -77,7 +77,7 @@ This package consists of the files tikz-minesweeper.dtx,
 \usepackage{float}
 \usepackage{multicol}
 
-\def\lang{zh}
+\def\lang{en}
 \def\zhlang{zh}\newcommand{\zh}[1]{\ifx\lang\zhlang#1\fi}
 \def\enlang{en}\newcommand{\en}[1]{\ifx\lang\enlang#1\fi}
 \ctexset{
@@ -233,7 +233,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %         \toprule
 %         \zh{颜色标签}\en{Color label} & R   & G   & B   & \zh{场景}        \en{Use case}                          \\
 %         \midrule
-%         \ColorTagZero{}  & 192 & 192 & 192 & \zh{格子内部 / 外边框}        \en{cell interior/border interior}     \\
+%         \ColorTagZero{}  & 192 & 192 & 192 & \zh{格子内部 / 外边框}        \en{cell interior/frame interior}     \\
 %         \ColorTagOne{}   & 0   & 0   & 255 & \zh{数字1}                   \en{number 1}                          \\
 %         \ColorTagTwo{}   & 0   & 128 & 0   & \zh{数字2}                   \en{number 2}                          \\
 %         \ColorTagThree{} & 255 & 0   & 0   & \zh{数字3}                   \en{number 3}                          \\
@@ -242,7 +242,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %         \ColorTagSix{}   & 0   & 128 & 128 & \zh{数字6}                   \en{number 6}                          \\
 %         \ColorTagSeven{} & 0   & 0   & 0   & \zh{数字7}                   \en{number 7}                          \\
 %         \ColorTagEight{} & 128 & 128 & 128 & \zh{数字8}                   \en{number 8}                          \\
-%         \ColorTagBorder{}& 160 & 160 & 160 & \zh{边框阴影}                \en{border shade}                      \\
+%         \ColorTagBorder{}& 160 & 160 & 160 & \zh{边框阴影}                \en{frame shade}                      \\
 %         \ColorTagLight{} & 255 & 255 & 255 & \zh{高亮}                    \en{highlight}                         \\
 %         \ColorTagShade{} & 128 & 128 & 128 & \zh{格子阴影 / 按下的格子边界} \en{cell shade/border of opened cell}  \\
 %         \ColorTagFail{}  & 255 & 0   & 0   & \zh{导致失败的格子}           \en{blasted cell}                      \\
@@ -299,23 +299,27 @@ This package consists of the files tikz-minesweeper.dtx,
 %      \tn{mine}
 %   \end{syntax}
 % \qquad
-% \zh{绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影.}
+% \zh{绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起，然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影。}
 % \en{Draw the mine. Draw the trapezoidal spikes with \ColorTagSeven{} first, then draw the circular body and the highlight with \ColorTagSeven{}.}
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\cellup}
-% \changes{v0.1.0}{2022/01/30}{新增方格弹起时和按下时的命令 \tn{cellup} 和 \tn{celldown}.}
+% \changes{v0.1.0}{2022/01/30}{\zh{新增方格弹起时和按下时的命令 \tn{cellup} 和 \tn{celldown}。}\en{Add \tn{cellup} and \tn{celldown} for covered and revealed cells.}}
 %   \begin{syntax}
 %      \tn{cellup}
 %   \end{syntax}
-% \qquad 绘制鼠标弹起时的方格. 首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面, 营造立体感, 亮面和暗面的宽度均为2, 然后用 \ColorTagZero{} 绘制底色. 需要注意的是, 该方格的中心点为 (8.5, -8.5), 与 |\celldown| 指令对应方格的中心点不同.
+% \qquad 
+% \zh{绘制鼠标弹起时的方格。首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面，营造立体感，亮面和暗面的宽度均为2，然后用 \ColorTagZero{} 绘制底色。需要注意的是，该方格的中心点为 (8.5, -8.5)，与 \tn{celldown} 指令对应方格的中心点不同。}
+% \en{Draw the covered cell. Draw the light side and dark side, the widths of which are both 2, with \ColorTagLight{} and \ColorTagShade{} respectively to create a 3D effect. Then fill the background with \ColorTagZero{}. Note that the center of this cell is (8.5, -8.5), which is different from that of \tn{celldown}.}
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\celldown}
 %   \begin{syntax}
 %      \tn{celldown}
 %   \end{syntax}
-% \qquad 绘制鼠标按下时的方格. 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagZero{} 绘制底色, 左和上的边界宽度均为1. 需要注意的是, c此时方格的中心点为 (8, -8), 与 |\cellup| 指令对应方格的中心点不同.
+% \qquad 
+% \zh{绘制鼠标按下时的方格。首先用 \ColorTagShade{} 绘制方格边界，然后用 \ColorTagZero{} 绘制底色，左和上的边界宽度均为1。需要注意的是，c此时方格的中心点为 (8, -8)，与 \tn{cellup} 指令对应方格的中心点不同。}
+% \en{Draw the revealed cell. Draw the edges with \ColorTagShade{}, then fill the background with \ColorTagZero{}. The widths of the left and top edges are both 1. Note that the center of this cell is (8, -8), which is different from that of \tn{cellup}.}
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -331,25 +335,29 @@ This package consists of the files tikz-minesweeper.dtx,
 %          \draw[thick, cborder] (0,0) rectangle (16, -16);
 %          \fill[red] (8.5, -8.5) circle (0.2);
 %     \end{tikzpicture}
-%     \caption{弹起的方格与按下的方格(包含中心点)}
+%     \caption{\zh{弹起的方格与按下的方格（包含中心点）}\en{Covered cell and revealed cell (the centers are marked)}}
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cellnum}
-% \changes{v0.1.0}{2022/01/30}{新增数字命令 \tn{cellnum}.}
-% \changes{v0.2.0}{2022/11/23}{将普通数字 1 至 8 调整为矢量化数字 1 至 8.}
+% \changes{v0.1.0}{2022/01/30}{\zh{新增数字命令 \tn{cellnum}。}\en{Add \tn{cellnum} for numbers.}}
+% \changes{v0.2.0}{2022/11/23}{\zh{将普通数字 1 至 8 调整为矢量化数字 1 至 8。}\en{Change plain text 1-8 to vectorized 1-8.}}
 %   \begin{syntax}
 %      \tn{cellnum} \marg{num=1|2|3|4|5|6|7|8}
 %   \end{syntax}
-% \qquad 在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. 如果 \meta{num} 不为 1 至 8, 则该指令不起作用. 需要注意的是, 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与 |\celldown| 指令一起使用.
+% \qquad 
+% \zh{在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}。如果 \meta{num} 不为 1 至 8，则该指令不起作用。需要注意的是，由于扫雷图形本身遵循的原则，该命令不建议单独使用，一般与 \tn{celldown} 指令一起使用。}
+% \en{Fill the cell with colored vectorized number~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. If \meta{num} is not from 1 to 8, then the command will not take effect. Note that this command is usually used with \tn{celldown}. It's not recommended to use this command alone due to the general rule of minesweeper graphics. }
 % \end{function}
 %
-% \subsection{边框元素}
+% \subsection{\zh{边框元素}\en{Frame elements}}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\border}
 %   \begin{syntax}
 %      \tn{border} \oarg{border\_type=-|t|l|b|r}
 %   \end{syntax}
-% \qquad 绘制以格为单位长度(宽度)的边框. t, l, b, r 分别代表上, 左, 下, 右边框, 如果相邻边框同时绘制, 将自动绘制对应的角. 边框分为三层, 中间层使用 \ColorTagZero{} 绘制, 宽度为 6, 内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感, 宽度为 3. 提供立体感的方式和 |\cellup| 同理. 左边和上边的高亮外边缘用 \ColorTagBorder{} 封边. 默认参数为 -, 即绘制全部边框.
+% \qquad 
+% \zh{绘制以格为单位长度(宽度)的边框。t、l、b、r 分别代表上、左、下、右边框，如果相邻边框同时绘制，将自动绘制对应的角。边框分为三层，中间层使用 \ColorTagZero{} 绘制，宽度为 6，内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感，宽度为 3。提供立体感的方式和 \tn{cellup} 同理。左边和上边的高亮外边缘用 \ColorTagBorder{} 封边。默认参数为 -，即绘制全部边框。}
+% \en{Draw the cell-sized frame. t, l, b, r represent the top, left, bottom, right frame respectively. If two adjacent sides are drawn at the same time, the corner in between will also be drawn. The frame consists of 3 layers. The middle layer is in \ColorTagZero{} and 6 units wide. The inner and outer layer are 3 units wide, using \ColorTagLight{} and \ColorTagBorder{} to create a 3D effect in a similar manner as \tn{cellup}. The outer edge of the left and top highlights are enclosed with \ColorTagBorder{}. The default argument is -, which means drawing the full frame.}
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -367,20 +375,21 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \node at (-6, -8) {l};
 %         \end{scope}
 %     \end{tikzpicture}
-%     \caption{边框组装效果}
+%     \caption{\zh{边框组装效果}\en{The full frame in effect}}
 % \end{figure}
 %
-% \subsection{综合模块}
+% \subsection{\zh{综合模块}\en{Modules}}
 %
-% 这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块, 如果没有特定的设计需求，推荐仅使用这一部分提供的模块.
+% \zh{这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块，如果没有特定的设计需求，推荐仅使用这一部分提供的模块。}
+% \en{This section contains the modules provided by \pkg{tikz-minesweeper}. In general, it's recommended to only use these commands unless there is specific customisation needed.}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cell}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 数字 0-8.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 九种颜色指令 r, g, b, c, y, o, t, l, v.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 旗帜 f, 雷 m.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 输入单字符和多字符.}
-% \changes{v0.2.0}{2022/11/23}{由于颜色 teal 和 lime 难以与其它颜色分辨, \tn{cell} 参数 \meta{info} 选项取消 t, l.}
-% \changes{v0.2.0}{2022/11/23}{\tn{cell} 支持参数 \meta{info} 选项: 半透明雷 s, 踩雷 n 和标记错误 e.}
+% \changes{v0.1.0}{2022/01/30}{\zh{\tn{cell} 支持参数 \meta{info} 选项：数字 0-8。}\en{\meta{info} of \tn{cell} supports: 0-8 for numbers.}}
+% \changes{v0.1.0}{2022/01/30}{\zh{\tn{cell} 支持参数 \meta{info} 选项：九种颜色指令 r、g、b、c、y、o、t、l、v。}\en{\meta{info} of \tn{cell} supports: r, g, b, c, y, o, t, l, v for nine colors.}}
+% \changes{v0.1.0}{2022/01/30}{\zh{\tn{cell} 支持参数 \meta{info} 选项：旗帜 f、雷 m。}\en{\meta{info} of \tn{cell} supports: f for flag, m for mine.}}
+% \changes{v0.1.0}{2022/01/30}{\zh{\tn{cell} 支持参数 \meta{info} 输入单字符和多字符。}\en{\meta{info} of \tn{cell} supports single character and string.}}
+% \changes{v0.2.0}{2022/11/23}{\zh{由于颜色 teal 和 lime 难以与其它颜色分辨，\tn{cell} 参数 \meta{info} 选项取消 t、l。}\en{Since teal and lime are hard to distinguish from other colors, \meta{info} of \tn{cell} removes support for t and l.}}
+% \changes{v0.2.0}{2022/11/23}{\zh{\tn{cell} 支持参数 \meta{info} 选项：半透明雷 s、踩雷 n 和标记错误 e。}\en{\meta{info} of \tn{cell} supports: s for semitransparent mine, n for blasted mine and e for mark.}}
 %   \begin{syntax}
 %      \tn{cell} \marg{r} \marg{c} \marg{info}
 %   \end{syntax}
