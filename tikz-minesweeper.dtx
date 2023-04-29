@@ -393,18 +393,30 @@ This package consists of the files tikz-minesweeper.dtx,
 %   \begin{syntax}
 %      \tn{cell} \marg{r} \marg{c} \marg{info}
 %   \end{syntax}
-% \qquad 在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格, 行列均从 0 开始编号. \meta{info} 的检查顺序如下:
+% \qquad 
+% \zh{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格，行列均从 0 开始编号。\meta{info} 的检查顺序如下：}
+% \en{Draw a cell containing \meta{info} at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. \meta{info} is checked in the following order: }
 % \begin{itemize}
-%     \item 如果 \meta{info} 是 0-8 的数字, 方格是按下状态并且数字会上色;
-%     \item 如果 \meta{info} 是 r(红色, red), g(绿色, green), b(蓝色, blue), c(cyan, 湖蓝色), y(yellow, 黄色), o(orange, 橘色), v(violet, 紫色) 中的一个, 方格是抬起状态, 且会染成对应颜色, 方格颜色的透明度为\textbf{0.2};
-%     \item 如果 \meta{info} 是 f, 方格是弹起状态并且会插旗.
-%     \item 如果 \meta{info} 是 m, 方格是按下状态并且会显示地雷.
-%     \item 如果 \meta{info} 是 s, 方格是按下状态并且会显示半透明的地雷, 即将地雷的颜色调整为 \ColorTagShade{}.
-%     \item 如果 \meta{info} 是 n, 方格是按下状态并且会显示踩到地雷, 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagFail{} 绘制底色.
-%     \item 如果 \meta{info} 是 e, 方格是按下状态并且会显示标记错误的地雷, 即在普通地雷的基础上, 进一步用 \ColorTagFail{} 绘制一个叉.
-%     \item 如果 \meta{info} 是 -, 方格是弹起状态并且无字符.
-%     \item 如果 \meta{info} 是其他\textbf{单个}字符, 方格是弹起状态并包含该字符, 字符中心为 (8, -8).
-%     \item 如果 \meta{info} 包含\textbf{多个}字符, 将会自动缩小字符, 转化为 |\tiny| 模式.
+%     \item \zh{如果 \meta{info} 是 0-8 的数字，方格是按下状态并且数字会上色；}
+%           \en{If \meta{info} is a number from 0 to 8, then the cell is pressed down and the number is colored;}
+%     \item \zh{如果 \meta{info} 是 r（red，红色）、g（绿色）、b（蓝色）、c（cyan，湖蓝色）、y（yellow，黄色）、o（orange，橘色）、v（violet，紫色）中的一个，方格是抬起状态，且会染成对应颜色，方格颜色的透明度为\textbf{0.2}；}
+%           \en{If \meta{info} is r (red), g (green), b (blue), c (cyan), y (yellow), o (orange) or v (violet), then the cell is covered and accordingly colored with a transparency of \textbf{0.2};}
+%     \item \zh{如果 \meta{info} 是 f，方格是弹起状态并且会插旗。}
+%           \en{If \meta{info} is f, then the cell is covered and flagged.}
+%     \item \zh{如果 \meta{info} 是 m，方格是按下状态并且会显示地雷。}
+%           \en{If \meta{info} is m, then the cell is pressed and shows a mine.}
+%     \item \zh{如果 \meta{info} 是 s，方格是按下状态并且会显示半透明的地雷，即将地雷的颜色调整为 \ColorTagShade{}。}
+%           \en{If \meta{info} is s, then the cell is pressed and shows a semitransparent mine, which is basically a mine in \ColorTagShade{}.}
+%     \item \zh{如果 \meta{info} 是 n，方格是按下状态并且会显示踩到地雷，用 \ColorTagFail{} 绘制底色。}
+%           \en{If \meta{info} is n, then the cell is pressed and shows a blasted mine, with \ColorTagFail{} for background.}
+%     \item \zh{如果 \meta{info} 是 e，方格是按下状态并且会显示标记错误的地雷，即在普通地雷的基础上，进一步用 \ColorTagFail{} 绘制一个叉。}
+%           \en{If \meta{info} is e, then the cell is pressed and shows a mistakenly flagged mine, which is a cross in \ColorTagFail{} on top of a mine.}
+%     \item \zh{如果 \meta{info} 是 -，方格是弹起状态并且无字符。}
+%           \en{If \meta{info} is -, then the cell is covered and has no content.}
+%     \item \zh{如果 \meta{info} 是其他\textbf{单个}字符，方格是弹起状态并包含该字符，字符中心为 (8, -8)。}
+%           \en{If \meta{info} is any other \textbf{single} character, then the cell is covered and shows the character centered at (8, -8).}
+%     \item \zh{如果 \meta{info} 包含\textbf{多个}字符，将会自动缩小字符，转化为 \tn{tiny} 模式。}
+%           \en{If \meta{info} contains \textbf{multiple} characters, the string will be shown in \tn{tiny} font.}
 % \end{itemize}
 % \end{function}
 %
