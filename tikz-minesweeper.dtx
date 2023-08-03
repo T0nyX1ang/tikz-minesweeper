@@ -99,7 +99,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{357}
+% \CheckSum{377}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -433,7 +433,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %   \begin{syntax}
 %      \tn{colorcell} \marg{color} \marg{seq: pos}
 %   \end{syntax}
-% \qquad 将\meta{seq: pos}位置的方格染色为\meta{color}颜色. \meta{color} 仅能传入 |\cell| 中接受的颜色类型. \meta{seq: pos} 定义了一个位置序列, 格式如下:
+% \qquad 将\meta{seq: pos}位置的方格染色为\meta{color}颜色. \meta{color} 仅能传入 |\cell| 中接受的颜色类型, 但是与|\cell|仅支持单一颜色不同的是, \meta{color}支持填入至多 4 种不同颜色, 颜色将从方格部分逆时针填充. \meta{seq: pos} 定义了一个位置序列, 格式如下:
 % \begin{itemize}
 %     \item 序列中的每个元素以分号(;)分隔.
 %     \item 对于每个元素, 以逗号(,)分隔行区间和列区间.
@@ -441,8 +441,11 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{itemize}
 % 下面给出一些示例:
 %  \begin{ctexexam}
-%    \colorcell{g}{0,0-1;0-1,3} % 代表用绿色染色0行, 0-1列和0-1行, 3列的一共4个格子.
-%    \colorcell{r}{0,4;1-2,0-2} % 代表用红色染色0行, 4列和1-2行, 0-2列的一共7个格子.
+%    \colorcell{g}{0,0-1;0-1,3} % 代表用绿色染色0行, 0-1列和0-1行, 3列的4个格子.
+%    \colorcell{r}{0,4;1-2,0-2} % 代表用红色染色0行, 4列和1-2行, 0-2列的7个格子.
+%    \colorcell{rg}{3,0-2} % 代表用红色和绿色染色3行, 0-2列的3个格子.
+%    \colorcell{rgb}{4,0-2} % 代表用红色, 绿色和蓝色染色4行, 0-2列的3个格子.
+%    \colorcell{rgby}{3-4,3-4} % 代表用红色, 绿色, 蓝色和黄色染色3-4行, 3-4列的4个格子.
 %  \end{ctexexam}
 % \end{function}
 %
@@ -458,6 +461,9 @@ This package consists of the files tikz-minesweeper.dtx,
         \row{2}{m-678}
         \colorcell{g}{0,0-1;0-1,3}
         \colorcell{r}{0,4;1-2,0-2}
+        \colorcell{rg}{3,0-2}
+        \colorcell{rgb}{4,0-2}
+        \colorcell{rgby}{3-4,3-4}
     \end{tikzpicture}
 \end{verbatim}
 % \iffalse
@@ -467,16 +473,17 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \begin{figure}[H]
 %         \centering
 %         \begin{tikzpicture}
-%             \board{3}{5}
+%             \board{5}{5}
 %             \row{0}{f{20}123}
 %             \row{1}{A-405}
 %             \row{2}{m-678}
-%             \colorcell{g}{
-%                 0,0-1;0-1,3
-%             }
-%             \colorcell{r}{
-%                 0,4;1-2,0-2
-%             }
+%             \row{3}{-----}
+%             \row{4}{-----}
+%             \colorcell{g}{0,0-1;0-1,3}
+%             \colorcell{r}{0,4;1-2,0-2}
+%             \colorcell{rg}{3,0-2}
+%             \colorcell{rgb}{4,0-2}
+%             \colorcell{rgby}{3-4,3-4}
 %         \end{tikzpicture}
 %         \caption{方格染色示例}
 %     \end{figure}
@@ -532,6 +539,7 @@ This package consists of the files tikz-minesweeper.dtx,
 \str_const:Nn \c__msweeper_valid_numbers_str {012345678}
 \str_const:Nn \c__msweeper_valid_colors_str {rgbcyov}
 \str_new:N \l__msweeper_cellcolor_str
+\str_new:N \l__msweeper_qtrcellcolor_str
 \int_new:N \l__msweeper_rows_int
 \int_new:N \l__msweeper_cols_int
 \int_new:N \l__msweeper_tmargin_int
@@ -694,22 +702,34 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_cellcolored:n}
-% \qquad 绘制鼠标按下时的染色方格, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 r, g, b, c, y, o, v 中的一个, 传入其它值将会被忽略.
+% \qquad 绘制鼠标按下时的染色方格, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 r, g, b, c, y, o, v 中的一个, 传入其它值将会被忽略. 参数 |#1| 的最长长度为 4, 如果传入的参数长度小于 4, 则会在参数的左/右侧补充与其相同的字符, 如果传入的参数长度大于 4, 则会直接被截断为 4 个字符.
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cellcolored:n #1 {
-    \str_case:nnT {#1} {
-        {r} { \str_set:Nn \l__msweeper_cellcolor_str {red} }
-        {g} { \str_set:Nn \l__msweeper_cellcolor_str {green} }
-        {b} { \str_set:Nn \l__msweeper_cellcolor_str {blue} }
-        {c} { \str_set:Nn \l__msweeper_cellcolor_str {cyan} }
-        {y} { \str_set:Nn \l__msweeper_cellcolor_str {yellow} }
-        {o} { \str_set:Nn \l__msweeper_cellcolor_str {orange} }
-        {v} { \str_set:Nn \l__msweeper_cellcolor_str {violet} }
-    } {
-        \begin{scope}
-            \fill[color=\l__msweeper_cellcolor_str, opacity=0.2]
-                (0, 0) rectangle (16, -16);
-        \end{scope}
+    \str_set:Nn \l__msweeper_cellcolor_str {#1}
+    \int_case:nn { \str_count:n {#1} } {
+        {1} { \str_set:Nn \l__msweeper_cellcolor_str {#1#1#1#1} }
+        {2} {
+            \str_put_left:Nx \l__msweeper_cellcolor_str { \str_head:n {#1} }
+            \str_put_right:Nx \l__msweeper_cellcolor_str { \str_tail:n {#1} }
+        }
+        {3} { \str_put_left:Nx \l__msweeper_cellcolor_str { \str_head:n {#1} } }
+    }
+
+    \int_step_inline:nnn {0} {3} {
+        \str_case_e:nnT { \str_item:Nn \l__msweeper_cellcolor_str {##1 + 1} } {
+            {r} { \str_set:Nn \l__msweeper_qtrcellcolor_str {red} }
+            {g} { \str_set:Nn \l__msweeper_qtrcellcolor_str {green} }
+            {b} { \str_set:Nn \l__msweeper_qtrcellcolor_str {blue} }
+            {c} { \str_set:Nn \l__msweeper_qtrcellcolor_str {cyan} }
+            {y} { \str_set:Nn \l__msweeper_qtrcellcolor_str {yellow} }
+            {o} { \str_set:Nn \l__msweeper_qtrcellcolor_str {orange} }
+            {v} { \str_set:Nn \l__msweeper_qtrcellcolor_str {violet} }
+        } {
+            \begin{scope}[xshift=8, yshift=-8]
+                \fill[color=\l__msweeper_qtrcellcolor_str, opacity=0.2, rotate=90*##1]
+                    (0, 0) -- (8, 8) -- (-8, 8) -- cycle;
+            \end{scope}
+        }
     }
 }
 
