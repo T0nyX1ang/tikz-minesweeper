@@ -84,11 +84,9 @@ This package consists of the files tikz-minesweeper.dtx,
 }
 \EnableCrossrefs
 \CodelineIndex
-\RecordChanges
 \begin{document}
     \DocInput{tikz-minesweeper.dtx}
     \IndexLayout
-    \PrintChanges
     \IndexPrologue{%
     \section{\indexname}
     \textit{意大利体的数字表示描述对应索引项的页码,
@@ -236,7 +234,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \subsection{方格元素}
 %
 % \begin{function}[added=2022-01-30]{\flag}
-% \changes{v0.1.0}{2022/01/30}{新增旗帜命令 \tn{flag}.}
 %   \begin{syntax}
 %      \tn{flag}
 %   \end{syntax}
@@ -274,7 +271,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30]{\mine}
-% \changes{v0.1.0}{2022/01/30}{新增地雷命令 \tn{mine}.}
 %   \begin{syntax}
 %      \tn{mine}
 %   \end{syntax}
@@ -282,7 +278,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\cellup}
-% \changes{v0.1.0}{2022/01/30}{新增方格弹起时和按下时的命令 \tn{cellup} 和 \tn{celldown}.}
 %   \begin{syntax}
 %      \tn{cellup}
 %   \end{syntax}
@@ -313,8 +308,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cellnum}
-% \changes{v0.1.0}{2022/01/30}{新增数字命令 \tn{cellnum}.}
-% \changes{v0.2.0}{2022/11/23}{将普通数字 1 至 8 调整为矢量化数字 1 至 8.}
 %   \begin{syntax}
 %      \tn{cellnum} \marg{num=1|2|3|4|5|6|7|8}
 %   \end{syntax}
@@ -353,12 +346,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % 这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块, 如果没有特定的设计需求，推荐仅使用这一部分提供的模块.
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cell}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 数字 0-8.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 九种颜色指令 r, g, b, c, y, o, t, l, v.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 选项: 旗帜 f, 雷 m.}
-% \changes{v0.1.0}{2022/01/30}{\tn{cell} 支持参数 \meta{info} 输入单字符和多字符.}
-% \changes{v0.2.0}{2022/11/23}{由于颜色 teal 和 lime 难以与其它颜色分辨, \tn{cell} 参数 \meta{info} 选项取消 t, l.}
-% \changes{v0.2.0}{2022/11/23}{\tn{cell} 支持参数 \meta{info} 选项: 半透明雷 s, 踩雷 n 和标记错误 e.}
 %   \begin{syntax}
 %      \tn{cell} \marg{r} \marg{c} \marg{info}
 %   \end{syntax}
@@ -378,7 +365,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\row}
-% \changes{v0.1.0}{2022/01/30}{新增 \tn{row} 命令和 \tn{col} 命令.}
 %   \begin{syntax}
 %      \tn{row} \marg{r} \marg{seq:info}
 %   \end{syntax}
@@ -393,9 +379,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{function}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\board}
-% \changes{v0.1.0}{2022/01/30}{新增 \tn{board} 指令与四种边界类型.}
-% \changes{v0.2.0}{2022/11/23}{新增标记行列坐标选项 x.}
-% \changes{v0.2.0}{2022/11/23}{提前绘制同色邻接区域, 以避免格子的同色邻接区域导致的渲染问题.}
 %   \begin{syntax}
 %      \tn{board} \oarg{border\_type=-|t|l|b|r|x} \marg{r} \marg{c}
 %   \end{syntax}
@@ -429,7 +412,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30]{\colorcell}
-% \changes{v0.1.0}{2022/01/30}{新增 \tn{colorcell} 指令.}
 %   \begin{syntax}
 %      \tn{colorcell} \marg{color} \marg{seq: pos}
 %   \end{syntax}
