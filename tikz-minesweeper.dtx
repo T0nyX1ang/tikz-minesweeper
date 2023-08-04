@@ -19,7 +19,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<package>\ProvidesPackage{tikz-minesweeper}
-%<package>    [2022/11/25 v0.2.1 Draw a minesweeper board in LaTeX]
+%<package>    [2023/04/23 v0.2.2 Draw a minesweeper board in LaTeX]
 %<*batchfile>
 \begingroup
 \input ctxdocstrip.tex
@@ -88,11 +88,9 @@ This package consists of the files tikz-minesweeper.dtx,
 }
 \EnableCrossrefs
 \CodelineIndex
-\RecordChanges
 \begin{document}
     \DocInput{tikz-minesweeper.dtx}
     \IndexLayout
-    \PrintChanges
     \IndexPrologue{%
     \section{\indexname}
     \textit{意大利体的数字表示描述对应索引项的页码,
@@ -103,7 +101,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{357}
+% \CheckSum{377}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -123,10 +121,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \GetFileInfo{tikz-minesweeper.sty}
 %
-% \title{
-%     \zh{\pkg{tikz-minesweeper}宏包使用手册}
-%     \en{\pkg{tikz-minesweeper} Manual}
-% }
+% \title{\pkg{tikz-minesweeper}宏包使用手册 (\fileversion)}
 % \author{濮天羿~~~~向飞宇\thanks{源代码请参考此仓库: https://github.com/T0nyX1ang/tikz-minesweeper}~~~~朱耀宇}
 % \maketitle
 %
@@ -254,7 +249,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \subsection{\zh{方格元素}\en{Cell elements}}
 %
 % \begin{function}[added=2022-01-30]{\flag}
-% \changes{v0.1.0}{2022/01/30}{\zh{新增旗帜命令 \tn{flag}。}\en{Add \tn{flag} for drawing flags.}}
 %   \begin{syntax}
 %      \tn{flag}
 %   \end{syntax}
@@ -294,7 +288,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30]{\mine}
-% \changes{v0.1.0}{2022/01/30}{\zh{新增地雷命令 \tn{mine}。}\en{Add \tn{mine} for drawing mines.}}
 %   \begin{syntax}
 %      \tn{mine}
 %   \end{syntax}
@@ -304,11 +297,10 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\cellup}
-% \changes{v0.1.0}{2022/01/30}{\zh{新增方格弹起时和按下时的命令 \tn{cellup} 和 \tn{celldown}。}\en{Add \tn{cellup} and \tn{celldown} for covered and revealed cells.}}
 %   \begin{syntax}
 %      \tn{cellup}
 %   \end{syntax}
-% \qquad 
+% \qquad
 % \zh{绘制鼠标弹起时的方格。首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面，营造立体感，亮面和暗面的宽度均为2，然后用 \ColorTagZero{} 绘制底色。需要注意的是，该方格的中心点为 (8.5, -8.5)，与 \tn{celldown} 指令对应方格的中心点不同。}
 % \en{Draw the covered cell. Draw the light side and dark side, the widths of which are both 2, with \ColorTagLight{} and \ColorTagShade{} respectively to create a 3D effect. Then fill the background with \ColorTagZero{}. Note that the center of this cell is (8.5, -8.5), which is different from that of \tn{celldown}.}
 % \end{function}
@@ -317,7 +309,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %   \begin{syntax}
 %      \tn{celldown}
 %   \end{syntax}
-% \qquad 
+% \qquad
 % \zh{绘制鼠标按下时的方格。首先用 \ColorTagShade{} 绘制方格边界，然后用 \ColorTagZero{} 绘制底色，左和上的边界宽度均为1。需要注意的是，c此时方格的中心点为 (8, -8)，与 \tn{cellup} 指令对应方格的中心点不同。}
 % \en{Draw the revealed cell. Draw the edges with \ColorTagShade{}, then fill the background with \ColorTagZero{}. The widths of the left and top edges are both 1. Note that the center of this cell is (8, -8), which is different from that of \tn{cellup}.}
 % \end{function}
@@ -339,12 +331,10 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cellnum}
-% \changes{v0.1.0}{2022/01/30}{\zh{新增数字命令 \tn{cellnum}。}\en{Add \tn{cellnum} for numbers.}}
-% \changes{v0.2.0}{2022/11/23}{\zh{将普通数字 1 至 8 调整为矢量化数字 1 至 8。}\en{Change plain text 1-8 to vectorized 1-8.}}
 %   \begin{syntax}
 %      \tn{cellnum} \marg{num=1|2|3|4|5|6|7|8}
 %   \end{syntax}
-% \qquad 
+% \qquad
 % \zh{在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}。如果 \meta{num} 不为 1 至 8，则该指令不起作用。需要注意的是，由于扫雷图形本身遵循的原则，该命令不建议单独使用，一般与 \tn{celldown} 指令一起使用。}
 % \en{Fill the cell with colored vectorized number~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. If \meta{num} is not from 1 to 8, then the command will not take effect. Note that this command is usually used with \tn{celldown}. It's not recommended to use this command alone due to the general rule of minesweeper graphics. }
 % \end{function}
@@ -355,7 +345,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %   \begin{syntax}
 %      \tn{border} \oarg{border\_type=-|t|l|b|r}
 %   \end{syntax}
-% \qquad 
+% \qquad
 % \zh{绘制以格为单位长度(宽度)的边框。t、l、b、r 分别代表上、左、下、右边框，如果相邻边框同时绘制，将自动绘制对应的角。边框分为三层，中间层使用 \ColorTagZero{} 绘制，宽度为 6，内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感，宽度为 3。提供立体感的方式和 \tn{cellup} 同理。左边和上边的高亮外边缘用 \ColorTagBorder{} 封边。默认参数为 -，即绘制全部边框。}
 % \en{Draw the cell-sized frame. t, l, b, r represent the top, left, bottom, right frame respectively. If two adjacent sides are drawn at the same time, the corner in between will also be drawn. The frame consists of 3 layers. The middle layer is in \ColorTagZero{} and 6 units wide. The inner and outer layer are 3 units wide, using \ColorTagLight{} and \ColorTagBorder{} to create a 3D effect in a similar manner as \tn{cellup}. The outer edge of the left and top highlights are enclosed with \ColorTagBorder{}. The default argument is -, which means drawing the full frame.}
 % \end{function}
@@ -384,16 +374,10 @@ This package consists of the files tikz-minesweeper.dtx,
 % \en{This section contains the modules provided by \pkg{tikz-minesweeper}. In general, it's recommended to only use these commands unless there is specific customisation needed.}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cell}
-% \changes{v0.1.0}{2022/01/30}{\zh{\tn{cell} 支持参数 \meta{info} 选项：数字 0-8。}\en{\meta{info} of \tn{cell} supports: 0-8 for numbers.}}
-% \changes{v0.1.0}{2022/01/30}{\zh{\tn{cell} 支持参数 \meta{info} 选项：九种颜色指令 r、g、b、c、y、o、t、l、v。}\en{\meta{info} of \tn{cell} supports: r, g, b, c, y, o, t, l, v for nine colors.}}
-% \changes{v0.1.0}{2022/01/30}{\zh{\tn{cell} 支持参数 \meta{info} 选项：旗帜 f、雷 m。}\en{\meta{info} of \tn{cell} supports: f for flag, m for mine.}}
-% \changes{v0.1.0}{2022/01/30}{\zh{\tn{cell} 支持参数 \meta{info} 输入单字符和多字符。}\en{\meta{info} of \tn{cell} supports single character and string.}}
-% \changes{v0.2.0}{2022/11/23}{\zh{由于颜色 teal 和 lime 难以与其它颜色分辨，\tn{cell} 参数 \meta{info} 选项取消 t、l。}\en{Since teal and lime are hard to distinguish from other colors, \meta{info} of \tn{cell} removes support for t and l.}}
-% \changes{v0.2.0}{2022/11/23}{\zh{\tn{cell} 支持参数 \meta{info} 选项：半透明雷 s、踩雷 n 和标记错误 e。}\en{\meta{info} of \tn{cell} supports: s for semitransparent mine, n for blasted mine and e for mark.}}
 %   \begin{syntax}
 %      \tn{cell} \marg{r} \marg{c} \marg{info}
 %   \end{syntax}
-% \qquad 
+% \qquad
 % \zh{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格，行列均从 0 开始编号。\meta{info} 的检查顺序如下：}
 % \en{Draw a cell containing \meta{info} at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. \meta{info} is checked in the following order: }
 % \begin{itemize}
@@ -421,7 +405,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\row}
-% \changes{v0.1.0}{2022/01/30}{新增 \tn{row} 命令和 \tn{col} 命令.}
 %   \begin{syntax}
 %      \tn{row} \marg{r} \marg{seq:info}
 %   \end{syntax}
@@ -436,9 +419,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{function}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\board}
-% \changes{v0.1.0}{2022/01/30}{新增 \tn{board} 指令与四种边界类型.}
-% \changes{v0.2.0}{2022/11/23}{新增标记行列坐标选项 x.}
-% \changes{v0.2.0}{2022/11/23}{提前绘制同色邻接区域, 以避免格子的同色邻接区域导致的渲染问题.}
 %   \begin{syntax}
 %      \tn{board} \oarg{border\_type=-|t|l|b|r|x} \marg{r} \marg{c}
 %   \end{syntax}
@@ -472,11 +452,10 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30]{\colorcell}
-% \changes{v0.1.0}{2022/01/30}{新增 \tn{colorcell} 指令.}
 %   \begin{syntax}
 %      \tn{colorcell} \marg{color} \marg{seq: pos}
 %   \end{syntax}
-% \qquad 将\meta{seq: pos}位置的方格染色为\meta{color}颜色. \meta{color} 仅能传入 |\cell| 中接受的颜色类型. \meta{seq: pos} 定义了一个位置序列, 格式如下:
+% \qquad 将\meta{seq: pos}位置的方格染色为\meta{color}颜色. \meta{color} 仅能传入 |\cell| 中接受的颜色类型, 但是与|\cell|仅支持单一颜色不同的是, \meta{color}支持填入至多 4 种不同颜色, 颜色将从方格部分逆时针填充. \meta{seq: pos} 定义了一个位置序列, 格式如下:
 % \begin{itemize}
 %     \item 序列中的每个元素以分号(;)分隔.
 %     \item 对于每个元素, 以逗号(,)分隔行区间和列区间.
@@ -484,8 +463,11 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{itemize}
 % 下面给出一些示例:
 %  \begin{ctexexam}
-%    \colorcell{g}{0,0-1;0-1,3} % 代表用绿色染色0行, 0-1列和0-1行, 3列的一共4个格子.
-%    \colorcell{r}{0,4;1-2,0-2} % 代表用红色染色0行, 4列和1-2行, 0-2列的一共7个格子.
+%    \colorcell{g}{0,0-1;0-1,3} % 代表用绿色染色0行, 0-1列和0-1行, 3列的4个格子.
+%    \colorcell{r}{0,4;1-2,0-2} % 代表用红色染色0行, 4列和1-2行, 0-2列的7个格子.
+%    \colorcell{rg}{3,0-2} % 代表用红色和绿色染色3行, 0-2列的3个格子.
+%    \colorcell{rgb}{4,0-2} % 代表用红色, 绿色和蓝色染色4行, 0-2列的3个格子.
+%    \colorcell{rgby}{3-4,3-4} % 代表用红色, 绿色, 蓝色和黄色染色3-4行, 3-4列的4个格子.
 %  \end{ctexexam}
 % \end{function}
 %
@@ -501,6 +483,9 @@ This package consists of the files tikz-minesweeper.dtx,
         \row{2}{m-678}
         \colorcell{g}{0,0-1;0-1,3}
         \colorcell{r}{0,4;1-2,0-2}
+        \colorcell{rg}{3,0-2}
+        \colorcell{rgb}{4,0-2}
+        \colorcell{rgby}{3-4,3-4}
     \end{tikzpicture}
 \end{verbatim}
 % \iffalse
@@ -510,16 +495,17 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \begin{figure}[H]
 %         \centering
 %         \begin{tikzpicture}
-%             \board{3}{5}
+%             \board{5}{5}
 %             \row{0}{f{20}123}
 %             \row{1}{A-405}
 %             \row{2}{m-678}
-%             \colorcell{g}{
-%                 0,0-1;0-1,3
-%             }
-%             \colorcell{r}{
-%                 0,4;1-2,0-2
-%             }
+%             \row{3}{-----}
+%             \row{4}{-----}
+%             \colorcell{g}{0,0-1;0-1,3}
+%             \colorcell{r}{0,4;1-2,0-2}
+%             \colorcell{rg}{3,0-2}
+%             \colorcell{rgb}{4,0-2}
+%             \colorcell{rgby}{3-4,3-4}
 %         \end{tikzpicture}
 %         \caption{方格染色示例}
 %     \end{figure}
@@ -575,6 +561,7 @@ This package consists of the files tikz-minesweeper.dtx,
 \str_const:Nn \c__msweeper_valid_numbers_str {012345678}
 \str_const:Nn \c__msweeper_valid_colors_str {rgbcyov}
 \str_new:N \l__msweeper_cellcolor_str
+\str_new:N \l__msweeper_qtrcellcolor_str
 \int_new:N \l__msweeper_rows_int
 \int_new:N \l__msweeper_cols_int
 \int_new:N \l__msweeper_tmargin_int
@@ -737,22 +724,34 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_cellcolored:n}
-% \qquad 绘制鼠标按下时的染色方格, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 r, g, b, c, y, o, v 中的一个, 传入其它值将会被忽略.
+% \qquad 绘制鼠标按下时的染色方格, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 r, g, b, c, y, o, v 中的一个, 传入其它值将会被忽略. 参数 |#1| 的最长长度为 4, 如果传入的参数长度小于 4, 则会在参数的左/右侧补充与其相同的字符, 如果传入的参数长度大于 4, 则会直接被截断为 4 个字符.
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cellcolored:n #1 {
-    \str_case:nnT {#1} {
-        {r} { \str_set:Nn \l__msweeper_cellcolor_str {red} }
-        {g} { \str_set:Nn \l__msweeper_cellcolor_str {green} }
-        {b} { \str_set:Nn \l__msweeper_cellcolor_str {blue} }
-        {c} { \str_set:Nn \l__msweeper_cellcolor_str {cyan} }
-        {y} { \str_set:Nn \l__msweeper_cellcolor_str {yellow} }
-        {o} { \str_set:Nn \l__msweeper_cellcolor_str {orange} }
-        {v} { \str_set:Nn \l__msweeper_cellcolor_str {violet} }
-    } {
-        \begin{scope}
-            \fill[color=\l__msweeper_cellcolor_str, opacity=0.2]
-                (0, 0) rectangle (16, -16);
-        \end{scope}
+    \str_set:Nn \l__msweeper_cellcolor_str {#1}
+    \int_case:nn { \str_count:n {#1} } {
+        {1} { \str_set:Nn \l__msweeper_cellcolor_str {#1#1#1#1} }
+        {2} {
+            \str_put_left:Nx \l__msweeper_cellcolor_str { \str_head:n {#1} }
+            \str_put_right:Nx \l__msweeper_cellcolor_str { \str_tail:n {#1} }
+        }
+        {3} { \str_put_left:Nx \l__msweeper_cellcolor_str { \str_head:n {#1} } }
+    }
+
+    \int_step_inline:nnn {0} {3} {
+        \str_case_e:nnT { \str_item:Nn \l__msweeper_cellcolor_str {##1 + 1} } {
+            {r} { \str_set:Nn \l__msweeper_qtrcellcolor_str {red} }
+            {g} { \str_set:Nn \l__msweeper_qtrcellcolor_str {green} }
+            {b} { \str_set:Nn \l__msweeper_qtrcellcolor_str {blue} }
+            {c} { \str_set:Nn \l__msweeper_qtrcellcolor_str {cyan} }
+            {y} { \str_set:Nn \l__msweeper_qtrcellcolor_str {yellow} }
+            {o} { \str_set:Nn \l__msweeper_qtrcellcolor_str {orange} }
+            {v} { \str_set:Nn \l__msweeper_qtrcellcolor_str {violet} }
+        } {
+            \begin{scope}[xshift=8, yshift=-8]
+                \fill[color=\l__msweeper_qtrcellcolor_str, opacity=0.2, rotate=90*##1]
+                    (0, 0) -- (8, 8) -- (-8, 8) -- cycle;
+            \end{scope}
+        }
     }
 }
 
