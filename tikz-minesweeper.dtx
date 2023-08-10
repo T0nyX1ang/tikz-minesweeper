@@ -77,9 +77,6 @@ This package consists of the files tikz-minesweeper.dtx,
 \usepackage{float}
 \usepackage{multicol}
 
-\def\lang{en}
-\def\zhlang{zh}\newcommand{\zh}[1]{\ifx\lang\zhlang#1\fi}
-\def\enlang{en}\newcommand{\en}[1]{\ifx\lang\enlang#1\fi}
 \ctexset{
     section = {
         name = {,},
@@ -89,6 +86,8 @@ This package consists of the files tikz-minesweeper.dtx,
 \EnableCrossrefs
 \CodelineIndex
 \begin{document}
+    \input{translation/zh.tex}
+    \input{translation/en.tex}
     \DocInput{tikz-minesweeper.dtx}
     \IndexLayout
     \IndexPrologue{%
@@ -121,16 +120,13 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \GetFileInfo{tikz-minesweeper.sty}
 %
-% \title{\pkg{tikz-minesweeper}宏包使用手册 (\fileversion)}
-% \author{濮天羿~~~~向飞宇\thanks{源代码请参考此仓库: https://github.com/T0nyX1ang/tikz-minesweeper}~~~~朱耀宇}
+% \title{\TransTitle}
+% \author{\TransAuthor}
+% \date{\filedate}
 % \maketitle
 %
-% \section{
-%     \zh{绘制示例}
-%     \en{Usage}
-% }
-% \zh{下面是一个\pkg{tikz-minesweeper}宏包的绘制示例，包含了该宏包中最重要的几个指令。}
-% \en{Below is an example which includes the most important commands within the \pkg{tikz-minesweeper} package.}
+% \section{\TransSectionUsage}
+% \TransSectionUsageContent
 %
 % \begin{multicols}{2}
 % \iffalse
@@ -165,21 +161,18 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \row{4}{ov-f}
 %             \col{4}{358y?}
 %         \end{tikzpicture}
-%         \caption{
-%             \zh{在5x5区域内绘制数字、雷、旗帜、空格和标记}
-%             \en{Rendering numbers, mines, flags, cells and marks on a 5x5 board}
-%         }
+%         \caption{\TransFigureUsageCaption}
 %     \end{figure}
 % \end{multicols}
 %
-% \section{\zh{绘制指令介绍}\en{References}}
+% \section{\TransSectionCommand}
 %
-% \subsection{\zh{基础设定}\en{Fundamental rules}}
-% \zh{本宏包中设定单位长度为\textbf{1pt}。为了与标准扫雷游戏一致，一格的边长是\textbf{16pt}。下文如无特别说明，所有方格的原点都位于左上角，所有数据的单位均为\textbf{pt}。}
-% \en{This package sets the unit length to \textbf{1pt}. The edge length for cells is \textbf{16pt} to match the standard minesweeper game. Henceforth, without explicit note, the origin of a cell is its top-left corner and all lengths are in \textbf{pt}. }
+% \subsection{\TransSubsectionFundamentals}
 %
-% \zh{如果需要缩放一个盘面，推荐使用scope环境中的scale参数，即采用如下语法：}
-% \en{To scale a board, it's recommended to use the scale parameter from scope environment, that is: }
+% \TransSubsectionFundamentalsUnitContent
+%
+% \TransSubsectionFundamentalsScaleContent
+%
 % \begin{multicols}{2}
 % \iffalse
 %<*internal>
@@ -200,13 +193,13 @@ This package consists of the files tikz-minesweeper.dtx,
 %              \board[-tlbr]{1}{1}
 %              \row{0}{1}
 %         \end{tikzpicture}
-%         \caption{\zh{放大一个格子}\en{A zoomed cell}}
+%         \caption{\TransFigureZoomedCellCaption}
 %     \end{figure}
 % \end{multicols}
 %
-% \subsection{\zh{配色}\en{Color scheme}}
-% \zh{\pkg{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色。这些配色均给出了标签，这些标签均可以直接在文档中使用。}
-% \en{The \pkg{tikz-minesweeper} package defines the colors for numbers and boards in minesweeper. The colors have labels that can be called in the documentation. }
+% \subsection{\TransSubsectionColorScheme}
+%
+% \TransSubsectionColorSchemeContent
 %
 % \def\ColorTagZero{\textcolor{color0}{|color0|}}
 % \def\ColorTagOne{\textcolor{color1}{|color1|}}
@@ -224,37 +217,17 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \begin{table}[H]
 %     \centering
-%     \begin{tabular}{ccccc}
-%         \toprule
-%         \zh{颜色标签}\en{Color label} & R   & G   & B   & \zh{场景}        \en{Use case}                          \\
-%         \midrule
-%         \ColorTagZero{}  & 192 & 192 & 192 & \zh{格子内部 / 外边框}        \en{cell interior/frame interior}     \\
-%         \ColorTagOne{}   & 0   & 0   & 255 & \zh{数字1}                   \en{number 1}                          \\
-%         \ColorTagTwo{}   & 0   & 128 & 0   & \zh{数字2}                   \en{number 2}                          \\
-%         \ColorTagThree{} & 255 & 0   & 0   & \zh{数字3}                   \en{number 3}                          \\
-%         \ColorTagFour{}  & 0   & 0   & 128 & \zh{数字4}                   \en{number 4}                          \\
-%         \ColorTagFive{}  & 128 & 0   & 0   & \zh{数字5}                   \en{number 5}                          \\
-%         \ColorTagSix{}   & 0   & 128 & 128 & \zh{数字6}                   \en{number 6}                          \\
-%         \ColorTagSeven{} & 0   & 0   & 0   & \zh{数字7}                   \en{number 7}                          \\
-%         \ColorTagEight{} & 128 & 128 & 128 & \zh{数字8}                   \en{number 8}                          \\
-%         \ColorTagBorder{}& 160 & 160 & 160 & \zh{边框阴影}                \en{frame shade}                      \\
-%         \ColorTagLight{} & 255 & 255 & 255 & \zh{高亮}                    \en{highlight}                         \\
-%         \ColorTagShade{} & 128 & 128 & 128 & \zh{格子阴影 / 按下的格子边界} \en{cell shade/border of opened cell}  \\
-%         \ColorTagFail{}  & 255 & 0   & 0   & \zh{导致失败的格子}           \en{blasted cell}                      \\
-%         \bottomrule
-%     \end{tabular}
-%     \caption{\zh{颜色对照表}\en{Look-up table of colors}}
+%     \TransSubsectionColorSchemeTableContent
+%     \caption{\TransSubsectionColorSchemeTableCaption}
 % \end{table}
 %
-% \subsection{\zh{方格元素}\en{Cell elements}}
+% \subsection{\TransSubsectionCellElements}
 %
 % \begin{function}[added=2022-01-30]{\flag}
 %   \begin{syntax}
 %      \tn{flag}
 %   \end{syntax}
-% \qquad
-% \zh{绘制旗子。首先用 \ColorTagSeven{} 绘制两层旗子的底座，然后用 \ColorTagSeven{} 绘制旗子的旗杆，最后用 \ColorTagThree{} 绘制旗帜本身。}
-% \en{Draw the flag. Draw the 2-layer base of the flag with \ColorTagSeven{} first, then draw the flag pole with \ColorTagSeven{}. In the end, draw the flag with \ColorTagThree{}.}
+% \qquad \TransCommandFlagContent
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -284,34 +257,28 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \mine
 %         \end{scope}
 %     \end{tikzpicture}
-%     \caption{\zh{旗子和雷的细节图}\en{Sketch of the flag and the mine}}
+%     \caption{\TransFigureFlagMineCaption}
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30]{\mine}
 %   \begin{syntax}
 %      \tn{mine}
 %   \end{syntax}
-% \qquad
-% \zh{绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起，然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影。}
-% \en{Draw the mine. Draw the trapezoidal spikes with \ColorTagSeven{} first, then draw the circular body and the highlight with \ColorTagSeven{}.}
+% \qquad \TransCommandMineContent
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\cellup}
 %   \begin{syntax}
 %      \tn{cellup}
 %   \end{syntax}
-% \qquad
-% \zh{绘制鼠标弹起时的方格。首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面，营造立体感，亮面和暗面的宽度均为2，然后用 \ColorTagZero{} 绘制底色。需要注意的是，该方格的中心点为 (8.5, -8.5)，与 \tn{celldown} 指令对应方格的中心点不同。}
-% \en{Draw the covered cell. Draw the light side and dark side, the widths of which are both 2, with \ColorTagLight{} and \ColorTagShade{} respectively to create a 3D effect. Then fill the background with \ColorTagZero{}. Note that the center of this cell is (8.5, -8.5), which is different from that of \tn{celldown}.}
+% \qquad \TransCommandCellUpContent
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\celldown}
 %   \begin{syntax}
 %      \tn{celldown}
 %   \end{syntax}
-% \qquad
-% \zh{绘制鼠标按下时的方格。首先用 \ColorTagShade{} 绘制方格边界，然后用 \ColorTagZero{} 绘制底色，左和上的边界宽度均为1。需要注意的是，c此时方格的中心点为 (8, -8)，与 \tn{cellup} 指令对应方格的中心点不同。}
-% \en{Draw the revealed cell. Draw the edges with \ColorTagShade{}, then fill the background with \ColorTagZero{}. The widths of the left and top edges are both 1. Note that the center of this cell is (8, -8), which is different from that of \tn{cellup}.}
+% \qquad \TransCommandCellDownContent
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -327,27 +294,23 @@ This package consists of the files tikz-minesweeper.dtx,
 %          \draw[thick, cborder] (0,0) rectangle (16, -16);
 %          \fill[red] (8.5, -8.5) circle (0.2);
 %     \end{tikzpicture}
-%     \caption{\zh{弹起的方格与按下的方格（包含中心点）}\en{Covered cell and revealed cell (the centers are marked)}}
+%     \caption{\TransFigureCellUpDownCaption}
 % \end{figure}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cellnum}
 %   \begin{syntax}
 %      \tn{cellnum} \marg{num=1|2|3|4|5|6|7|8}
 %   \end{syntax}
-% \qquad
-% \zh{在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}。如果 \meta{num} 不为 1 至 8，则该指令不起作用。需要注意的是，由于扫雷图形本身遵循的原则，该命令不建议单独使用，一般与 \tn{celldown} 指令一起使用。}
-% \en{Fill the cell with colored vectorized number~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. If \meta{num} is not from 1 to 8, then the command will not take effect. Note that this command is usually used with \tn{celldown}. It's not recommended to use this command alone due to the general rule of minesweeper graphics. }
+% \qquad \TransCommandCellNumContent
 % \end{function}
 %
-% \subsection{\zh{边框元素}\en{Frame elements}}
+% \subsection{\TransSubsectionFrameElements}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\border}
 %   \begin{syntax}
 %      \tn{border} \oarg{border\_type=-|t|l|b|r}
 %   \end{syntax}
-% \qquad
-% \zh{绘制以格为单位长度(宽度)的边框。t、l、b、r 分别代表上、左、下、右边框，如果相邻边框同时绘制，将自动绘制对应的角。边框分为三层，中间层使用 \ColorTagZero{} 绘制，宽度为 6，内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感，宽度为 3。提供立体感的方式和 \tn{cellup} 同理。左边和上边的高亮外边缘用 \ColorTagBorder{} 封边。默认参数为 -，即绘制全部边框。}
-% \en{Draw the cell-sized frame. t, l, b, r represent the top, left, bottom, right frame respectively. If two adjacent sides are drawn at the same time, the corner in between will also be drawn. The frame consists of 3 layers. The middle layer is in \ColorTagZero{} and 6 units wide. The inner and outer layer are 3 units wide, using \ColorTagLight{} and \ColorTagBorder{} to create a 3D effect in a similar manner as \tn{cellup}. The outer edge of the left and top highlights are enclosed with \ColorTagBorder{}. The default argument is -, which means drawing the full frame.}
+% \qquad \TransCommandBorderContent
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -365,43 +328,18 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \node at (-6, -8) {l};
 %         \end{scope}
 %     \end{tikzpicture}
-%     \caption{\zh{边框组装效果}\en{The full frame in effect}}
+%     \caption{\TransFigureBorderCaption}
 % \end{figure}
 %
-% \subsection{\zh{综合模块}\en{Modules}}
+% \subsection{\TransSubsectionModules}
 %
-% \zh{这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块，如果没有特定的设计需求，推荐仅使用这一部分提供的模块。}
-% \en{This section contains the modules provided by \pkg{tikz-minesweeper}. In general, it's recommended to only use these commands unless there is specific customisation needed.}
+% \TransSubsectionModulesContent
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\cell}
 %   \begin{syntax}
 %      \tn{cell} \marg{r} \marg{c} \marg{info}
 %   \end{syntax}
-% \qquad
-% \zh{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格，行列均从 0 开始编号。\meta{info} 的检查顺序如下：}
-% \en{Draw a cell containing \meta{info} at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. \meta{info} is checked in the following order: }
-% \begin{itemize}
-%     \item \zh{如果 \meta{info} 是 0-8 的数字，方格是按下状态并且数字会上色；}
-%           \en{If \meta{info} is a number from 0 to 8, then the cell is pressed down and the number is colored;}
-%     \item \zh{如果 \meta{info} 是 r（red，红色）、g（绿色）、b（蓝色）、c（cyan，湖蓝色）、y（yellow，黄色）、o（orange，橘色）、v（violet，紫色）中的一个，方格是抬起状态，且会染成对应颜色，方格颜色的透明度为\textbf{0.2}；}
-%           \en{If \meta{info} is r (red), g (green), b (blue), c (cyan), y (yellow), o (orange) or v (violet), then the cell is covered and accordingly colored with a transparency of \textbf{0.2};}
-%     \item \zh{如果 \meta{info} 是 f，方格是弹起状态并且会插旗。}
-%           \en{If \meta{info} is f, then the cell is covered and flagged.}
-%     \item \zh{如果 \meta{info} 是 m，方格是按下状态并且会显示地雷。}
-%           \en{If \meta{info} is m, then the cell is pressed and shows a mine.}
-%     \item \zh{如果 \meta{info} 是 s，方格是按下状态并且会显示半透明的地雷，即将地雷的颜色调整为 \ColorTagShade{}。}
-%           \en{If \meta{info} is s, then the cell is pressed and shows a semitransparent mine, which is basically a mine in \ColorTagShade{}.}
-%     \item \zh{如果 \meta{info} 是 n，方格是按下状态并且会显示踩到地雷，用 \ColorTagFail{} 绘制底色。}
-%           \en{If \meta{info} is n, then the cell is pressed and shows a blasted mine, with \ColorTagFail{} for background.}
-%     \item \zh{如果 \meta{info} 是 e，方格是按下状态并且会显示标记错误的地雷，即在普通地雷的基础上，进一步用 \ColorTagFail{} 绘制一个叉。}
-%           \en{If \meta{info} is e, then the cell is pressed and shows a mistakenly flagged mine, which is a cross in \ColorTagFail{} on top of a mine.}
-%     \item \zh{如果 \meta{info} 是 -，方格是弹起状态并且无字符。}
-%           \en{If \meta{info} is -, then the cell is covered and has no content.}
-%     \item \zh{如果 \meta{info} 是其他\textbf{单个}字符，方格是弹起状态并包含该字符，字符中心为 (8, -8)。}
-%           \en{If \meta{info} is any other \textbf{single} character, then the cell is covered and shows the character centered at (8, -8).}
-%     \item \zh{如果 \meta{info} 包含\textbf{多个}字符，将会自动缩小字符，转化为 \tn{tiny} 模式。}
-%           \en{If \meta{info} contains \textbf{multiple} characters, the string will be shown in \tn{tiny} font.}
-% \end{itemize}
+% \qquad \TransCommandCellContent
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\row}

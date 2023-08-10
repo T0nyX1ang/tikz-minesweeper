@@ -1,0 +1,88 @@
+%%
+%% This is file `zh.tex',
+%% Chinese version of the `tikz-minesweeper' package
+%%
+%% Copyright (C) 2021-2023 by Tian-Yi Pu, Fei-Yu Xiang
+%% and Yao-Yu Zhu
+%%
+%% This file may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3 of this license or (at your option) any later
+%% version. The latest version of this license is in:
+%%
+%%    http://www.latex-project.org/lppl.txt
+%%
+%% and version 1.3 or later is part of all distributions of
+%% LaTeX version 2005/12/01 or later.
+
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+
+\def\TransTitle{\pkg{tikz-minesweeper}宏包使用手册 (\fileversion)}
+\def\TransAuthor{濮天羿~~~~向飞宇\thanks{源代码请参考此仓库: https://github.com/T0nyX1ang/tikz-minesweeper}~~~~朱耀宇}
+
+\def\TransSectionUsage{绘制示例}
+\def\TransSectionUsageContent{下面是一个\pkg{tikz-minesweeper}宏包的绘制示例，包含了该宏包中最重要的几个指令。}
+\def\TransFigureUsageCaption{在5x5区域内绘制数字、雷、旗帜、空格和标记}
+
+\def\TransSectionCommand{绘制指令介绍}
+
+\def\TransSubsectionFundamentals{基础设定}
+\def\TransSubsectionFundamentalsUnitContent{本宏包中设定单位长度为\textbf{1pt}。为了与标准扫雷游戏一致，一格的边长是\textbf{16pt}。下文如无特别说明，所有方格的原点都位于左上角，所有数据的单位均为\textbf{pt}。}
+\def\TransSubsectionFundamentalsScaleContent{如果需要缩放一个盘面，推荐使用scope环境中的scale参数，即采用如下语法：}
+\def\TransFigureZoomedCellCaption{放大一个格子}
+
+\def\TransSubsectionColorScheme{配色方案}
+\def\TransSubsectionColorSchemeContent{\pkg{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色。这些配色均给出了标签，这些标签均可以直接在文档中使用。}
+\def\TransSubsectionColorSchemeTableContent{
+    \begin{tabular}{ccccc}
+        \toprule
+        颜色标签           & R   & G   & B   & 场景                    \\
+        \midrule
+        \ColorTagZero{}   & 192 & 192 & 192 & 格子内部 / 外边框中间层   \\
+        \ColorTagOne{}    & 0   & 0   & 255 & 数字1                   \\
+        \ColorTagTwo{}    & 0   & 128 & 0   & 数字2                   \\
+        \ColorTagThree{}  & 255 & 0   & 0   & 数字3                   \\
+        \ColorTagFour{}   & 0   & 0   & 128 & 数字4                   \\
+        \ColorTagFive{}   & 128 & 0   & 0   & 数字5                   \\
+        \ColorTagSix{}    & 0   & 128 & 128 & 数字6                   \\
+        \ColorTagSeven{}  & 0   & 0   & 0   & 数字7                   \\
+        \ColorTagEight{}  & 128 & 128 & 128 & 数字8                   \\
+        \ColorTagBorder{} & 160 & 160 & 160 & 边框阴影                 \\
+        \ColorTagLight{}  & 255 & 255 & 255 & 与阴影对比的高亮颜色      \\
+        \ColorTagShade{}  & 128 & 128 & 128 & 格子阴影 / 按下的格子边界  \\
+        \ColorTagFail{}   & 255 & 0   & 0   & 导致失败的格子            \\
+        \bottomrule
+    \end{tabular}
+}
+\def\TransSubsectionColorSchemeTableCaption{颜色对照表}
+
+\def\TransSubsectionCellElements{方格元素}
+\def\TransCommandFlagContent{绘制旗子。首先用 \ColorTagSeven{} 绘制两层旗子的底座，然后用 \ColorTagSeven{} 绘制旗子的旗杆，最后用 \ColorTagThree{} 绘制旗帜本身。}
+\def\TransCommandMineContent{绘制地雷。首先用 \ColorTagSeven{} 绘制地雷的梯形突起，然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影。}
+\def\TransFigureFlagMineCaption{旗子和雷的细节图}
+\def\TransCommandCellUpContent{绘制鼠标弹起时的方格。首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面，营造立体感，亮面和暗面的宽度均为2，然后用 \ColorTagZero{} 绘制底色。需要注意的是，该方格的中心点为 (8.5, -8.5)，与 \tn{celldown} 指令对应方格的中心点不同。}
+\def\TransCommandCellDownContent{绘制鼠标按下时的方格。首先用 \ColorTagShade{} 绘制方格边界，然后用 \ColorTagZero{} 绘制底色，左和上的边界宽度均为1。需要注意的是，c此时方格的中心点为 (8, -8)，与 \tn{cellup} 指令对应方格的中心点不同。}
+\def\TransFigureCellUpDownCaption{弹起的方格与按下的方格（包含中心点）}
+\def\TransCommandCellNumContent{在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}。如果 \meta{num} 不为 1 至 8，则该指令不起作用。需要注意的是，由于扫雷图形本身遵循的原则，该命令不建议单独使用，一般与 \tn{celldown} 指令一起使用。}
+
+\def\TransSubsectionFrameElements{边框元素}
+\def\TransCommandBorderContent{绘制以格为单位长度(宽度)的边框。\oarg{t}、\oarg{l}、\oarg{b}、\oarg{r} 分别代表上、左、下、右边框，如果相邻边框同时绘制，将自动绘制对应的角。边框分为三层，中间层使用 \ColorTagZero{} 绘制，宽度为 6，内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感，宽度为 3。提供立体感的方式和 \tn{cellup} 同理。左边和上边的高亮外边缘用 \ColorTagBorder{} 封边。默认参数为 \oarg{-}，即绘制全部边框。}
+\def\TransFigureBorderCaption{边框组装效果}
+
+\def\TransSubsectionModules{综合模块}
+\def\TransSubsectionModulesContent{这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块，如果没有特定的设计需求，推荐仅使用这一部分提供的模块。}
+\def\TransCommandCellContent{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格，行列均从 0 开始编号。\meta{info} 的检查顺序如下：
+    \begin{itemize}
+        \item 如果 \meta{info} 是 \marg{0}-\marg{8} 的数字，方格是按下状态并且数字会上色；
+        \item 如果 \meta{info} 是 \marg{r}（red，红色）、\marg{g}（绿色）、\marg{b}（蓝色）、\marg{c}（cyan，湖蓝色）、\marg{y}（yellow，黄色）、\marg{o}（orange，橘色）、\marg{v}（violet，紫色）中的一个，方格是抬起状态，且会染成对应颜色，方格颜色的透明度为\textbf{0.2}；
+        \item 如果 \meta{info} 是 \marg{f}，方格是弹起状态并且会插旗；
+        \item 如果 \meta{info} 是 \marg{m}，方格是按下状态并且会显示地雷；
+        \item 如果 \meta{info} 是 \marg{s}，方格是按下状态并且会显示半透明的地雷，即将地雷的颜色调整为 \ColorTagShade{}；
+        \item 如果 \meta{info} 是 \marg{n}，方格是按下状态并且会显示踩到地雷，用 \ColorTagFail{} 绘制底色；
+        \item 如果 \meta{info} 是 \marg{e}，方格是按下状态并且会显示标记错误的地雷，即在普通地雷的基础上，进一步用 \ColorTagFail{} 绘制一个叉；
+        \item 如果 \meta{info} 是 \marg{-}，方格是弹起状态并且无字符；
+        \item 如果 \meta{info} 是其他\textbf{单个}字符，方格是弹起状态并包含该字符，字符中心为 (8, -8)；
+        \item 如果 \meta{info} 包含\textbf{多个}字符，将会自动缩小字符，转化为 \tn{tiny} 模式。
+    \end{itemize}
+}
