@@ -22,7 +22,9 @@ jobs:
     - name: Extract sty file
       uses: xu-cheng/texlive-action/full@v1
       with:
-        run: l3build doc
+        run: |
+          sed 's/en.tex/zh.tex/g' tikz-minesweeper.dtx > tikz-minesweeper_zh.dtx
+          l3build ctan
 
     # Release sty file
     - name: Release sty file
