@@ -2,9 +2,11 @@
 
 module = "tikz-minesweeper"
 
+sourcefiles = { "*.dtx", "./translation" }
+
 unpackexe = "xelatex"
-unpackfiles = {"*.dtx"}
+unpackfiles = { "*.dtx" }
 
 typesetexe = "xelatex"
 
-installfiles = {"*.sty"}
+installfiles = { "*.sty" }

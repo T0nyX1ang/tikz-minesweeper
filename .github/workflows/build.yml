@@ -26,7 +26,9 @@ jobs:
     - name: Build LaTeX
       uses: xu-cheng/texlive-action/full@v1
       with:
-        run: l3build ctan
+        run: |
+          sed 's/en.tex/zh.tex/g' tikz-minesweeper.dtx > tikz-minesweeper_zh.dtx
+          l3build ctan
 
     # Upload tds to artifacts if it is compiled successfully
     - name: Upload artifacts
@@ -38,3 +40,4 @@ jobs:
         path: |
           ./build/distrib/tds/*
           !./build/distrib/tds/*.zip
+          !./build/distrib/tds/source/latex/tikz-minesweeper/tikz-minesweeper_*.dtx
