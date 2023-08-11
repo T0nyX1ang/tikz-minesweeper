@@ -31,5 +31,6 @@ jobs:
         files: |
           ./build/doc/tikz-minesweeper.sty
           ./build/doc/tikz-minesweeper.pdf
+          ./build/doc/tikz-minesweeper_*.pdf
         fail_on_unmatched_files: true
         generate_release_notes: true
