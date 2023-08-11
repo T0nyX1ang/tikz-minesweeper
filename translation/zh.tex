@@ -17,23 +17,25 @@
 
 \renewcommand{\figurename}{图}
 \renewcommand{\tablename}{表}
+\renewcommand{\indexname}{索引}
+\def\TransIndexPrologueContent{\emph{意大利体的数字表示描述对应索引项的页码, 带下划线的数字表示定义对应索引项的代码行号, 罗马字体的数字表示使用对应索引项的代码行号.}}
 
 \def\TransTitle{\pkg{tikz-minesweeper}宏包使用手册 (\fileversion)}
 \def\TransAuthor{濮天羿~~~~向飞宇\thanks{源代码请参考此仓库: https://github.com/T0nyX1ang/tikz-minesweeper}~~~~朱耀宇}
 
 \def\TransSectionUsage{绘制示例}
-\def\TransSectionUsageContent{下面是一个\pkg{tikz-minesweeper}宏包的绘制示例，包含了该宏包中最重要的几个指令。}
+\def\TransSectionUsageContent{下面是一个\pkg{tikz-minesweeper}宏包的绘制示例, 包含了该宏包中最重要的几个指令.}
 \def\TransFigureUsageCaption{在5x5区域内绘制数字、雷、旗帜、空格和标记}
 
 \def\TransSectionCommand{绘制指令介绍}
 
 \def\TransSubsectionFundamentals{基础设定}
-\def\TransSubsectionFundamentalsUnitContent{本宏包中设定单位长度为\textbf{1pt}。为了与标准扫雷游戏一致，一格的边长是\textbf{16pt}。下文如无特别说明，所有方格的原点都位于左上角，所有数据的单位均为\textbf{pt}。}
-\def\TransSubsectionFundamentalsScaleContent{如果需要缩放一个盘面，推荐使用scope环境中的scale参数，即采用如下语法：}
+\def\TransSubsectionFundamentalsUnitContent{本宏包中设定单位长度为\textbf{1pt}. 为了与标准扫雷游戏一致, 一格的边长是\textbf{16pt}. 下文如无特别说明, 所有方格的原点都位于左上角.}
+\def\TransSubsectionFundamentalsScaleContent{如果需要缩放一个盘面, 推荐使用scope环境中的scale参数, 即采用如下语法：}
 \def\TransFigureZoomedCellCaption{放大一个格子}
 
 \def\TransSubsectionColorScheme{配色方案}
-\def\TransSubsectionColorSchemeContent{\pkg{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色。这些配色均给出了标签，这些标签均可以直接在文档中使用。}
+\def\TransSubsectionColorSchemeContent{\pkg{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色. 这些配色均给出了标签, 这些标签均可以直接在文档中使用.}
 \def\TransSubsectionColorSchemeTableContent{
     \begin{tabular}{ccccc}
         \toprule
@@ -58,31 +60,70 @@
 \def\TransSubsectionColorSchemeTableCaption{颜色对照表}
 
 \def\TransSubsectionCellElements{方格元素}
-\def\TransCommandFlagContent{绘制旗子。首先用 \ColorTagSeven{} 绘制两层旗子的底座，然后用 \ColorTagSeven{} 绘制旗子的旗杆，最后用 \ColorTagThree{} 绘制旗帜本身。}
-\def\TransCommandMineContent{绘制地雷。首先用 \ColorTagSeven{} 绘制地雷的梯形突起，然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影。}
+\def\TransCommandFlagContent{绘制旗子. 首先用 \ColorTagSeven{} 绘制两层旗子的底座, 然后用 \ColorTagSeven{} 绘制旗子的旗杆, 最后用 \ColorTagThree{} 绘制旗帜本身.}
+\def\TransCommandMineContent{绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影.}
 \def\TransFigureFlagMineCaption{旗子和雷的细节图}
-\def\TransCommandCellUpContent{绘制鼠标弹起时的方格。首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面，营造立体感，亮面和暗面的宽度均为2，然后用 \ColorTagZero{} 绘制底色。需要注意的是，该方格的中心点为 (8.5, -8.5)，与 \tn{celldown} 指令对应方格的中心点不同。}
-\def\TransCommandCellDownContent{绘制鼠标按下时的方格。首先用 \ColorTagShade{} 绘制方格边界，然后用 \ColorTagZero{} 绘制底色，左和上的边界宽度均为1。需要注意的是，c此时方格的中心点为 (8, -8)，与 \tn{cellup} 指令对应方格的中心点不同。}
+\def\TransCommandCellUpContent{绘制鼠标弹起时的方格. 首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面, 营造立体感, 亮面和暗面的宽度均为 2pt, 然后用 \ColorTagZero{} 绘制底色. 需要注意的是, 该方格的中心点为 (8.5, -8.5), 与 \tn{celldown} 指令对应方格的中心点不同.}
+\def\TransCommandCellDownContent{绘制鼠标按下时的方格. 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagZero{} 绘制底色, 左和上的边界宽度均为 1pt. 需要注意的是, c此时方格的中心点为 (8, -8), 与 \tn{cellup} 指令对应方格的中心点不同.}
 \def\TransFigureCellUpDownCaption{弹起的方格与按下的方格（包含中心点）}
-\def\TransCommandCellNumContent{在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}。如果 \meta{num} 不为 1 至 8，则该指令不起作用。需要注意的是，由于扫雷图形本身遵循的原则，该命令不建议单独使用，一般与 \tn{celldown} 指令一起使用。}
+\def\TransCommandCellNumContent{在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. 如果 \meta{num} 不为 1 至 8, 则该指令不起作用. 需要注意的是, 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与 \tn{celldown} 指令一起使用.}
 
 \def\TransSubsectionFrameElements{边框元素}
-\def\TransCommandBorderContent{绘制以格为单位长度(宽度)的边框。\oarg{t}、\oarg{l}、\oarg{b}、\oarg{r} 分别代表上、左、下、右边框，如果相邻边框同时绘制，将自动绘制对应的角。边框分为三层，中间层使用 \ColorTagZero{} 绘制，宽度为 6，内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感，宽度为 3。提供立体感的方式和 \tn{cellup} 同理。左边和上边的高亮外边缘用 \ColorTagBorder{} 封边。默认参数为 \oarg{-}，即绘制全部边框。}
+\def\TransCommandBorderContent{绘制以格为单位长度(宽度)的边框. \meta{t}、\meta{l}、\meta{b}、\meta{r} 分别代表上、左、下、右边框, 如果相邻边框同时绘制, 将自动绘制对应的角. 边框分为三层, 中间层使用 \ColorTagZero{} 绘制, 宽度为 6pt, 内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感, 宽度为 3pt. 提供立体感的方式和 \tn{cellup} 同理. 左边和上边的高亮外边缘用 \ColorTagBorder{} 封边. 默认参数为 \meta{-}, 即绘制全部边框.}
 \def\TransFigureBorderCaption{边框组装效果}
 
 \def\TransSubsectionModules{综合模块}
-\def\TransSubsectionModulesContent{这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块，如果没有特定的设计需求，推荐仅使用这一部分提供的模块。}
-\def\TransCommandCellContent{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格，行列均从 0 开始编号。\meta{info} 的检查顺序如下：
+\def\TransSubsectionModulesContent{这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块, 如果没有特定的设计需求, 推荐仅使用这一部分提供的模块.}
+\def\TransCommandCellContent{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格, 行列均从 0 开始编号. \meta{info} 的检查顺序如下：
     \begin{itemize}
-        \item 如果 \meta{info} 是 \marg{0}-\marg{8} 的数字，方格是按下状态并且数字会上色；
-        \item 如果 \meta{info} 是 \marg{r}（red，红色）、\marg{g}（绿色）、\marg{b}（蓝色）、\marg{c}（cyan，湖蓝色）、\marg{y}（yellow，黄色）、\marg{o}（orange，橘色）、\marg{v}（violet，紫色）中的一个，方格是抬起状态，且会染成对应颜色，方格颜色的透明度为\textbf{0.2}；
-        \item 如果 \meta{info} 是 \marg{f}，方格是弹起状态并且会插旗；
-        \item 如果 \meta{info} 是 \marg{m}，方格是按下状态并且会显示地雷；
-        \item 如果 \meta{info} 是 \marg{s}，方格是按下状态并且会显示半透明的地雷，即将地雷的颜色调整为 \ColorTagShade{}；
-        \item 如果 \meta{info} 是 \marg{n}，方格是按下状态并且会显示踩到地雷，用 \ColorTagFail{} 绘制底色；
-        \item 如果 \meta{info} 是 \marg{e}，方格是按下状态并且会显示标记错误的地雷，即在普通地雷的基础上，进一步用 \ColorTagFail{} 绘制一个叉；
-        \item 如果 \meta{info} 是 \marg{-}，方格是弹起状态并且无字符；
-        \item 如果 \meta{info} 是其他\textbf{单个}字符，方格是弹起状态并包含该字符，字符中心为 (8, -8)；
-        \item 如果 \meta{info} 包含\textbf{多个}字符，将会自动缩小字符，转化为 \tn{tiny} 模式。
+        \item 如果 \meta{info} 是 \meta{0}-\meta{8} 的数字, 方格是按下状态并且数字会上色;
+        \item 如果 \meta{info} 是 \meta{r}（red, 红色）、\meta{g}（绿色）、\meta{b}（蓝色）、\meta{c}（cyan, 湖蓝色）、\meta{y}（yellow, 黄色）、\meta{o}（orange, 橘色）、\meta{v}（violet, 紫色）中的一个, 方格是抬起状态, 且会染成对应颜色, 方格颜色的透明度为 0.2;
+        \item 如果 \meta{info} 是 \meta{f}, 方格是弹起状态并且会插旗;
+        \item 如果 \meta{info} 是 \meta{m}, 方格是按下状态并且会显示地雷;
+        \item 如果 \meta{info} 是 \meta{s}, 方格是按下状态并且会显示半透明的地雷, 即将地雷的颜色调整为 \ColorTagShade{};
+        \item 如果 \meta{info} 是 \meta{n}, 方格是按下状态并且会显示踩到地雷, 用 \ColorTagFail{} 绘制底色;
+        \item 如果 \meta{info} 是 \meta{e}, 方格是按下状态并且会显示标记错误的地雷, 即在普通地雷的基础上, 进一步用 \ColorTagFail{} 绘制一个叉;
+        \item 如果 \meta{info} 是 \meta{-}, 方格是弹起状态并且无字符;
+        \item 如果 \meta{info} 是其他\textbf{单个}字符, 方格是弹起状态并包含该字符, 字符中心为 (8, -8);
+        \item 如果 \meta{info} 包含\textbf{多个}字符, 将会自动缩小字符, 转化为 \tn[no-index]{tiny} 模式.
     \end{itemize}
 }
+\def\TransCommandRowContent{在第 \meta{r} 行从左到右绘制多个方格. \meta{seq:info} 为一个含有 \meta{info} 的序列, 序列中的每个元素作为 \tn{cell} 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如 \meta{1\{23\}4} 的序列长度为3, 该序列中的元素分别为 \meta{1}, \meta{23} 和 \meta{4}.}
+\def\TransCommandColContent{在第 \meta{c} 列从上到下绘制多个方格, 语法与 \tn{row} 一致.}
+\def\TransCommandBoardContent{绘制 \meta{r} 行 \meta{c} 列的边框, \meta{t}, \meta{r}, \meta{b}, \meta{l} 为与 \tn{border} 对应可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了 \meta{-} 标志, 代表去除某些特定方位的边框. 此选项可以根据自己需求进行定制. 解析器只会解析最后一个 \meta{-} 标志的位置, 即 \tn[no-index]{border[-br-tl-lb-b]} 会被解析为 \tn[no-index]{border[-b]}. 解析器不会解析重复的参数, 即 \tn[no-index]{border[ttblbtlb]} 会被解析为 \tn[no-index]{border[tlb]}. 可选指令 \meta{x} 表示是否显示横纵坐标, 默认为不显示横纵坐标.}
+\def\TransCommandBoardExtraNoteContent{在绘制边框的过程中, 该指令会根据边框类型, 利用 \pkg{tikz} 宏包的截取指令, 自动以 \ColorTagBorder{} 为颜色, 绘制一个 0.2pt 的外边框. 同时, 为了避免格子的同色邻接区域导致的渲染问题, 该指令会提前绘制同色邻接区域.}
+\def\TransFigureBoardOptionCaption{边框指令示例}
+\def\TransFigureBoardCoordinateCaption{横纵坐标显示示例}
+\def\TransCommandColorCellContent{将 \meta{seq: pos} 位置的方格染色为 \meta{color} 颜色. \meta{color} 仅能传入 \tn{cell} 中接受的颜色类型, 但是与 \tn{cell} 仅支持单一颜色不同的是, \meta{color} 支持填入至多 4 种不同颜色, 颜色将从方格顶部逆时针填充. \meta{seq: pos} 定义了一个位置序列, 格式如下:
+    \begin{itemize}
+        \item 序列中的每个元素以分号(;)分隔.
+        \item 对于每个元素, 以逗号(,)分隔行区间和列区间.
+        \item 对于每个区间, 如果它是\textbf{单字符}, 则表示区间的起始位置和终止位置相同, 均为该字符; 否则需要以减号(-)分隔起始位置和终止位置.
+    \end{itemize}
+}
+\def\TransFigureColorCellCaption{方格染色示例}
+
+\def\TransSectionImplementation{代码实现}
+\def\TransMacroDependencyContent{定义 \pkg{tikz-minesweeper} 宏包的依赖, 分别为 \LaTeXiii{} 和 \pkg{tikz} 宏包.}
+\def\TransMacroColorSchemeContent{定义 \pkg{tikz-minesweeper} 宏包的配色方案. 在实际使用该宏包时, 可以使用类似方法定义自己的配色方案.}
+\def\TransMacroUnitContent{定义 \pkg{tikz-minesweeper} 宏包的基本单位, 即 1pt.}
+\def\TransMacroEnableLaTeXiiiEnvContent{打开\LaTeXiii{}编程环境.}
+\def\TransMacroVariableDefinitionContent{定义 \pkg{tikz-minesweeper} 宏包中的变量.}
+\def\TransMacroFlagContent{绘制旗子.}
+\def\TransMacroMineContent{绘制地雷.}
+\def\TransMacroMineShadedContent{绘制半透明的地雷. 需要注意的是, 半透明的雷的颜色没有与其它颜色解耦, 如果定义了不同的配色方案, 请谨慎绘制这种地雷.}
+\def\TransMacroCellUpContent{绘制鼠标弹起时的方格.}
+\def\TransMacroCellDownContent{绘制鼠标按下后的方格.}
+\def\TransMacroCellFailContent{绘制由于踩雷而失败的方格.}
+\def\TransMacroMisflagFailContent{绘制由于标记错误而失败的方格.}
+\def\TransMacroCellNumContent{用 \ColorTagOne{} 至 \ColorTagEight{} 绘制给定的矢量化数字 1 至 8, 接受一个参数 \meta{\#1}. 参数 \meta{\#1} 仅接受 \meta{12345678} 中的字符, 传入其它值将会被忽略.}
+\def\TransMacroCellColoredContent{绘制鼠标按下时的染色方格, 接受一个参数 \meta{\#1}. 参数 \meta{\#1} 仅接受 \meta{rgbcyov} 中的字符, 传入其它值将会被忽略. 参数 \meta{\#1} 的最长长度为 4, 如果传入的参数长度小于 4, 则会在参数的左/右侧补充与其相同的字符, 如果传入的参数长度大于 4, 则会直接被截断为 4 个字符.}
+\def\TransMacroCellContent{绘制方格, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. 在坐标(\meta{\#3}, \meta{\#2})处绘制一个方格, 方格中的内容由 \meta{\#1} 决定, \meta{\#1}可以传入任意参数. 该函数依次检查 \meta{\#1} 是否为数字参数 \meta{012345678}, 颜色参数 \meta{rgbcyov}, 雷与旗帜参数 \meta{fmsne-}, 除上述字符外的单字符参数以及多字符参数.}
+\def\TransMacroLineContent{绘制一行或者一列的格子, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为行号或者列号, \meta{\#2} 为格子内容, \meta{\#3} 为按行 \meta{r} 或者按列 \meta{c} 依次绘制格子, 其余参数将不会绘制.}
+\def\TransMacroRowColMarkerContent{绘制行列坐标数字.}
+\def\TransMacroRawBorderContent{绘制原始的边框, 用户在绘制盘面时传入的边框参数将会影响最终边框的形状.}
+\def\TransMacroGapFillerContent{由于渲染问题, 绘制盘面时, 同色区域之间可能会出现一个空白的缝隙, 该函数用于提前填充这些缝隙.}
+\def\TransMacroBorderContent{绘制边框, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbrx} 中的值.}
+\def\TransMacroColorCellContent{给多个区域的方格染色, 接受两个参数 \meta{\#1}, \meta{\#2}. \meta{\#1} 仅能传入 \cs[no-index]{msweeper_cellcolored:n} 中接受的颜色, \meta{\#2} 传入待绘制的多个区域.}
+\def\TransMacroUserAPIContent{提供不显式调用 \LaTeXiii{} 的用户接口.}
+\def\TransMacroDisableLaTeXiiiEnvContent{关闭 \LaTeXiii{} 编程环境.}

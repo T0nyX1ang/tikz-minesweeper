@@ -17,6 +17,8 @@
 
 \renewcommand{\figurename}{Figure}
 \renewcommand{\tablename}{Table}
+\renewcommand{\indexname}{Index}
+\def\TransIndexPrologueContent{\emph{The italic numbers denote the pages where the corresponding entry is described, numbers underlined point to the definition, all others indicate the places where it is used.}}
 
 \def\TransTitle{\pkg{tikz-minesweeper} Manual (\fileversion)}
 \def\TransAuthor{Tian-Yi Pu~~~~Fei-Yu Xiang \thanks{Source code: https://github.com/T0nyX1ang/tikz-minesweeper}~~~~Yao-Yu Zhu}
@@ -28,7 +30,7 @@
 \def\TransSectionCommand{Reference of commands}
 
 \def\TransSubsectionFundamentals{Fundamental rules}
-\def\TransSubsectionFundamentalsUnitContent{This package sets the unit length to \textbf{1pt}. The edge length for cells is \textbf{16pt} to match the standard minesweeper game. Henceforth, without explicit note, the origin of a cell is its top-left corner and all lengths are in \textbf{pt}.}
+\def\TransSubsectionFundamentalsUnitContent{This package sets the unit length to \textbf{1pt}. The edge length for cells is \textbf{16pt} to match the standard minesweeper game. Henceforth, without explicit note, the origin of a cell is its top-left corner.}
 \def\TransSubsectionFundamentalsScaleContent{To scale a board, it's recommended to use the scale parameter from scope environment, that is: }
 \def\TransFigureZoomedCellCaption{A zoomed cell}
 
@@ -58,31 +60,70 @@
 \def\TransSubsectionColorSchemeTableCaption{Look-up table of colors}
 
 \def\TransSubsectionCellElements{Cell Elements}
-\def\TransCommandFlagContent{Draw the flag. Draw the 2-layer base of the flag with \ColorTagSeven{} first, then draw the flag pole with \ColorTagSeven{}. In the end, draw the flag with \ColorTagThree{}.}
-\def\TransCommandMineContent{Draw the mine. Draw the trapezoidal spikes with \ColorTagSeven{} first, then draw the circular body and the highlight with \ColorTagSeven{}.}
+\def\TransCommandFlagContent{Draw the flag. Draw a 2-layer base of the flag with \ColorTagSeven{} first, then draw a flag pole with \ColorTagSeven{}. In the end, draw a flag with \ColorTagThree{}.}
+\def\TransCommandMineContent{Draw a mine. Draw trapezoidal spikes with \ColorTagSeven{} first, then draw a circular body and highlight with \ColorTagSeven{}.}
 \def\TransFigureFlagMineCaption{Sketch of the flag and the mine}
-\def\TransCommandCellUpContent{Draw the covered cell. Draw the light side and dark side, the widths of which are both 2, with \ColorTagLight{} and \ColorTagShade{} respectively to create a 3D effect. Then fill the background with \ColorTagZero{}. Note that the center of this cell is (8.5, -8.5), which is different from that of \tn{celldown}.}
-\def\TransCommandCellDownContent{Draw the revealed cell. Draw the edges with \ColorTagShade{}, then fill the background with \ColorTagZero{}. The widths of the left and top edges are both 1. Note that the center of this cell is (8, -8), which is different from that of \tn{cellup}.}
+\def\TransCommandCellUpContent{Draw a covered cell. Draw the light side and dark side first, the widths of which are both 2pt, with \ColorTagLight{} and \ColorTagShade{} respectively to create a 3D effect. Then fill the background with \ColorTagZero{}. Note that the center of this cell is (8.5, -8.5), which is different from that of \tn{celldown}.}
+\def\TransCommandCellDownContent{Draw a revealed cell. Draw the edges with \ColorTagShade{}, then fill the background with \ColorTagZero{}. The widths of the left and top edges are both 1pt. Note that the center of this cell is (8, -8), which is different from that of \tn{cellup}.}
 \def\TransFigureCellUpDownCaption{Covered cell and revealed cell (the centers are marked)}
 \def\TransCommandCellNumContent{Fill the cell with colored vectorized number~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. If \meta{num} is not from 1 to 8, then the command will not take effect. Note that this command is usually used with \tn{celldown}. It's not recommended using this command alone due to the general rule of minesweeper graphics. }
 
 \def\TransSubsectionFrameElements{Frame elements}
-\def\TransCommandBorderContent{Draw the cell-sized frame. \oarg{t}, \oarg{l}, \oarg{b}, \oarg{r} represent the top, left, bottom, right frame respectively. If two adjacent sides are drawn at the same time, the corner in between will also be drawn. The frame consists of 3 layers. The middle layer is in \ColorTagZero{} and 6 units wide. The inner and outer layer are 3 units wide, using \ColorTagLight{} and \ColorTagBorder{} to create a 3D effect similarly as \tn{cellup}. The outer edge of the left and top highlights are enclosed with \ColorTagBorder{}. The default argument is \oarg{-}, which means drawing the full frame.}
+\def\TransCommandBorderContent{Draw a cell-sized frame. \meta{t}, \meta{l}, \meta{b}, \meta{r} represent the top, left, bottom, right frame respectively. If two adjacent sides are drawn at the same time, the corner in between will also be drawn. The frame consists of 3 layers. The middle layer is in \ColorTagZero{} and 6pt wide. The inner and outer layer are 3pt wide, using \ColorTagLight{} and \ColorTagBorder{} to create a 3D effect similarly as \tn{cellup}. The outer edge of the left and top highlights are enclosed with \ColorTagBorder{}. The default argument is \meta{-}, which means drawing the full frame.}
 \def\TransFigureBorderCaption{The full frame in effect}
 
 \def\TransSubsectionModules{Modules}
 \def\TransSubsectionModulesContent{This section contains the modules provided by \pkg{tikz-minesweeper}. In general, it's recommended to only use these commands unless there is specific customization needed.}
 \def\TransCommandCellContent{Draw a cell containing \meta{info} at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. \meta{info} is checked in the following order:
     \begin{itemize}
-        \item If \meta{info} is a number from \marg{0} to \marg{8}, then the cell is pressed down and the number is colored;
-        \item If \meta{info} is \marg{r} (red), \marg{g} (green), \marg{b} (blue), \marg{c} (cyan), \marg{y} (yellow), \marg{o} (orange) or \marg{v} (violet), then the cell is covered and accordingly colored with a transparency of \textbf{0.2};
-        \item If \meta{info} is \marg{f}, then the cell is covered and flagged;
-        \item If \meta{info} is \marg{m}, then the cell is pressed and shows a mine;
-        \item If \meta{info} is \marg{s}, then the cell is pressed and shows a semitransparent mine, which is basically a mine in \ColorTagShade{};
-        \item If \meta{info} is \marg{n}, then the cell is pressed and shows a blasted mine, with \ColorTagFail{} for background;
-        \item If \meta{info} is \marg{e}, then the cell is pressed and shows a mistakenly flagged mine, which is a cross in \ColorTagFail{} on top of a mine;
-        \item If \meta{info} is \marg{-}, then the cell is covered and has no content;
+        \item If \meta{info} is a number from \meta{0} to \meta{8}, then the cell is pressed down and the number is colored;
+        \item If \meta{info} is \meta{r} (red), \meta{g} (green), \meta{b} (blue), \meta{c} (cyan), \meta{y} (yellow), \meta{o} (orange) or \meta{v} (violet), then the cell is covered and accordingly colored with a transparency of 0.2;
+        \item If \meta{info} is \meta{f}, then the cell is covered and flagged;
+        \item If \meta{info} is \meta{m}, then the cell is pressed and shows a mine;
+        \item If \meta{info} is \meta{s}, then the cell is pressed and shows a semitransparent mine, which is basically a mine in \ColorTagShade{};
+        \item If \meta{info} is \meta{n}, then the cell is pressed and shows a blasted mine, with \ColorTagFail{} for background;
+        \item If \meta{info} is \meta{e}, then the cell is pressed and shows a mistakenly flagged mine, which is a cross in \ColorTagFail{} on top of a mine;
+        \item If \meta{info} is \meta{-}, then the cell is covered and has no content;
         \item If \meta{info} is any other \textbf{single} character, then the cell is covered and shows the character centered at (8, -8);
-        \item If \meta{info} contains \textbf{multiple} characters, the string will be shown in \tn{tiny} font.
+        \item If \meta{info} contains \textbf{multiple} characters, the string will be shown in \tn[no-index]{tiny} font.
     \end{itemize}
 }
+\def\TransCommandRowContent{Draw multiple cells from left to right in the \meta{r}-th row. \meta{seq:info} is a sequence containing \meta{info}, where each element in the sequence serves as the third parameter of \tn{cell}. To display multiple characters in a cell, these characters should be surrounded by curly braces. For example, the length of the sequence \meta{1\{23\}4} is 3, and the elements in this sequence are \meta{1}, \meta{23}, and \meta{4} respectively.}
+\def\TransCommandColContent{Draw multiple cells from top to bottom in the \meta{c}-th column, and the syntax is the same as \tn{row}.}
+\def\TransCommandBoardContent{Draw a border with \meta{r} rows and \meta{c} columns. \meta{t}, \meta{r}, \meta{b}, \meta{l} share the same syntax as \tn{border}. By default, the board will be surrounded by all borders. If the \meta{-} argument is used, the borders in specific directions will be removed, and this argument can be customized. The parser only parses the position of the last \meta{-} option. For example, \tn[no-index]{border[-br-tl-lb-b]} will be parsed as \tn[no-index]{border[-b]}. The parser does not parse repeated parameters. For example, \tn[no-index]{border[ttblbtlb]} will be parsed as \tn[no-index]{border[tlb]}. The argument \meta{x} indicates whether to display the coordinates, and the coordinates are hidden by default.}
+\def\TransCommandBoardExtraNoteContent{During the process of drawing borders, this command will automatically use the clipping utility provided by \pkg{tikz}, based on the border type. Moreover, this command will draw an outer border with \ColorTagBorder{} and a thickness of 0.2pt. Additionally, to avoid rendering issues caused by adjacent areas of the same color, this command will pre-draw the adjacent areas of the same color.}
+\def\TransFigureBoardOptionCaption{Examples for different border arguments}
+\def\TransFigureBoardCoordinateCaption{Examples for displaying coordinates}
+\def\TransCommandColorCellContent{Color the cells in a sequence of areas \meta{seq: pos} with the \meta{color}. The \meta{color} argument can only accept color types that are accepted by \tn{cell}. However, unlike \tn{cell}, which only supports a single color, the \meta{color} argument supports up to four different colors. The colors will be filled counterclockwise starting from the top of a cell. \meta{seq: pos} defines a sequence of positions with the following format:
+    \begin{itemize}
+        \item Each element in the sequence is separated by a semicolon (;);
+        \item For each element, the row range and column range are separated by a comma (,);
+        \item For each range, if it contains \textbf{only one} character, the starting and ending positions are the same; otherwise, these positions need to be separated by a hyphen (-).
+    \end{itemize}
+}
+\def\TransFigureColorCellCaption{Examples for colored cells}
+
+\def\TransSectionImplementation{Implementation}
+\def\TransMacroDependencyContent{Define the dependencies of \pkg{tikz-minesweeper}, which are \LaTeXiii{} and \pkg{tikz}.}
+\def\TransMacroColorSchemeContent{Define the color scheme of \pkg{tikz-minesweeper}. Customized color schemes can be defined similarly in practice.}
+\def\TransMacroUnitContent{Define the basic unit of \pkg{tikz-minesweeper}, which is 1pt.}
+\def\TransMacroEnableLaTeXiiiEnvContent{Enable the \LaTeXiii{} environment.}
+\def\TransMacroVariableDefinitionContent{Define the variables in \pkg{tikz-minesweeper}.}
+\def\TransMacroFlagContent{Draw a flag.}
+\def\TransMacroMineContent{Draw a mine.}
+\def\TransMacroMineShadedContent{Draw a shaded mine. Note that the color of a shaded mine is coupled with other colors in the package. Please draw shaded mines with caution if different color schemes are applied.}
+\def\TransMacroCellUpContent{Draw a covered cell.}
+\def\TransMacroCellDownContent{Draw a revealed cell.}
+\def\TransMacroCellFailContent{Draw a failed cell by clicking a mine.}
+\def\TransMacroMisflagFailContent{Draw a failed cell by misflaging.}
+\def\TransMacroCellNumContent{Use \ColorTagOne{} to \ColorTagEight{} to draw the given vectorized numbers from 1 to 8. It accepts one parameter \meta{\#1}. The parameter \meta{\#1} only accepts characters from \meta{12345678}. Any other value passed will be ignored.}
+\def\TransMacroCellColoredContent{Draw a colored revealed cell. It accepts one parameter \meta{\#1}, which only accepts characters from \meta{rgbcyov}. Any other value passed will be ignored. The maximum length of parameter \meta{\#1} is 4. If the length of the parameter is less than 4, it will be padded on the left/right side with the same character. If the length of the parameter is greater than 4, it will be truncated to 4 characters.}
+\def\TransMacroCellContent{Draw a cell, accepting three parameters \meta{\#1}, \meta{\#2}, \meta{\#3}. The cell will be drawn at coordinates (\meta{\#3}, \meta{\#2}), and the content of the cell is determined by \meta{\#1}. \meta{\#1} can accept any parameter. The function sequentially checks if \meta{\#1} is a numeric parameter \meta{012345678}, a color parameter \meta{rgbcyov}, a mine or flag parameter \meta{fmsne-}, a single character parameter excluding the mentioned characters, or a multi-character parameter.}
+\def\TransMacroLineContent{Draw a row or column of cells, accepting three parameters \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} represents the row number or column number, \meta{\#2} represents the content of the grids, and \meta{\#3} determines whether to draw the grids sequentially in a row (\meta{r}) or in a column (\meta{c}). Other parameters will not be drawn.}
+\def\TransMacroRowColMarkerContent{Draw row and column coordinates.}
+\def\TransMacroRawBorderContent{Draw the original border, and the parameters to draw a board will influence the final shape of the border.}
+\def\TransMacroGapFillerContent{Due to rendering issues, when drawing a board, there may be gaps between adjacent areas of the same color. This function can pre-fill these gaps.}
+\def\TransMacroBorderContent{Draw a border, accepting three parameters \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} represents the border type parameter, \meta{\#2} represents the number of rows, and \meta{\#3} represents the number of columns. The parameter \meta{\#1} accepts values from \meta{-tlbrx} only.}
+\def\TransMacroColorCellContent{Color the cells in multiple areas, which accepts two parameters \meta{\#1} and \meta{\#2}. The parameter \meta{\#1} can only accept colors that are accepted by \cs[no-index]{msweeper_cellcolored:n}. The parameter \meta{\#2} is used to pass multiple regions to be drawn.}
+\def\TransMacroUserAPIContent{Provide user APIs without calling \LaTeXiii{} directly.}
+\def\TransMacroDisableLaTeXiiiEnvContent{Disable the \LaTeXiii{} environment.}

@@ -73,14 +73,12 @@ This package consists of the files tikz-minesweeper.dtx,
 \EnableCrossrefs
 \CodelineIndex
 \begin{document}
-    \input{translation/zh.tex}
+    \input{translation/en.tex}
     \DocInput{tikz-minesweeper.dtx}
     \IndexLayout
     \IndexPrologue{%
     \section{\indexname}
-    \textit{意大利体的数字表示描述对应索引项的页码,
-    带下划线的数字表示定义对应索引项的代码行号,
-    罗马字体的数字表示使用对应索引项的代码行号.}}
+    \TransIndexPrologueContent}
     \PrintIndex
 \end{document}
 %</driver>
@@ -203,8 +201,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \begin{table}[H]
 %     \centering
-%     \TransSubsectionColorSchemeTableContent
 %     \caption{\TransSubsectionColorSchemeTableCaption}
+%     \TransSubsectionColorSchemeTableContent
 % \end{table}
 %
 % \subsection{\TransSubsectionCellElements}
@@ -332,36 +330,36 @@ This package consists of the files tikz-minesweeper.dtx,
 %   \begin{syntax}
 %      \tn{row} \marg{r} \marg{seq:info}
 %   \end{syntax}
-% \qquad 在第 \meta{r} 行从左到右绘制多个方格. \meta{seq:info} 为一个含有 \meta{info} 的序列, 序列中的每个元素作为 |\cell| 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如 |1{23}4| 的序列长度为3, 该序列中的元素分别为 1, 23 和 4.
+% \qquad \TransCommandRowContent
 % \end{function}
 %
 % \begin{function}[added=2022-01-30]{\col}
 %   \begin{syntax}
 %      \tn{col} \marg{c} \marg{seq:info}
 %   \end{syntax}
-% \qquad 在第 \meta{c} 列从上到下绘制多个方格, 语法与 |\row| 一致.
+% \qquad \TransCommandColContent
 % \end{function}
 %
-% \begin{function}[added=2022-01-30, updated=2022-11-23]{\board}
+% \begin{function}[added=2022-01-30, updated=2022-04-23]{\board}
 %   \begin{syntax}
 %      \tn{board} \oarg{border\_type=-|t|l|b|r|x} \marg{r} \marg{c}
 %   \end{syntax}
-% \qquad 绘制 \meta{r} 行 \meta{c} 列的边框, t, r, b, l 为与 |\border| 对应可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了 - 标志, 代表去除某个特定边框. 此选项可以根据自己需求进行定制. 解析器只会解析最后一个 - 标志的位置, 即 |\border[-br-tl-lb-b]| 会被解析为 |\border[-b]|. 解析器不会解析重复的参数, 即 |\border[ttblbtlb]| 会被解析为 |\border[tlb]|. 可选指令 x 表示是否显示横纵坐标, 默认为不显示.
+% \qquad \TransCommandBoardContent
 %
-% 在绘制边框的过程中, 该指令会根据边框类型, 利用 \pkg{tikz} 宏包的截取指令, 自动以 \ColorTagBorder{} 为颜色, 绘制一个\textbf{0.2pt}的外边框. 同时, 为了避免格子的同色邻接区域导致的渲染问题, 该指令会提前绘制同色邻接区域.
+% \TransCommandBoardExtraNoteContent
 % \end{function}
 %
 % \begin{figure}[!htp]
 %     \captionsetup[subfloat]{labelformat=empty}
 %     \centering
-%     \subfloat[\texttt{\textbackslash board}]{\begin{tikzpicture}[scale=2.5]\board{1}{1}\end{tikzpicture}}
+%     \subfloat[\texttt{\textbackslash board}]{\begin{tikzpicture}[scale=1.6]\board{1}{1}\end{tikzpicture}}
 %     \quad
-%     \subfloat[\texttt{\textbackslash board[tlb]} 或 \\ \texttt{\textbackslash board[-r]} ]{\begin{tikzpicture}[scale=2.5]\border[-r]\end{tikzpicture}}
+%     \subfloat[\texttt{\textbackslash board[-r]} ]{\begin{tikzpicture}[scale=1.6]\border[-r]\end{tikzpicture}}
 %     \quad
-%     \subfloat[\texttt{\textbackslash board[tlr]} 或 \\ \texttt{\textbackslash board[-b]} ]{\begin{tikzpicture}[scale=2.5]\border[-b]\end{tikzpicture}}
+%     \subfloat[\texttt{\textbackslash board[-b]} ]{\begin{tikzpicture}[scale=1.6]\border[-b]\end{tikzpicture}}
 %     \quad
-%     \subfloat[\texttt{\textbackslash board[tl]}]{\begin{tikzpicture}[scale=2.5]\border[tl]\end{tikzpicture}}
-%     \caption{边框指令示例}
+%     \subfloat[\texttt{\textbackslash board[tl]}]{\begin{tikzpicture}[scale=1.6]\border[tl]\end{tikzpicture}}
+%     \caption{\TransFigureBoardOptionCaption}
 % \end{figure}
 %
 % \begin{figure}[!htp]
@@ -372,27 +370,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \subfloat[\texttt{\textbackslash board[tlx]}]{\begin{tikzpicture}\board[tlx]{3}{3}\end{tikzpicture}}
 %     \quad
 %     \subfloat[\texttt{\textbackslash board[-tlx]}]{\begin{tikzpicture}\board[-tlx]{3}{3}\end{tikzpicture}}
-%     \caption{横纵坐标显示示例}
+%     \caption{\TransFigureBoardCoordinateCaption}
 % \end{figure}
 %
-% \begin{function}[added=2022-01-30]{\colorcell}
+% \begin{function}[added=2022-01-30, updated=2022-08-11]{\colorcell}
 %   \begin{syntax}
 %      \tn{colorcell} \marg{color} \marg{seq: pos}
 %   \end{syntax}
-% \qquad 将\meta{seq: pos}位置的方格染色为\meta{color}颜色. \meta{color} 仅能传入 |\cell| 中接受的颜色类型, 但是与|\cell|仅支持单一颜色不同的是, \meta{color}支持填入至多 4 种不同颜色, 颜色将从方格部分逆时针填充. \meta{seq: pos} 定义了一个位置序列, 格式如下:
-% \begin{itemize}
-%     \item 序列中的每个元素以分号(;)分隔.
-%     \item 对于每个元素, 以逗号(,)分隔行区间和列区间.
-%     \item 对于每个区间, 如果它是\textbf{单字符}, 则表示区间的起始位置和终止位置相同, 均为该字符; 否则需要以减号(-)分隔起始位置和终止位置.
-% \end{itemize}
-% 下面给出一些示例:
-%  \begin{ctexexam}
-%    \colorcell{g}{0,0-1;0-1,3} % 代表用绿色染色0行, 0-1列和0-1行, 3列的4个格子.
-%    \colorcell{r}{0,4;1-2,0-2} % 代表用红色染色0行, 4列和1-2行, 0-2列的7个格子.
-%    \colorcell{rg}{3,0-2} % 代表用红色和绿色染色3行, 0-2列的3个格子.
-%    \colorcell{rgb}{4,0-2} % 代表用红色, 绿色和蓝色染色4行, 0-2列的3个格子.
-%    \colorcell{rgby}{3-4,3-4} % 代表用红色, 绿色, 蓝色和黄色染色3-4行, 3-4列的4个格子.
-%  \end{ctexexam}
+% \qquad \TransCommandColorCellContent
 % \end{function}
 %
 % \begin{multicols}{2}
@@ -401,7 +386,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \fi
 \begin{verbatim}
     \begin{tikzpicture}
-        \board{3}{5}
+        \board[-x]{3}{5}
         \row{0}{f{20}123}
         \row{1}{A-405}
         \row{2}{m-678}
@@ -419,7 +404,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \begin{figure}[H]
 %         \centering
 %         \begin{tikzpicture}
-%             \board{5}{5}
+%             \board[-x]{5}{5}
 %             \row{0}{f{20}123}
 %             \row{1}{A-405}
 %             \row{2}{m-678}
@@ -431,7 +416,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \colorcell{rgb}{4,0-2}
 %             \colorcell{rgby}{3-4,3-4}
 %         \end{tikzpicture}
-%         \caption{方格染色示例}
+%         \caption{\TransFigureColorCellCaption}
 %     \end{figure}
 % \end{multicols}
 %
@@ -441,8 +426,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \clearpage
 %
-% \section{代码实现}
-% 定义 \pkg{tikz-minesweeper} 宏包的依赖, 分别为 \LaTeXiii{} 和 \pkg{tikz} 宏包.
+% \section{\TransSectionImplementation}
+% \TransMacroDependencyContent
 %    \begin{macrocode}
 
 \RequirePackage{expl3}
@@ -450,7 +435,7 @@ This package consists of the files tikz-minesweeper.dtx,
 
 %    \end{macrocode}
 %
-% 定义 \pkg{tikz-minesweeper} 宏包的配色方案. 在实际使用该宏包时, 可以使用类似方法定义自己的配色方案.
+% \TransMacroColorSchemeContent
 %    \begin{macrocode}
 \definecolor{color0}{RGB}{192,192,192} % color for blank cell
 \definecolor{color1}{RGB}{0,0,255} % color for cell 1
@@ -468,19 +453,19 @@ This package consists of the files tikz-minesweeper.dtx,
 
 %    \end{macrocode}
 %
-% 定义 \pkg{tikz-minesweeper} 宏包的基本单位, 即\textbf{1pt}.
+% \TransMacroUnitContent
 %    \begin{macrocode}
 \tikzset{x=1pt, y=1pt} % Default unit
 
 %    \end{macrocode}
 %
-% 打开\LaTeXiii{}编程环境.
+% \TransMacroEnableLaTeXiiiEnvContent
 %    \begin{macrocode}
 \ExplSyntaxOn
 
 %    \end{macrocode}
 %
-% 定义 \pkg{tikz-minesweeper} 宏包中的变量.
+% \TransMacroVariableDefinitionContent
 %    \begin{macrocode}
 \str_const:Nn \c__msweeper_valid_numbers_str {012345678}
 \str_const:Nn \c__msweeper_valid_colors_str {rgbcyov}
@@ -496,7 +481,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 %
 % \begin{macro}{\msweeper_flag:}
-% \qquad 绘制旗子.
+% \qquad \TransMacroFlagContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_flag: {
     \fill[color7] (5, -13) rectangle (12, -12); % lower base
@@ -509,7 +494,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_mine:}
-% \qquad 绘制地雷.
+% \qquad \TransMacroMineContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_mine: {
     \int_step_inline:nnnn {0} {45} {135} {
@@ -523,7 +508,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_mine_shaded:}
-% \qquad 绘制半透明的地雷. 需要注意的是, 半透明的雷的颜色没有与其它颜色解耦, 如果定义了不同的配色方案, 请谨慎绘制这种地雷.
+% \qquad \TransMacroMineShadedContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_mine_shaded: {
     \int_step_inline:nnnn {0} {45} {135} {
@@ -537,7 +522,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_cellup:}
-% \qquad 绘制鼠标弹起时的方格.
+% \qquad \TransMacroCellUpContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_cellup: {
     \fill[clight] (0, 0) -- (16, 0) -- (0, -16) -- cycle; % highlight
@@ -549,7 +534,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_celldown:}
-% \qquad 绘制鼠标按下后的方格.
+% \qquad \TransMacroCellDownContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_celldown: {
     \fill[cshade] (0, -16) rectangle (16, 0); % border
@@ -560,7 +545,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_cellfail:}
-% \qquad 绘制由于踩雷而失败的方格.
+% \qquad \TransMacroCellFailContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_cellfail: {
     \fill[cshade] (0, -16) rectangle (16, 0); % border
@@ -571,7 +556,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_misflagfail:}
-% \qquad 绘制由于标记错误而失败的方格.
+% \qquad \TransMacroMisflagFailContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_misflagfail: {
     \msweeper_mine:
@@ -583,7 +568,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_cellnum:n}
-% \qquad 用 \ColorTagOne{} 至 \ColorTagEight{} 绘制给定的矢量化数字 1 至 8, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 1 至 8, 传入其它值将会被忽略.
+% \qquad \TransMacroCellNumContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cellnum:n #1 {
     \str_case:nn {#1} {
@@ -648,7 +633,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_cellcolored:n}
-% \qquad 绘制鼠标按下时的染色方格, 接受一个参数 |#1|. 参数 |#1| 仅支持传入 r, g, b, c, y, o, v 中的一个, 传入其它值将会被忽略. 参数 |#1| 的最长长度为 4, 如果传入的参数长度小于 4, 则会在参数的左/右侧补充与其相同的字符, 如果传入的参数长度大于 4, 则会直接被截断为 4 个字符.
+% \qquad \TransMacroCellColoredContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cellcolored:n #1 {
     \str_set:Nn \l__msweeper_cellcolor_str {#1}
@@ -683,7 +668,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_cell:nnn}
-% \qquad 绘制方格, 接受三个参数 |#1|, |#2|, |#3|. 在坐标(|#3|, |#2|)处绘制一个方格, 方格中的内容由 |#1| 决定, |#1|可以传入任意参数. 该函数依次检查 |#1| 是否为数字参数 (012345678), 颜色参数 (rgbcyov), 雷与旗帜参数 (fmsne-), 除上述字符外的单字符参数以及多字符参数.
+% \qquad \TransMacroCellContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_cell:nnn #1#2#3 {
     \sffamily
@@ -720,7 +705,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_line:nnn}
-% \qquad 绘制一行或者一列的格子, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为行号或者列号, |#2| 为格子内容, |#3| 为按行首(r)或者按列首(c)依次绘制格子, 其余参数将不会绘制.
+% \qquad \TransMacroLineContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_line:nnn #1#2#3 {
     \int_zero:N \l_tmpa_int
@@ -737,7 +722,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_row_col_marker:}
-% \qquad 绘制行列坐标数字.
+% \qquad \TransMacroRowColMarkerContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_row_col_marker: {
     \sffamily
@@ -758,7 +743,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_raw_border:}
-% \qquad 绘制原始的边框, 用户在绘制盘面时传入的边框参数将会影响最终边框的形状.
+% \qquad \TransMacroRawBorderContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_raw_border: {
     \fill[clight] (-12, 12) -- (\l__msweeper_cols_int*16 + 12, 12) --
@@ -783,7 +768,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_gap_filler:}
-% \qquad 由于渲染问题, 绘制格子时, 同色区域之间可能会出现一个空白的缝隙, 该函数用于提前填充这些缝隙.
+% \qquad \TransMacroGapFillerContent
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_gap_filler: {
     % draw lines in advance to avoid gaps
@@ -809,7 +794,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_border:nnn}
-% \qquad 绘制边框, 接受三个参数 |#1|, |#2|, |#3|. |#1| 为边框种类参数, |#2| 为行数, |#3| 为列数. 参数 |#1| 可以传入 t, l, b, r, -, x 中的任意多个值.
+% \qquad \TransMacroBorderContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_border:nnn #1#2#3 {
     \int_set:Nn \l__msweeper_rows_int {#2}
@@ -857,7 +842,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_colorcell:nn}
-% \qquad 给多个区域的方格染色, 接受两个参数 |#1|, |#2|. |#1| 仅能传入 |\msweeper_cellcolored:n| 中接受的颜色, |#2| 传入待绘制的多个区域.
+% \qquad \TransMacroColorCellContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_colorcell:nn #1#2 {
     \tl_set:Nn \l_tmpa_tl {#2}
@@ -886,7 +871,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% 提供不显式调用 \LaTeXiii{} 的用户接口.
+% \TransMacroUserAPIContent
 %    \begin{macrocode}
 \newcommand{\flag}{\msweeper_flag:}
 \newcommand{\mine}{\msweeper_mine:}
@@ -902,7 +887,7 @@ This package consists of the files tikz-minesweeper.dtx,
 
 %    \end{macrocode}
 %
-% 关闭 \LaTeXiii{} 编程环境.
+% \TransMacroDisableLaTeXiiiEnvContent
 %    \begin{macrocode}
 \ExplSyntaxOff
 
