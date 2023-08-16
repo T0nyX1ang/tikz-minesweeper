@@ -1,17 +1,10 @@
 {
-    "latex-workshop.latex.search.rootFiles.include": [
-        "**/*.tex",
-        "**/*.dtx"
-    ],
+    "latex-workshop.latex.search.rootFiles.include": ["**/*.tex", "**/*.dtx"],
     "latex-workshop.latex.tools": [
         {
             "name": "update_checksum",
             "command": "texlua",
-            "args": [
-                "support/update_checksum.lua",
-                "%DOCFILE%.dtx"
-            ],
-            "env": {}
+            "args": ["support/update_checksum.lua", "%DOCFILE%.dtx"]
         },
         {
             "name": "xelatex(dtx)",
@@ -21,30 +14,27 @@
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "%DOCFILE%.dtx"
-            ],
-            "env": {}
+            ]
         },
         {
             "name": "makeindex(glo)",
             "command": "makeindex",
-            "args": [
-                "-s",
-                "gglo.ist",
-                "-o",
-                "%DOCFILE%.gls",
-                "%DOCFILE%.glo"
-            ],
+            "args": ["-s", "gglo.ist", "-o", "%DOCFILE%.gls", "%DOCFILE%.glo"]
         },
         {
             "name": "makeindex(idx)",
             "command": "makeindex",
-            "args": [
-                "-s",
-                "gind.ist",
-                "-o",
-                "%DOCFILE%.ind",
-                "%DOCFILE%.idx"
-            ]
+            "args": ["-s", "gind.ist", "-o", "%DOCFILE%.ind", "%DOCFILE%.idx"]
+        },
+        {
+            "name": "update_locale(zh)",
+            "command": "texlua",
+            "args": ["support/update_locale.lua", "%DOCFILE%.dtx", "zh"]
+        },
+        {
+            "name": "update_locale(en)",
+            "command": "texlua",
+            "args": ["support/update_locale.lua", "%DOCFILE%.dtx", "en"]
         }
     ],
     "latex-workshop.latex.recipes": [
@@ -58,6 +48,14 @@
                 "xelatex(dtx)",
                 "xelatex(dtx)"
             ]
+        },
+        {
+            "name": "Locale (zh)",
+            "tools": ["update_locale(zh)"]
+        },
+        {
+            "name": "Locale (en)",
+            "tools": ["update_locale(en)"]
         }
     ]
 }

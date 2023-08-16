@@ -288,3 +288,6 @@ test.*
 # l3build output files
 build/
 *.zip
+
+# translated .dtx files
+tikz-minesweeper_*.dtx
