@@ -1,4 +1,5 @@
 {
+    "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.latex.search.rootFiles.include": ["**/*.tex", "**/*.dtx"],
     "latex-workshop.latex.tools": [
         {
