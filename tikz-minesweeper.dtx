@@ -207,11 +207,11 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \subsection{\TransSubsectionCellElements}
 %
-% \begin{function}[added=2022-01-30]{\flag}
+% \begin{function}[added=2022-01-30, updated=2022-11-23]{\cell}
 %   \begin{syntax}
-%      \tn{flag}
+%      \tn{cell} \marg{r} \marg{c} \marg{info}
 %   \end{syntax}
-% \qquad \TransCommandFlagContent
+% \qquad \TransCommandCellContent
 % \end{function}
 %
 % \begin{figure}[!htp]
@@ -242,28 +242,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %         \end{scope}
 %     \end{tikzpicture}
 %     \caption{\TransFigureFlagMineCaption}
+%     \label{fig-flag-mine}
 % \end{figure}
-%
-% \begin{function}[added=2022-01-30]{\mine}
-%   \begin{syntax}
-%      \tn{mine}
-%   \end{syntax}
-% \qquad \TransCommandMineContent
-% \end{function}
-%
-% \begin{function}[added=2022-01-30]{\cellup}
-%   \begin{syntax}
-%      \tn{cellup}
-%   \end{syntax}
-% \qquad \TransCommandCellUpContent
-% \end{function}
-%
-% \begin{function}[added=2022-01-30]{\celldown}
-%   \begin{syntax}
-%      \tn{celldown}
-%   \end{syntax}
-% \qquad \TransCommandCellDownContent
-% \end{function}
 %
 % \begin{figure}[!htp]
 %     \centering
@@ -279,14 +259,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %          \fill[red] (8.5, -8.5) circle (0.2);
 %     \end{tikzpicture}
 %     \caption{\TransFigureCellUpDownCaption}
+%     \label{fig-cellup-celldown}
 % \end{figure}
-%
-% \begin{function}[added=2022-01-30, updated=2022-11-23]{\cellnum}
-%   \begin{syntax}
-%      \tn{cellnum} \marg{num=1|2|3|4|5|6|7|8}
-%   \end{syntax}
-% \qquad \TransCommandCellNumContent
-% \end{function}
 %
 % \subsection{\TransSubsectionFrameElements}
 %
@@ -318,13 +292,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \subsection{\TransSubsectionModules}
 %
 % \TransSubsectionModulesContent
-%
-% \begin{function}[added=2022-01-30, updated=2022-11-23]{\cell}
-%   \begin{syntax}
-%      \tn{cell} \marg{r} \marg{c} \marg{info}
-%   \end{syntax}
-% \qquad \TransCommandCellContent
-% \end{function}
 %
 % \begin{function}[added=2022-01-30]{\row}
 %   \begin{syntax}

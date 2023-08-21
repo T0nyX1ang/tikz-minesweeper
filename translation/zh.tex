@@ -32,7 +32,7 @@
 \def\TransSubsectionFundamentals{基础设定}
 \def\TransSubsectionFundamentalsUnitContent{本宏包中设定单位长度为\textbf{1pt}. 为了与标准扫雷游戏一致, 一格的边长是\textbf{16pt}. 下文如无特别说明, 所有方格的原点都位于左上角.}
 \def\TransSubsectionFundamentalsScaleContent{如果需要缩放一个盘面, 推荐使用scope环境中的scale参数, 即采用如下语法：}
-\def\TransFigureZoomedCellCaption{放大一个格子}
+\def\TransFigureZoomedCellCaption{两倍放大一个格子}
 
 \def\TransSubsectionColorScheme{配色方案}
 \def\TransSubsectionColorSchemeContent{\pkg{tikz-minesweeper}宏包定义了用于绘制扫雷数字和盘面的配色. 这些配色均给出了标签, 这些标签均可以直接在文档中使用.}
@@ -60,13 +60,24 @@
 \def\TransSubsectionColorSchemeTableCaption{颜色对照表}
 
 \def\TransSubsectionCellElements{方格元素}
-\def\TransCommandFlagContent{绘制旗子. 首先用 \ColorTagSeven{} 绘制两层旗子的底座, 然后用 \ColorTagSeven{} 绘制旗子的旗杆, 最后用 \ColorTagThree{} 绘制旗帜本身.}
-\def\TransCommandMineContent{绘制地雷. 首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影.}
+\def\TransCommandCellContent{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格, 行列均从 0 开始编号. \meta{info} 的检查顺序如下：
+    \begin{optdesc}
+        \item[0] 如果 \meta{info} 是 \meta{0}, 仅绘制一个按下状态的方格. 按下状态的方格首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagZero{} 绘制底色, 左和上的边界宽度均为 1pt, 此时方格的中心点为 (8, -8);
+        \item[1{\textbar}2{\textbar}3{\textbar}4{\textbar}5{\textbar}6{\textbar}7{\textbar}8] 如果 \meta{info} 是 \meta{1}-\meta{8}, 方格是按下状态, 并且填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}}} \raisebox{-0.25ex}{\tikz{\cellnum{2}}} \raisebox{-0.25ex}{\tikz{\cellnum{3}}} \raisebox{-0.25ex}{\tikz{\cellnum{4}}} \raisebox{-0.25ex}{\tikz{\cellnum{5}}} \raisebox{-0.25ex}{\tikz{\cellnum{6}}} \raisebox{-0.25ex}{\tikz{\cellnum{7}}} \raisebox{-0.25ex}{\tikz{\cellnum{8}}};
+        \item[r{\textbar}g{\textbar}b{\textbar}c{\textbar}y{\textbar}o{\textbar}v] 如果 \meta{info} 是 \meta{r} (red, 红色)、\meta{g} (绿色)、\meta{b} (蓝色)、\meta{c} (cyan, 湖蓝色)、\meta{y} (yellow, 黄色)、\meta{o} (orange, 橘色)、\meta{v} (violet, 紫色)中的一个, 方格是抬起状态, 且会染成对应颜色, 方格颜色的透明度为 0.2;
+        \item[f] 如果 \meta{info} 是 \meta{f}, 方格是弹起状态并且会插旗. 旗帜首先用 \ColorTagSeven{} 绘制两层旗子的底座, 然后用 \ColorTagSeven{} 绘制旗子的旗杆, 最后用 \ColorTagThree{} 绘制旗帜本身;
+        \item[m] 如果 \meta{info} 是 \meta{m}, 方格是按下状态并且会显示地雷. 地雷首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影;
+        \item[s] 如果 \meta{info} 是 \meta{s}, 方格是按下状态并且会显示半透明的地雷, 即将地雷的颜色调整为 \ColorTagShade{};
+        \item[n] 如果 \meta{info} 是 \meta{n}, 方格是按下状态并且会显示踩到地雷, 用 \ColorTagFail{} 绘制底色;
+        \item[e] 如果 \meta{info} 是 \meta{e}, 方格是按下状态并且会显示标记错误的地雷, 即在普通地雷的基础上, 进一步用 \ColorTagFail{} 绘制一个叉;
+        \item[-] 如果 \meta{info} 是 \meta{-}, 方格是弹起状态并且无字符. 弹起状态的方格首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面, 营造立体感, 亮面和暗面的宽度均为 2pt, 然后用 \ColorTagZero{} 绘制底色. 需要注意的是, 该方格的中心点为 (8.5, -8.5);
+        \item[(?)] 如果 \meta{info} 是其他\textbf{单个}字符, 方格是弹起状态并包含该字符, 字符中心为 (8, -8);
+        \item[(*)] 如果 \meta{info} 包含\textbf{多个}字符, 将会自动缩小字符, 转化为 \tn[no-index]{tiny} 模式.
+    \end{optdesc}
+    相关元素绘制细节见图\ref{fig-flag-mine}和图\ref{fig-cellup-celldown}.
+}
 \def\TransFigureFlagMineCaption{旗子和雷的细节图}
-\def\TransCommandCellUpContent{绘制鼠标弹起时的方格. 首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面, 营造立体感, 亮面和暗面的宽度均为 2pt, 然后用 \ColorTagZero{} 绘制底色. 需要注意的是, 该方格的中心点为 (8.5, -8.5), 与 \tn{celldown} 指令对应方格的中心点不同.}
-\def\TransCommandCellDownContent{绘制鼠标按下时的方格. 首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagZero{} 绘制底色, 左和上的边界宽度均为 1pt. 需要注意的是, c此时方格的中心点为 (8, -8), 与 \tn{cellup} 指令对应方格的中心点不同.}
-\def\TransFigureCellUpDownCaption{弹起的方格与按下的方格（包含中心点）}
-\def\TransCommandCellNumContent{在当前方块中填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. 如果 \meta{num} 不为 1 至 8, 则该指令不起作用. 需要注意的是, 由于扫雷图形本身遵循的原则, 该命令不建议单独使用, 一般与 \tn{celldown} 指令一起使用.}
+\def\TransFigureCellUpDownCaption{弹起的方格与按下的方格 (包含中心点)}
 
 \def\TransSubsectionFrameElements{边框元素}
 \def\TransCommandBorderContent{绘制以格为单位长度(宽度)的边框. \meta{t}、\meta{l}、\meta{b}、\meta{r} 分别代表上、左、下、右边框, 如果相邻边框同时绘制, 将自动绘制对应的角. 边框分为三层, 中间层使用 \ColorTagZero{} 绘制, 宽度为 6pt, 内外层用 \ColorTagLight{} 与 \ColorTagBorder{} 提供立体感, 宽度为 3pt. 提供立体感的方式和 \tn{cellup} 同理. 左边和上边的高亮外边缘用 \ColorTagBorder{} 封边. 默认参数为 \meta{-}, 即绘制全部边框.}
@@ -74,20 +85,6 @@
 
 \def\TransSubsectionModules{综合模块}
 \def\TransSubsectionModulesContent{这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块, 如果没有特定的设计需求, 推荐仅使用这一部分提供的模块.}
-\def\TransCommandCellContent{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格, 行列均从 0 开始编号. \meta{info} 的检查顺序如下：
-    \begin{itemize}
-        \item 如果 \meta{info} 是 \meta{0}-\meta{8} 的数字, 方格是按下状态并且数字会上色;
-        \item 如果 \meta{info} 是 \meta{r}（red, 红色）、\meta{g}（绿色）、\meta{b}（蓝色）、\meta{c}（cyan, 湖蓝色）、\meta{y}（yellow, 黄色）、\meta{o}（orange, 橘色）、\meta{v}（violet, 紫色）中的一个, 方格是抬起状态, 且会染成对应颜色, 方格颜色的透明度为 0.2;
-        \item 如果 \meta{info} 是 \meta{f}, 方格是弹起状态并且会插旗;
-        \item 如果 \meta{info} 是 \meta{m}, 方格是按下状态并且会显示地雷;
-        \item 如果 \meta{info} 是 \meta{s}, 方格是按下状态并且会显示半透明的地雷, 即将地雷的颜色调整为 \ColorTagShade{};
-        \item 如果 \meta{info} 是 \meta{n}, 方格是按下状态并且会显示踩到地雷, 用 \ColorTagFail{} 绘制底色;
-        \item 如果 \meta{info} 是 \meta{e}, 方格是按下状态并且会显示标记错误的地雷, 即在普通地雷的基础上, 进一步用 \ColorTagFail{} 绘制一个叉;
-        \item 如果 \meta{info} 是 \meta{-}, 方格是弹起状态并且无字符;
-        \item 如果 \meta{info} 是其他\textbf{单个}字符, 方格是弹起状态并包含该字符, 字符中心为 (8, -8);
-        \item 如果 \meta{info} 包含\textbf{多个}字符, 将会自动缩小字符, 转化为 \tn[no-index]{tiny} 模式.
-    \end{itemize}
-}
 \def\TransCommandRowContent{在第 \meta{r} 行从左到右绘制多个方格. \meta{seq:info} 为一个含有 \meta{info} 的序列, 序列中的每个元素作为 \tn{cell} 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如 \meta{1\{23\}4} 的序列长度为3, 该序列中的元素分别为 \meta{1}, \meta{23} 和 \meta{4}.}
 \def\TransCommandColContent{在第 \meta{c} 列从上到下绘制多个方格, 语法与 \tn{row} 一致.}
 \def\TransCommandBoardContent{绘制 \meta{r} 行 \meta{c} 列的边框, \meta{t}, \meta{r}, \meta{b}, \meta{l} 为与 \tn{border} 对应可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了 \meta{-} 标志, 代表去除某些特定方位的边框. 此选项可以根据自己需求进行定制. 解析器只会解析最后一个 \meta{-} 标志的位置, 即 \tn[no-index]{border[-br-tl-lb-b]} 会被解析为 \tn[no-index]{border[-b]}. 解析器不会解析重复的参数, 即 \tn[no-index]{border[ttblbtlb]} 会被解析为 \tn[no-index]{border[tlb]}. 可选指令 \meta{x} 表示是否显示横纵坐标, 默认为不显示横纵坐标.}

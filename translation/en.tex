@@ -32,7 +32,7 @@
 \def\TransSubsectionFundamentals{Fundamental rules}
 \def\TransSubsectionFundamentalsUnitContent{This package sets the unit length to \textbf{1pt}. The edge length for cells is \textbf{16pt} to match the standard minesweeper game. Henceforth, without explicit note, the origin of a cell is its top-left corner.}
 \def\TransSubsectionFundamentalsScaleContent{To scale a board, it's recommended to use the scale parameter from scope environment, that is: }
-\def\TransFigureZoomedCellCaption{A zoomed cell}
+\def\TransFigureZoomedCellCaption{A zoomed cell by two times}
 
 \def\TransSubsectionColorScheme{Color scheme}
 \def\TransSubsectionColorSchemeContent{The \pkg{tikz-minesweeper} package defines the colors for numbers and board margins in minesweeper. The colors have labels that can be directly executed in the documentation.}
@@ -60,13 +60,24 @@
 \def\TransSubsectionColorSchemeTableCaption{Look-up table of colors}
 
 \def\TransSubsectionCellElements{Cell Elements}
-\def\TransCommandFlagContent{Draw the flag. Draw the 2-layer base of the flag with \ColorTagSeven{} first, then draw the flag pole with \ColorTagSeven{}. In the end, draw the flag with \ColorTagThree{}.}
-\def\TransCommandMineContent{Draw the mine. Draw trapezoidal spikes with \ColorTagSeven{} first, then draw the circular body and highlight with \ColorTagSeven{}.}
+\def\TransCommandCellContent{Draw the cell containing \meta{info} at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. \meta{info} is checked in the following order:
+    \begin{optdesc}
+        \item[0] If \meta{info} is \meta{0}, then the cell is only pressed down. A pressed cell is drawn the edges with \ColorTagShade{}, then the background is filled with \ColorTagZero{}. The widths of the left and top edges are both 1pt. Note that the center of this cell is (8, -8);
+        \item[1{\textbar}2{\textbar}3{\textbar}4{\textbar}5{\textbar}6{\textbar}7{\textbar}8] If \meta{info} is from \meta{0} to \meta{8}, then the cell is pressed and the vectorized number is colored as \raisebox{-0.25ex}{\tikz{\cellnum{1}}} \raisebox{-0.25ex}{\tikz{\cellnum{2}}} \raisebox{-0.25ex}{\tikz{\cellnum{3}}} \raisebox{-0.25ex}{\tikz{\cellnum{4}}} \raisebox{-0.25ex}{\tikz{\cellnum{5}}} \raisebox{-0.25ex}{\tikz{\cellnum{6}}} \raisebox{-0.25ex}{\tikz{\cellnum{7}}} \raisebox{-0.25ex}{\tikz{\cellnum{8}}};
+        \item[r{\textbar}g{\textbar}b{\textbar}c{\textbar}y{\textbar}o{\textbar}v] If \meta{info} is \meta{r} (red), \meta{g} (green), \meta{b} (blue), \meta{c} (cyan), \meta{y} (yellow), \meta{o} (orange) or \meta{v} (violet), then the cell is covered and accordingly colored with a transparency of 0.2;
+        \item[f] If \meta{info} is \meta{f}, then the cell is covered and flagged. The 2-layer base of the flag is colored with \ColorTagSeven{} first, then the flag pole is colored with \ColorTagSeven{}. In the end, the flag is colored with \ColorTagThree{};
+        \item[m] If \meta{info} is \meta{m}, then the cell is pressed and shows a mine. Trapezoidal spikes are colored with \ColorTagSeven{} first, then the circular body is shaded with \ColorTagSeven{};
+        \item[s] If \meta{info} is \meta{s}, then the cell is pressed and shows a semitransparent mine, which is basically a mine in \ColorTagShade{};
+        \item[n] If \meta{info} is \meta{n}, then the cell is pressed and shows a blasted mine, with \ColorTagFail{} for background;
+        \item[e] If \meta{info} is \meta{e}, then the cell is pressed and shows a mistakenly flagged mine, which is a cross in \ColorTagFail{} on top of a mine;
+        \item[-] If \meta{info} is \meta{-}, then the cell is covered and has no content. A covered cell is drawn with the light side and dark side first. The widths of these sides are both 2pt, with \ColorTagLight{} and \ColorTagShade{} respectively to create a 3D effect. Then, the background is filled with \ColorTagZero{}. Note that the center of this cell is (8.5, -8.5);
+        \item[(?)] If \meta{info} is any other \textbf{single} character, then the cell is covered and shows the character centered at (8, -8);
+        \item[(*)] If \meta{info} contains \textbf{multiple} characters, the string will be shown in \tn[no-index]{tiny} font.
+    \end{optdesc}
+    The details of cell elements are in Fig. \ref{fig-flag-mine} and Fig. \ref{fig-cellup-celldown}.
+}
 \def\TransFigureFlagMineCaption{Sketch of the flag and the mine}
-\def\TransCommandCellUpContent{Draw the covered cell. Draw the light side and dark side first, the widths of which are both 2pt, with \ColorTagLight{} and \ColorTagShade{} respectively to create a 3D effect. Then fill the background with \ColorTagZero{}. Note that the center of this cell is (8.5, -8.5), which is different from that of \tn{celldown}.}
-\def\TransCommandCellDownContent{Draw the revealed cell. Draw the edges with \ColorTagShade{}, then fill the background with \ColorTagZero{}. The widths of the left and top edges are both 1pt. Note that the center of this cell is (8, -8), which is different from that of \tn{cellup}.}
 \def\TransFigureCellUpDownCaption{Covered cell and revealed cell (the centers are marked)}
-\def\TransCommandCellNumContent{Fill the cell with colored vectorized number~\raisebox{-0.25ex}{\tikz{\cellnum{1}} \tikz{\cellnum{2}} \tikz{\cellnum{3}} \tikz{\cellnum{4}} \tikz{\cellnum{5}} \tikz{\cellnum{6}} \tikz{\cellnum{7}} \tikz{\cellnum{8}}}. If \meta{num} is not from 1 to 8, then the command will not take effect. Note that this command is usually used with \tn{celldown}. It's not recommended using this command alone due to the general rule of minesweeper graphics. }
 
 \def\TransSubsectionFrameElements{Frame elements}
 \def\TransCommandBorderContent{Draw the cell-sized frame. \meta{t}, \meta{l}, \meta{b}, \meta{r} represent the top, left, bottom, right frame respectively. If two adjacent sides are drawn at the same time, the corner in between will also be drawn. The frame consists of 3 layers. The middle layer is in \ColorTagZero{} and 6pt wide. The inner and outer layer are 3pt wide, using \ColorTagLight{} and \ColorTagBorder{} to create a 3D effect similarly as \tn{cellup}. The outer edge of the left and top highlights are enclosed with \ColorTagBorder{}. The default argument is \meta{-}, which means drawing the full frame.}
@@ -74,20 +85,6 @@
 
 \def\TransSubsectionModules{Modules}
 \def\TransSubsectionModulesContent{This section contains the modules provided by \pkg{tikz-minesweeper}. In general, it's recommended to only use these commands unless there is specific customization needed.}
-\def\TransCommandCellContent{Draw the cell containing \meta{info} at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. \meta{info} is checked in the following order:
-    \begin{itemize}
-        \item If \meta{info} is a number from \meta{0} to \meta{8}, then the cell is pressed down and the number is colored;
-        \item If \meta{info} is \meta{r} (red), \meta{g} (green), \meta{b} (blue), \meta{c} (cyan), \meta{y} (yellow), \meta{o} (orange) or \meta{v} (violet), then the cell is covered and accordingly colored with a transparency of 0.2;
-        \item If \meta{info} is \meta{f}, then the cell is covered and flagged;
-        \item If \meta{info} is \meta{m}, then the cell is pressed and shows a mine;
-        \item If \meta{info} is \meta{s}, then the cell is pressed and shows a semitransparent mine, which is basically a mine in \ColorTagShade{};
-        \item If \meta{info} is \meta{n}, then the cell is pressed and shows a blasted mine, with \ColorTagFail{} for background;
-        \item If \meta{info} is \meta{e}, then the cell is pressed and shows a mistakenly flagged mine, which is a cross in \ColorTagFail{} on top of a mine;
-        \item If \meta{info} is \meta{-}, then the cell is covered and has no content;
-        \item If \meta{info} is any other \textbf{single} character, then the cell is covered and shows the character centered at (8, -8);
-        \item If \meta{info} contains \textbf{multiple} characters, the string will be shown in \tn[no-index]{tiny} font.
-    \end{itemize}
-}
 \def\TransCommandRowContent{Draw multiple cells from left to right in the \meta{r}-th row. \meta{seq:info} is a sequence containing \meta{info}, where each element in the sequence serves as the third parameter of \tn{cell}. To display multiple characters in a cell, these characters should be surrounded by curly braces. For example, the length of the sequence \meta{1\{23\}4} is 3, and the elements in this sequence are \meta{1}, \meta{23}, and \meta{4} respectively.}
 \def\TransCommandColContent{Draw multiple cells from top to bottom in the \meta{c}-th column, and the syntax is the same as \tn{row}.}
 \def\TransCommandBoardContent{Draw the border with \meta{r} rows and \meta{c} columns. \meta{t}, \meta{r}, \meta{b}, \meta{l} share the same syntax as \tn{border}. By default, the board will be surrounded by all borders. If the \meta{-} argument is used, the borders in specific directions will be removed, and this argument can be customized. The parser only parses the position of the last \meta{-} option. For example, \tn[no-index]{border[-br-tl-lb-b]} will be parsed as \tn[no-index]{border[-b]}. The parser does not parse repeated parameters. For example, \tn[no-index]{border[ttblbtlb]} will be parsed as \tn[no-index]{border[tlb]}. The argument \meta{x} indicates whether to display the coordinates, which are hidden by default.}
