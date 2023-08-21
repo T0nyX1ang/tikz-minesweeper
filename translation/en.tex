@@ -63,7 +63,7 @@
 \def\TransCommandCellContent{Draw the cell containing \meta{info} at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. \meta{info} is checked in the following order:
     \begin{optdesc}
         \item[0] If \meta{info} is \meta{0}, then the cell is only pressed down. A pressed cell is drawn the edges with \ColorTagShade{}, then the background is filled with \ColorTagZero{}. The widths of the left and top edges are both 1pt. Note that the center of this cell is (8, -8);
-        \item[1{\textbar}2{\textbar}3{\textbar}4{\textbar}5{\textbar}6{\textbar}7{\textbar}8] If \meta{info} is from \meta{0} to \meta{8}, then the cell is pressed and the vectorized number is colored as \raisebox{-0.25ex}{\tikz{\cellnum{1}}} \raisebox{-0.25ex}{\tikz{\cellnum{2}}} \raisebox{-0.25ex}{\tikz{\cellnum{3}}} \raisebox{-0.25ex}{\tikz{\cellnum{4}}} \raisebox{-0.25ex}{\tikz{\cellnum{5}}} \raisebox{-0.25ex}{\tikz{\cellnum{6}}} \raisebox{-0.25ex}{\tikz{\cellnum{7}}} \raisebox{-0.25ex}{\tikz{\cellnum{8}}};
+        \item[1{\textbar}2{\textbar}3{\textbar}4{\textbar}5{\textbar}6{\textbar}7{\textbar}8] If \meta{info} is from \meta{0} to \meta{8}, then the cell is pressed and the vectorized numbers are drawn;
         \item[r{\textbar}g{\textbar}b{\textbar}c{\textbar}y{\textbar}o{\textbar}v] If \meta{info} is \meta{r} (red), \meta{g} (green), \meta{b} (blue), \meta{c} (cyan), \meta{y} (yellow), \meta{o} (orange) or \meta{v} (violet), then the cell is covered and accordingly colored with a transparency of 0.2;
         \item[f] If \meta{info} is \meta{f}, then the cell is covered and flagged. The 2-layer base of the flag is colored with \ColorTagSeven{} first, then the flag pole is colored with \ColorTagSeven{}. In the end, the flag is colored with \ColorTagThree{};
         \item[m] If \meta{info} is \meta{m}, then the cell is pressed and shows a mine. Trapezoidal spikes are colored with \ColorTagSeven{} first, then the circular body is shaded with \ColorTagSeven{};
@@ -76,7 +76,7 @@
     \end{optdesc}
     The details of cell elements are in Fig. \ref{fig-flag-mine} and Fig. \ref{fig-cellup-celldown}.
 }
-\def\TransFigureFlagMineCaption{Sketch of the flag and the mine}
+\def\TransFigureFlagMineNumCaption{Sketch of the flag, the mine and the numbers}
 \def\TransFigureCellUpDownCaption{Covered cell and revealed cell (the centers are marked)}
 
 \def\TransSubsectionFrameElements{Frame elements}

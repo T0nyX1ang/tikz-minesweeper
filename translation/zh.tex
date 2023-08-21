@@ -63,7 +63,7 @@
 \def\TransCommandCellContent{在第 \meta{r} 行第 \meta{c} 列交叉处绘制包含内容 \meta{info} 的方格, 行列均从 0 开始编号. \meta{info} 的检查顺序如下：
     \begin{optdesc}
         \item[0] 如果 \meta{info} 是 \meta{0}, 仅绘制一个按下状态的方格. 按下状态的方格首先用 \ColorTagShade{} 绘制方格边界, 然后用 \ColorTagZero{} 绘制底色, 左和上的边界宽度均为 1pt, 此时方格的中心点为 (8, -8);
-        \item[1{\textbar}2{\textbar}3{\textbar}4{\textbar}5{\textbar}6{\textbar}7{\textbar}8] 如果 \meta{info} 是 \meta{1}-\meta{8}, 方格是按下状态, 并且填入带配色的矢量化数字~\raisebox{-0.25ex}{\tikz{\cellnum{1}}} \raisebox{-0.25ex}{\tikz{\cellnum{2}}} \raisebox{-0.25ex}{\tikz{\cellnum{3}}} \raisebox{-0.25ex}{\tikz{\cellnum{4}}} \raisebox{-0.25ex}{\tikz{\cellnum{5}}} \raisebox{-0.25ex}{\tikz{\cellnum{6}}} \raisebox{-0.25ex}{\tikz{\cellnum{7}}} \raisebox{-0.25ex}{\tikz{\cellnum{8}}};
+        \item[1{\textbar}2{\textbar}3{\textbar}4{\textbar}5{\textbar}6{\textbar}7{\textbar}8] 如果 \meta{info} 是 \meta{1}-\meta{8}, 方格是按下状态, 并且填入带配色的矢量化数字;
         \item[r{\textbar}g{\textbar}b{\textbar}c{\textbar}y{\textbar}o{\textbar}v] 如果 \meta{info} 是 \meta{r} (red, 红色)、\meta{g} (绿色)、\meta{b} (蓝色)、\meta{c} (cyan, 湖蓝色)、\meta{y} (yellow, 黄色)、\meta{o} (orange, 橘色)、\meta{v} (violet, 紫色)中的一个, 方格是抬起状态, 且会染成对应颜色, 方格颜色的透明度为 0.2;
         \item[f] 如果 \meta{info} 是 \meta{f}, 方格是弹起状态并且会插旗. 旗帜首先用 \ColorTagSeven{} 绘制两层旗子的底座, 然后用 \ColorTagSeven{} 绘制旗子的旗杆, 最后用 \ColorTagThree{} 绘制旗帜本身;
         \item[m] 如果 \meta{info} 是 \meta{m}, 方格是按下状态并且会显示地雷. 地雷首先用 \ColorTagSeven{} 绘制地雷的梯形突起, 然后用 \ColorTagSeven{} 绘制地雷的圆形本体与本体上的光影;
@@ -76,7 +76,7 @@
     \end{optdesc}
     相关元素绘制细节见图\ref{fig-flag-mine}和图\ref{fig-cellup-celldown}.
 }
-\def\TransFigureFlagMineCaption{旗子和雷的细节图}
+\def\TransFigureFlagMineNumCaption{旗子、雷和数字的细节图}
 \def\TransFigureCellUpDownCaption{弹起的方格与按下的方格 (包含中心点)}
 
 \def\TransSubsectionFrameElements{边框元素}
