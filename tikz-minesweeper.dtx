@@ -683,28 +683,28 @@ This package consists of the files tikz-minesweeper.dtx,
         \tl_if_single:nTF {#1} {
             % single token
             \str_if_in:NnTF \c__msweeper_valid_numbers_str {#1} {
-                \msweeper_celldown: \msweeper_cellnum:n {#1} % number
+                \msweeper_celldown: \msweeper_cellnum:n {#1}
             } {
                 \str_if_in:NnTF \c__msweeper_valid_colors_str {#1} {
-                    \msweeper_cellup: \msweeper_cellcolored:n {#1} % color
+                    \msweeper_cellup: \msweeper_cellcolored:n {#1}
                 } {
                     \str_case:nnF {#1} {
-                        {f} { \msweeper_cellup: \msweeper_flag: } % flag
-                        {m} { \msweeper_celldown: \msweeper_mine: } % mine
-                        {s} { \msweeper_celldown: \msweeper_mine_shaded: } % shaded
-                        {n} { \msweeper_cellfail: \msweeper_mine: } % blasted
-                        {e} { \msweeper_celldown: \msweeper_misflagfail: } % misflagged
-                        {-} { \msweeper_cellup: } % empty
+                        {f} { \msweeper_cellup: \msweeper_flag: }
+                        {m} { \msweeper_celldown: \msweeper_mine: }
+                        {s} { \msweeper_celldown: \msweeper_mine_shaded: }
+                        {n} { \msweeper_cellfail: \msweeper_mine: }
+                        {e} { \msweeper_celldown: \msweeper_misflagfail: }
+                        {-} { \msweeper_cellup: }
                     } {
                         \msweeper_cellup:
                         \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}};
-                    } % normal label
+                    }
                 }
             }
         } {
             \msweeper_cellup:
             \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}};
-        } % tiny label
+        }
     \end{scope}
 }
 
