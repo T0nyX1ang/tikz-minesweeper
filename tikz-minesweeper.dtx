@@ -84,7 +84,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{362}
+% \CheckSum{338}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -749,31 +749,6 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\msweeper_raw_border:}
-% \qquad \TransMacroRawBorderContent
-%    \begin{macrocode}
-\cs_set:Nn \msweeper_raw_border: {
-    \fill[clight] (-12, 12) -- (\l__msweeper_cols_int*16 + 12, 12) --
-        (\l__msweeper_cols_int*16, 0) -- (0, -\l__msweeper_rows_int*16) --
-        (-12, -\l__msweeper_rows_int*16 - 12) -- cycle;
-    \fill[cborder] (\l__msweeper_cols_int*16 + 12, -\l__msweeper_rows_int*16 - 12) --
-        (-12, -\l__msweeper_rows_int*16 - 12) -- (0, -\l__msweeper_rows_int*16) --
-        (\l__msweeper_cols_int*16, 0) -- (\l__msweeper_cols_int*16 + 12, 12) -- cycle;
-    \fill[color0] (-9, 9) rectangle
-        (\l__msweeper_cols_int*16 + 9, -\l__msweeper_rows_int*16 - 9);
-    \fill[cborder] (-3, 3) -- (\l__msweeper_cols_int*16 + 3, 3) --
-        (\l__msweeper_cols_int*16, 0) -- (0, -\l__msweeper_rows_int*16) --
-        (-3, -\l__msweeper_rows_int*16 - 3) -- cycle;
-    \fill[clight] (\l__msweeper_cols_int*16 + 3, -\l__msweeper_rows_int*16 - 3) --
-        (-3, -\l__msweeper_rows_int*16 - 3) -- (0, -\l__msweeper_rows_int*16) --
-        (\l__msweeper_cols_int*16, 0) -- (\l__msweeper_cols_int*16 + 3, 3) -- cycle;
-    \fill[clight] (0, 0) rectangle
-        (\l__msweeper_cols_int*16, -\l__msweeper_rows_int*16);
-}
-
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\msweeper_gap_filler:}
 % \qquad \TransMacroGapFillerContent
 %    \begin{macrocode}
@@ -804,9 +779,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \qquad \TransMacroBorderContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_border:nnn #1#2#3 {
-    \int_set:Nn \l__msweeper_rows_int {#2}
-    \int_set:Nn \l__msweeper_cols_int {#3}
-
     \bool_set_false:N \l_tmpa_bool
     \int_zero:N \l__msweeper_tmargin_int
     \int_zero:N \l__msweeper_lmargin_int
@@ -829,19 +801,37 @@ This package consists of the files tikz-minesweeper.dtx,
         }
     }
 
-    % draw row and column numbers
-    \str_if_in:nnT {#1} {x} { \msweeper_row_col_marker: }
-
     % draw outer border with clipping
     % clip the area inside of a scope to avoid side effects
     \begin{scope}
         \clip[preaction={draw, color=cborder, line~width=0.8}]
             (-\l__msweeper_lmargin_int, \l__msweeper_tmargin_int) rectangle
-            (\l__msweeper_cols_int*16 + \l__msweeper_rmargin_int,
-            -\l__msweeper_rows_int*16 - \l__msweeper_bmargin_int);
-        \msweeper_raw_border:
+            (#2*16 + \l__msweeper_rmargin_int, -#2*16 - \l__msweeper_bmargin_int);
+        \fill[clight] (-12, 12) -- (#2*16 + 12, 12) -- (#2*16, 0) --
+            (0, -#2*16) -- (-12, -#2*16 - 12) -- cycle;
+        \fill[cborder] (#2*16 + 12, -#2*16 - 12) -- (-12, -#2*16 - 12) --
+            (0, -#2*16) -- (#2*16, 0) -- (#2*16 + 12, 12) -- cycle;
+        \fill[color0] (-9, 9) rectangle (#2*16 + 9, -#2*16 - 9);
+        \fill[cborder] (-3, 3) -- (#2*16 + 3, 3) -- (#2*16, 0) --
+            (0, -#2*16) -- (-3, -#2*16 - 3) -- cycle;
+        \fill[clight] (#2*16 + 3, -#2*16 - 3) -- (-3, -#2*16 - 3) --
+            (0, -#2*16) -- (#2*16, 0) -- (#2*16 + 3, 3) -- cycle;
+        \fill[clight] (0, 0) rectangle (#2*16, -#2*16);
     \end{scope}
+}
 
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\msweeper_board:nnn}
+% \qquad \TransMacroBoardContent
+%    \begin{macrocode}
+\cs_set:Npn \msweeper_board:nnn #1#2#3 {
+    \int_set:Nn \l__msweeper_rows_int {#2}
+    \int_set:Nn \l__msweeper_cols_int {#3}
+
+    \msweeper_border:nnn {#1}{\l__msweeper_rows_int}{\l__msweeper_cols_int}
+    \str_if_in:nnT {#1} {x} { \msweeper_row_col_marker: }
     \msweeper_gap_filler:
 }
 
@@ -884,7 +874,7 @@ This package consists of the files tikz-minesweeper.dtx,
 \newcommand{\row}[2]{\msweeper_line:nnn {#1}{#2}{r}}
 \newcommand{\col}[2]{\msweeper_line:nnn {#1}{#2}{c}}
 \newcommand{\border}[1][-]{\msweeper_border:nnn {#1}{1}{1}}
-\newcommand{\board}[3][-]{\msweeper_border:nnn {#1}{#2}{#3}}
+\newcommand{\board}[3][-]{\msweeper_board:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
 
 %    \end{macrocode}
