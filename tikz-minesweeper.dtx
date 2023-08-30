@@ -728,53 +728,6 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\msweeper_row_col_marker:}
-% \qquad \TransMacroRowColMarkerContent
-%    \begin{macrocode}
-\cs_set:Nn \msweeper_row_col_marker: {
-    \sffamily
-    % show axis x
-    \int_step_inline:nnn {0} {\l__msweeper_cols_int - 1} {
-        \node[text~centered, text={color7}, xshift=16*##1] at
-            (8, 6 + \l__msweeper_tmargin_int) {\textbf{\tiny ##1}};
-    }
-
-    % show axis y
-    \int_step_inline:nnn {0} {\l__msweeper_rows_int - 1} {
-        \node[text~centered, text={color7}, yshift=-16*##1] at
-            (-6 - \l__msweeper_lmargin_int, -8) {\textbf{\tiny ##1}};
-    }
-}
-
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\msweeper_gap_filler:}
-% \qquad \TransMacroGapFillerContent
-%    \begin{macrocode}
-\cs_set:Nn \msweeper_gap_filler: {
-    % draw lines in advance to avoid gaps
-    \int_step_variable:nnNn {1} {\l__msweeper_cols_int - 1} \l_tmpa_tl {
-        \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l_tmpb_tl {
-            \fill[cshade, xshift=\l_tmpa_tl*16, yshift=-\l_tmpb_tl * 16] (0, 0) --
-                (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) --
-                (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
-        }
-    }
-
-    \int_step_variable:nnNn {1} {\l__msweeper_rows_int - 1} \l_tmpb_tl {
-        \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l_tmpa_tl {
-            \fill[cshade, xshift=\l_tmpa_tl*16, yshift=-\l_tmpb_tl * 16] (0, 0) --
-                (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
-                (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) --
-                (-0.5, 0.5) -- cycle;
-        }
-    }
-}
-
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\msweeper_border:nnn}
 % \qquad \TransMacroBorderContent
 %    \begin{macrocode}
@@ -818,6 +771,53 @@ This package consists of the files tikz-minesweeper.dtx,
             (0, -#2*16) -- (#2*16, 0) -- (#2*16 + 3, 3) -- cycle;
         \fill[clight] (0, 0) rectangle (#2*16, -#2*16);
     \end{scope}
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\msweeper_row_col_marker:}
+% \qquad \TransMacroRowColMarkerContent
+%    \begin{macrocode}
+\cs_set:Nn \msweeper_row_col_marker: {
+    \sffamily
+    % show axis x
+    \int_step_inline:nnn {0} {\l__msweeper_cols_int - 1} {
+        \node[text~centered, text={color7}, xshift=16*##1] at
+            (8, 6 + \l__msweeper_tmargin_int) {\textbf{\tiny ##1}};
+    }
+
+    % show axis y
+    \int_step_inline:nnn {0} {\l__msweeper_rows_int - 1} {
+        \node[text~centered, text={color7}, yshift=-16*##1] at
+            (-6 - \l__msweeper_lmargin_int, -8) {\textbf{\tiny ##1}};
+    }
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\msweeper_gap_filler:}
+% \qquad \TransMacroGapFillerContent
+%    \begin{macrocode}
+\cs_set:Nn \msweeper_gap_filler: {
+    % draw lines in advance to avoid gaps
+    \int_step_variable:nnNn {1} {\l__msweeper_cols_int - 1} \l_tmpa_tl {
+        \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l_tmpb_tl {
+            \fill[cshade, xshift=\l_tmpa_tl*16, yshift=-\l_tmpb_tl * 16] (0, 0) --
+                (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) --
+                (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
+        }
+    }
+
+    \int_step_variable:nnNn {1} {\l__msweeper_rows_int - 1} \l_tmpb_tl {
+        \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l_tmpa_tl {
+            \fill[cshade, xshift=\l_tmpa_tl*16, yshift=-\l_tmpb_tl * 16] (0, 0) --
+                (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
+                (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) --
+                (-0.5, 0.5) -- cycle;
+        }
+    }
 }
 
 %    \end{macrocode}
