@@ -759,17 +759,17 @@ This package consists of the files tikz-minesweeper.dtx,
     \begin{scope}
         \clip[preaction={draw, color=cborder, line~width=0.8}]
             (-\l__msweeper_lmargin_int, \l__msweeper_tmargin_int) rectangle
-            (#2*16 + \l__msweeper_rmargin_int, -#2*16 - \l__msweeper_bmargin_int);
-        \fill[clight] (-12, 12) -- (#2*16 + 12, 12) -- (#2*16, 0) --
+            (#3*16 + \l__msweeper_rmargin_int, -#2*16 - \l__msweeper_bmargin_int);
+        \fill[clight] (-12, 12) -- (#3*16 + 12, 12) -- (#3*16, 0) --
             (0, -#2*16) -- (-12, -#2*16 - 12) -- cycle;
-        \fill[cborder] (#2*16 + 12, -#2*16 - 12) -- (-12, -#2*16 - 12) --
-            (0, -#2*16) -- (#2*16, 0) -- (#2*16 + 12, 12) -- cycle;
-        \fill[color0] (-9, 9) rectangle (#2*16 + 9, -#2*16 - 9);
-        \fill[cborder] (-3, 3) -- (#2*16 + 3, 3) -- (#2*16, 0) --
+        \fill[cborder] (#3*16 + 12, -#2*16 - 12) -- (-12, -#2*16 - 12) --
+            (0, -#2*16) -- (#3*16, 0) -- (#3*16 + 12, 12) -- cycle;
+        \fill[color0] (-9, 9) rectangle (#3*16 + 9, -#2*16 - 9);
+        \fill[cborder] (-3, 3) -- (#3*16 + 3, 3) -- (#3*16, 0) --
             (0, -#2*16) -- (-3, -#2*16 - 3) -- cycle;
-        \fill[clight] (#2*16 + 3, -#2*16 - 3) -- (-3, -#2*16 - 3) --
-            (0, -#2*16) -- (#2*16, 0) -- (#2*16 + 3, 3) -- cycle;
-        \fill[clight] (0, 0) rectangle (#2*16, -#2*16);
+        \fill[clight] (#3*16 + 3, -#2*16 - 3) -- (-3, -#2*16 - 3) --
+            (0, -#2*16) -- (#3*16, 0) -- (#3*16 + 3, 3) -- cycle;
+        \fill[clight] (0, 0) rectangle (#3*16, -#2*16);
     \end{scope}
 }
 
