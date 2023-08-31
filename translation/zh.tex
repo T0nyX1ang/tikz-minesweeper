@@ -106,6 +106,7 @@
 \def\TransMacroUnitContent{定义 \pkg{tikz-minesweeper} 宏包的基本单位, 即 1pt.}
 \def\TransMacroEnableLaTeXiiiEnvContent{打开\LaTeXiii{}编程环境.}
 \def\TransMacroVariableDefinitionContent{定义 \pkg{tikz-minesweeper} 宏包中的变量.}
+\def\TransMacroValidateInRangeContent{判断 \meta{\#1} 是否介于下界 \meta{\#2} 和上界 \meta{\#3} 之间, 包含边界. 如果下界 \meta{\#2} 为空值, 则仅判断 \meta{\#1} 是否小于上界 \meta{\#3}; 如果上界 \meta{\#3} 为空值, 则仅判断 \meta{\#1} 是否大于上界 \meta{\#2}.}
 \def\TransMacroFlagContent{绘制旗子.}
 \def\TransMacroMineContent{绘制地雷.}
 \def\TransMacroMineShadedContent{绘制半透明的地雷. 需要注意的是, 半透明的雷的颜色没有与其它颜色解耦, 如果定义了不同的配色方案, 请谨慎绘制这种地雷.}
@@ -121,6 +122,6 @@
 \def\TransMacroGapFillerContent{由于渲染问题, 绘制盘面时, 同色区域之间可能会出现一个空白的缝隙, 该函数用于提前填充这些缝隙.}
 \def\TransMacroBorderContent{绘制边框, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbr} 中的值.}
 \def\TransMacroBoardContent{绘制盘面, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbrx} 中的值.}
-\def\TransMacroColorCellContent{给多个区域的方格染色, 接受两个参数 \meta{\#1}, \meta{\#2}. \meta{\#1} 仅能传入 \cs[no-index]{msweeper_cellcolored:n} 中接受的颜色, \meta{\#2} 传入待绘制的多个区域.}
+\def\TransMacroColorCellContent{给多个区域染色, 接受两个参数 \meta{\#1}, \meta{\#2}. \meta{\#1} 仅接受 \cs[no-index]{msweeper_cellcolored:n} 中的颜色, \meta{\#2} 传入待绘制的多个区域.}
 \def\TransMacroUserAPIContent{提供不显式调用 \LaTeXiii{} 的用户接口.}
 \def\TransMacroDisableLaTeXiiiEnvContent{关闭 \LaTeXiii{} 编程环境.}
