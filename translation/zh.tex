@@ -106,6 +106,7 @@
 \def\TransMacroUnitContent{定义 \pkg{tikz-minesweeper} 宏包的基本单位, 即 1pt.}
 \def\TransMacroEnableLaTeXiiiEnvContent{打开\LaTeXiii{}编程环境.}
 \def\TransMacroVariableDefinitionContent{定义 \pkg{tikz-minesweeper} 宏包中的变量.}
+\def\TransMacroValidateInRangeContent{判断 \meta{\#1} 是否介于下界 \meta{\#2} 和上界 \meta{\#3} 之间, 包含边界. 如果下界 \meta{\#2} 为空值, 则仅判断 \meta{\#1} 是否小于上界 \meta{\#3}; 如果上界 \meta{\#3} 为空值, 则仅判断 \meta{\#1} 是否大于上界 \meta{\#2}.}
 \def\TransMacroFlagContent{绘制旗子.}
 \def\TransMacroMineContent{绘制地雷.}
 \def\TransMacroMineShadedContent{绘制半透明的地雷. 需要注意的是, 半透明的雷的颜色没有与其它颜色解耦, 如果定义了不同的配色方案, 请谨慎绘制这种地雷.}
@@ -118,9 +119,9 @@
 \def\TransMacroCellContent{绘制方格, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. 在坐标(\meta{\#3}, \meta{\#2})处绘制一个方格, 方格中的内容由 \meta{\#1} 决定, \meta{\#1}可以传入任意参数. 该函数依次检查 \meta{\#1} 是否为数字参数 \meta{012345678}, 颜色参数 \meta{rgbcyov}, 雷与旗帜参数 \meta{fmsne-}, 除上述字符外的单字符参数以及多字符参数.}
 \def\TransMacroLineContent{绘制一行或者一列的格子, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为行号或者列号, \meta{\#2} 为格子内容, \meta{\#3} 为按行 \meta{r} 或者按列 \meta{c} 依次绘制格子, 其余参数将不会绘制.}
 \def\TransMacroRowColMarkerContent{绘制行列坐标数字.}
-\def\TransMacroRawBorderContent{绘制原始的边框, 用户在绘制盘面时传入的边框参数将会影响最终边框的形状.}
 \def\TransMacroGapFillerContent{由于渲染问题, 绘制盘面时, 同色区域之间可能会出现一个空白的缝隙, 该函数用于提前填充这些缝隙.}
-\def\TransMacroBorderContent{绘制边框, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbrx} 中的值.}
-\def\TransMacroColorCellContent{给多个区域的方格染色, 接受两个参数 \meta{\#1}, \meta{\#2}. \meta{\#1} 仅能传入 \cs[no-index]{msweeper_cellcolored:n} 中接受的颜色, \meta{\#2} 传入待绘制的多个区域.}
+\def\TransMacroBorderContent{绘制边框, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbr} 中的值.}
+\def\TransMacroBoardContent{绘制盘面, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbrx} 中的值.}
+\def\TransMacroColorCellContent{给多个区域染色, 接受两个参数 \meta{\#1}, \meta{\#2}. \meta{\#1} 仅接受 \cs[no-index]{msweeper_cellcolored:n} 中的颜色, \meta{\#2} 传入待绘制的多个区域.}
 \def\TransMacroUserAPIContent{提供不显式调用 \LaTeXiii{} 的用户接口.}
 \def\TransMacroDisableLaTeXiiiEnvContent{关闭 \LaTeXiii{} 编程环境.}
