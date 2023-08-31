@@ -84,7 +84,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{347}
+% \CheckSum{360}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -737,6 +737,16 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_line:nnn #1#2#3 {
     \int_zero:N \l_tmpa_int
+    \str_case:nn {#3} {
+        {r} {
+            \msweeper_range_check:nnn {#1}{0}{\l__msweeper_rows_int - 1}
+            \msweeper_range_check:nnn {\tl_count:n {#2}}{0}{\l__msweeper_cols_int}
+        }
+        {c} {
+            \msweeper_range_check:nnn {#1}{0}{\l__msweeper_cols_int - 1}
+            \msweeper_range_check:nnn {\tl_count:n {#2}}{0}{\l__msweeper_rows_int}
+        }
+    }
     \tl_map_inline:nn {#2} {
         \str_case:nn {#3} {
             {r} { \msweeper_cell:nnn {##1}{#1}{\l_tmpa_int} }
@@ -848,6 +858,8 @@ This package consists of the files tikz-minesweeper.dtx,
 % \qquad \TransMacroBoardContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_board:nnn #1#2#3 {
+    \msweeper_range_check:nnn {#2}{0}{}
+    \msweeper_range_check:nnn {#3}{0}{}
     \int_set:Nn \l__msweeper_rows_int {#2}
     \int_set:Nn \l__msweeper_cols_int {#3}
 
