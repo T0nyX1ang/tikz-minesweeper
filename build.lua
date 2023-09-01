@@ -37,7 +37,7 @@ function tag_hook(tagname, tagdate)
         return 1
     end
 
-    print("Info: Deleting duplicate tags:" .. tagname)
+    print("Info: Deleting duplicate tags: " .. tagname)
     errorlevel = os.execute("git tag -d v" .. tagname)
 
     print("Info: Tagging version: " .. tagname)
