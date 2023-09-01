@@ -50,7 +50,7 @@ Draw a minesweeper board in LaTeX.
 
 - `\row{r}{seq: info}`: draw a row with a sequence of `info` according to `\cell`
 
-- `\border[-tlbrx]`: draw a border with edge options
+- `\border[-tlbr]{r}{c}`: draw a border with edge options
 
 - `\board[-tlbrx]{r}{c}`: draw a board with border
 
