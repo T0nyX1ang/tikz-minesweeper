@@ -41,7 +41,7 @@ function tag_hook(tagname, tagdate)
     errorlevel = os.execute("git tag -d v" .. tagname)
 
     print("Info: Tagging version: " .. tagname)
-    errorlevel = os.execute("git tag v" .. tagname)
+    errorlevel = os.execute("git tag -a v" .. tagname .. " -m \"\"")
     if errorlevel ~= 0 then
         print("Critical: Git tag failed.")
         return 1
