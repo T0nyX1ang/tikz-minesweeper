@@ -300,11 +300,11 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \label{fig-cellup-celldown}
 % \end{figure}
 %
-% \subsection{\TransSubsectionFrameElements}
+% \subsection{\TransSubsectionBorderElements}
 %
 % \begin{function}[added=2022-01-30, updated=2022-11-23]{\border}
 %   \begin{syntax}
-%      \tn{border} \oarg{border\_type=-|t|l|b|r}
+%      \tn{border} \oarg{border\_option} \marg{r} \marg{c}
 %   \end{syntax}
 % \qquad \TransCommandBorderContent
 % \end{function}
@@ -313,7 +313,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \centering
 %     \begin{tikzpicture}
 %         \begin{scope}[scale=4]
-%             \border
+%             \border[-]{1}{1}
 %             \draw[dashed] (-14,0) -- (30,0);
 %             \draw[dashed] (-14,-16) -- (30,-16);
 %             \draw[dashed] (0,14) -- (0,-30);
@@ -322,9 +322,28 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \node at (22, -8) {r};
 %             \node at (8, -22) {b};
 %             \node at (-6, -8) {l};
+%             \node at (-6, 6) {tl};
+%             \node at (22, 6) {tr};
+%             \node at (-6, -22) {bl};
+%             \node at (22, -22) {br};
 %         \end{scope}
 %     \end{tikzpicture}
 %     \caption{\TransFigureBorderCaption}
+%     \label{fig-border-full}
+% \end{figure}
+%
+% \begin{figure}[!htp]
+%     \captionsetup[subfloat]{labelformat=empty}
+%     \centering
+%     \subfloat[\texttt{\textbackslash border[-]\{1\}\{1\}}]{\begin{tikzpicture}[scale=2.5]\border[-]{1}{1}\end{tikzpicture}}
+%     \quad
+%     \subfloat[\texttt{\textbackslash border[-r]\{1\}\{1\}} ]{\begin{tikzpicture}[scale=2.5]\border[-r]{1}{1}\end{tikzpicture}}
+%     \quad
+%     \subfloat[\texttt{\textbackslash border[-b]\{1\}\{1\}} ]{\begin{tikzpicture}[scale=2.5]\border[-b]{1}{1}\end{tikzpicture}}
+%     \quad
+%     \subfloat[\texttt{\textbackslash border[tl]\{1\}\{1\}}]{\begin{tikzpicture}[scale=2.5]\border[tl]{1}{1}\end{tikzpicture}}
+%     \caption{\TransFigureBorderOptionCaption}
+%     \label{fig-border-options}
 % \end{figure}
 %
 % \subsection{\TransSubsectionModules}
@@ -340,25 +359,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \begin{function}[added=2022-01-30, updated=2022-04-23]{\board}
 %   \begin{syntax}
-%      \tn{board} \oarg{border\_type=-|t|l|b|r|x} \marg{r} \marg{c}
+%      \tn{board} \oarg{board\_option=-|t|l|b|r|x} \marg{r} \marg{c}
 %   \end{syntax}
 % \qquad \TransCommandBoardContent
-%
-% \TransCommandBoardExtraNoteContent
 % \end{function}
-%
-% \begin{figure}[!htp]
-%     \captionsetup[subfloat]{labelformat=empty}
-%     \centering
-%     \subfloat[\texttt{\textbackslash board}]{\begin{tikzpicture}[scale=1.6]\board{1}{1}\end{tikzpicture}}
-%     \quad
-%     \subfloat[\texttt{\textbackslash board[-r]} ]{\begin{tikzpicture}[scale=1.6]\border[-r]\end{tikzpicture}}
-%     \quad
-%     \subfloat[\texttt{\textbackslash board[-b]} ]{\begin{tikzpicture}[scale=1.6]\border[-b]\end{tikzpicture}}
-%     \quad
-%     \subfloat[\texttt{\textbackslash board[tl]}]{\begin{tikzpicture}[scale=1.6]\border[tl]\end{tikzpicture}}
-%     \caption{\TransFigureBoardOptionCaption}
-% \end{figure}
 %
 % \begin{figure}[!htp]
 %     \captionsetup[subfloat]{labelformat=empty}
@@ -885,7 +889,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \newcommand{\cell}[3]{\msweeper_cell:nnn {#1}{#2}{#3}}
 \newcommand{\row}[2]{\msweeper_row:nn {#1}{#2}}
-\newcommand{\border}[1][-]{\msweeper_border:nnn {#1}{1}{1}}
+\newcommand{\border}[3][-]{\msweeper_border:nnn {#1}{#2}{#3}}
 \newcommand{\board}[3][-]{\msweeper_board:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
 
