@@ -84,7 +84,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{334}
+% \CheckSum{330}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -859,19 +859,17 @@ This package consists of the files tikz-minesweeper.dtx,
 % \qquad \TransMacroColorCellContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_colorcell:nn #1#2 {
-    \seq_set_split:Nnn \l__msweeper_area_seq {;} {#2}
-    \seq_map_inline:Nn \l__msweeper_area_seq {
-        \seq_set_split:Nnn \l__msweeper_row_col_seq {,} {##1}
-        \tl_set:Nx \l__msweeper_row_tl { \seq_item:Nn \l__msweeper_row_col_seq {1} }
-        \tl_set:Nx \l__msweeper_col_tl { \seq_item:Nn \l__msweeper_row_col_seq {2} }
-        \seq_set_split:NnV \l__msweeper_row_seq {-} \l__msweeper_row_tl
-        \seq_set_split:NnV \l__msweeper_col_seq {-} \l__msweeper_col_tl
-        \int_step_variable:nnNn { \seq_item:Nn \l__msweeper_row_seq {1} } {
-            \seq_item:Nn \l__msweeper_row_seq {-1}
-        } \l_tmpa_tl {
-            \int_step_variable:nnNn { \seq_item:Nn \l__msweeper_col_seq {1} } {
-                \seq_item:Nn \l__msweeper_col_seq {-1}
-            } \l_tmpb_tl {
+    \seq_set_split:Nnn \l__msweeper_areas_seq {;} {#2}
+    \seq_map_inline:Nn \l__msweeper_areas_seq {
+        \seq_set_split:Nnn \l__msweeper_ranges_seq {,} {##1}
+        \exp_args:NNnx \seq_set_split:Nnn \l__msweeper_rowranges_seq {-} {
+            \seq_item:Nn \l__msweeper_ranges_seq {1} } % row
+        \exp_args:NNnx \seq_set_split:Nnn \l__msweeper_colranges_seq {-} {
+            \seq_item:Nn \l__msweeper_ranges_seq {2} } % col
+        \int_step_variable:nnNn { \seq_item:Nn \l__msweeper_rowranges_seq {1} } {
+            \seq_item:Nn \l__msweeper_rowranges_seq {-1} } \l_tmpa_tl {
+            \int_step_variable:nnNn { \seq_item:Nn \l__msweeper_colranges_seq {1} } {
+                \seq_item:Nn \l__msweeper_colranges_seq {-1} } \l_tmpb_tl {
                 \begin{scope}[xshift=\l_tmpb_tl*16,yshift=-\l_tmpa_tl*16]
                     \msweeper_cellcolored:n {#1}
                 \end{scope}
