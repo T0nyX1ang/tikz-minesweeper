@@ -46,21 +46,9 @@ Draw a minesweeper board in LaTeX.
 
 ## Usage
 
-- `\flag`: draw a flag
-
-- `\mine`: draw a mine
-
-- `\cellup`: draw an untouched cell
-
-- `\celldown`: draw a pressed cell
-
-- `\cellnum{num}`: draw a cell with a centered number (0-8)
-
 - `\cell{r}{c}{info}`: draw `info` at (`r`, `c`), see [here](https://github.com/T0nyX1ang/tikz-minesweeper/discussions/16) for detailed command discussions
 
 - `\row{r}{seq: info}`: draw a row with a sequence of `info` according to `\cell`
-
-- `\col{c}{seq: info}`: draw a column with a sequence of `info` according to `\cell`
 
 - `\border[-tlbrx]`: draw a border with edge options
 

@@ -86,7 +86,6 @@
 \def\TransSubsectionModules{综合模块}
 \def\TransSubsectionModulesContent{这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块, 如果没有特定的设计需求, 推荐仅使用这一部分提供的模块.}
 \def\TransCommandRowContent{在第 \meta{r} 行从左到右绘制多个方格. \meta{seq:info} 为一个含有 \meta{info} 的序列, 序列中的每个元素作为 \tn{cell} 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如 \meta{1\{23\}4} 的序列长度为3, 该序列中的元素分别为 \meta{1}, \meta{23} 和 \meta{4}.}
-\def\TransCommandColContent{在第 \meta{c} 列从上到下绘制多个方格, 语法与 \tn{row} 一致.}
 \def\TransCommandBoardContent{绘制 \meta{r} 行 \meta{c} 列的边框, \meta{t}, \meta{r}, \meta{b}, \meta{l} 为与 \tn{border} 对应可叠加的边框开关, 默认全部开启, 即地图中有完整边框, 如果使用了 \meta{-} 标志, 代表去除某些特定方位的边框. 此选项可以根据自己需求进行定制. 解析器只会解析最后一个 \meta{-} 标志的位置, 即 \tn[no-index]{border[-br-tl-lb-b]} 会被解析为 \tn[no-index]{border[-b]}. 解析器不会解析重复的参数, 即 \tn[no-index]{border[ttblbtlb]} 会被解析为 \tn[no-index]{border[tlb]}. 可选指令 \meta{x} 表示是否显示横纵坐标, 默认为不显示横纵坐标.}
 \def\TransCommandBoardExtraNoteContent{在绘制边框的过程中, 该指令会根据边框类型, 利用 \pkg{tikz} 宏包的截取指令, 自动以 \ColorTagBorder{} 为颜色, 绘制一个 0.2pt 的外边框. 同时, 为了避免格子的同色邻接区域导致的渲染问题, 该指令会提前绘制同色邻接区域.}
 \def\TransFigureBoardOptionCaption{边框指令示例}
@@ -117,7 +116,7 @@
 \def\TransMacroCellNumContent{用 \ColorTagOne{} 至 \ColorTagEight{} 绘制给定的矢量化数字 1 至 8, 接受一个参数 \meta{\#1}. 参数 \meta{\#1} 仅接受 \meta{12345678} 中的字符, 传入其它值将会被忽略.}
 \def\TransMacroCellColoredContent{绘制鼠标按下时的染色方格, 接受一个参数 \meta{\#1}. 参数 \meta{\#1} 仅接受 \meta{rgbcyov} 中的字符, 传入其它值将会被忽略. 参数 \meta{\#1} 的最长长度为 4, 如果传入的参数长度小于 4, 则会在参数的左/右侧补充与其相同的字符, 如果传入的参数长度大于 4, 则会直接被截断为 4 个字符.}
 \def\TransMacroCellContent{绘制方格, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. 在坐标(\meta{\#3}, \meta{\#2})处绘制一个方格, 方格中的内容由 \meta{\#1} 决定, \meta{\#1}可以传入任意参数. 该函数依次检查 \meta{\#1} 是否为数字参数 \meta{012345678}, 颜色参数 \meta{rgbcyov}, 雷与旗帜参数 \meta{fmsne-}, 除上述字符外的单字符参数以及多字符参数.}
-\def\TransMacroLineContent{绘制一行或者一列的格子, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为行号或者列号, \meta{\#2} 为格子内容, \meta{\#3} 为按行 \meta{r} 或者按列 \meta{c} 依次绘制格子, 其余参数将不会绘制.}
+\def\TransMacroRowContent{绘制一行格子, 接受两个参数 \meta{\#1}, \meta{\#2}. \meta{\#1} 为行号或者列号, \meta{\#2} 为格子内容.}
 \def\TransMacroRowColMarkerContent{绘制行列坐标数字.}
 \def\TransMacroGapFillerContent{由于渲染问题, 绘制盘面时, 同色区域之间可能会出现一个空白的缝隙, 该函数用于提前填充这些缝隙.}
 \def\TransMacroBorderContent{绘制边框, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbr} 中的值.}
