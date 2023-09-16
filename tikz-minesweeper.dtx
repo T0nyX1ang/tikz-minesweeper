@@ -84,7 +84,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{306}
+% \CheckSum{312}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -374,6 +374,13 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \subfloat[\texttt{\textbackslash board[-tlx]}]{\begin{tikzpicture}\board[-tlx]{3}{3}\end{tikzpicture}}
 %     \caption{\TransFigureBoardCoordinateCaption}
 % \end{figure}
+%
+% \begin{function}[added=2022-09-16]{\colorcell}
+%   \begin{syntax}
+%      \tn{realcoord} \marg{pos} \marg{r} \marg{c}
+%   \end{syntax}
+% \qquad \TransUndefined
+% \end{function}
 %
 % \begin{function}[added=2022-01-30, updated=2022-08-11]{\colorcell}
 %   \begin{syntax}
@@ -828,6 +835,31 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\msweeper_absolute_coord:nnn}
+% \qquad \TransUndefined
+%    \begin{macrocode}
+\cs_set:Npn \msweeper_real_coord:nnn #1#2#3 {
+    \str_case:nn {#1} {
+        {uc} { (#3*16 + 8.5, -#2*16 - 8.5) }
+        {dc} { (#3*16 + 8, -#2*16 - 8) }
+        {t} { (#3*16 + 8, -#2*16) }
+        {l} { (#3*16, -#2*16 - 8) }
+        {b} { (#3*16 + 8, -#2*16 - 16) }
+        {r} { (#3*16 + 16, -#2*16 - 8) }
+        {tl} { (#3*16, -#2*16) }
+        {lt} { (#3*16, -#2*16) }
+        {tr} { (#3*16 + 16, -#2*16) }
+        {rt} { (#3*16 + 16, -#2*16) }
+        {bl} { (#3*16, -#2*16 - 16) }
+        {lb} { (#3*16, -#2*16 - 16) }
+        {br} { (#3*16 + 16, -#2*16 - 16) }
+        {rb} { (#3*16 + 16, -#2*16 - 16) }
+    }
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\msweeper_colorcell:nn}
 % \qquad \TransMacroColorCellContent
 %    \begin{macrocode}
@@ -861,6 +893,7 @@ This package consists of the files tikz-minesweeper.dtx,
 \newcommand{\border}[3][-]{\msweeper_border:nnn {#1}{#2}{#3}}
 \newcommand{\board}[3][-]{\msweeper_board:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
+\newcommand{\realcoord}[3]{\msweeper_real_coord:nnn {#1}{#2}{#3}}
 
 %    \end{macrocode}
 %
