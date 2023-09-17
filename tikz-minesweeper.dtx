@@ -84,7 +84,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{306}
+% \CheckSum{312}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -287,14 +287,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \centering
 %     \begin{tikzpicture}[scale=6]
 %          \ExplSyntaxOn \msweeper_cellup: \ExplSyntaxOff
-%          \draw[thick, cborder] (0,0) rectangle (16, -16);
-%          \fill[red] (8, -8) circle (0.2);
+%          \border[]{1}{1} \cell{-}{0}{0}
+%          \fill[red] \abscoord{uc}{0}{0} circle (0.2);
 %     \end{tikzpicture}
 %     \quad
 %     \begin{tikzpicture}[scale=6]
 %          \ExplSyntaxOn \msweeper_celldown: \ExplSyntaxOff
-%          \draw[thick, cborder] (0,0) rectangle (16, -16);
-%          \fill[red] (8.5, -8.5) circle (0.2);
+%          \border[]{1}{1} \cell{0}{0}{0}
+%          \fill[red] \abscoord{dc}{0}{0} circle (0.2);
 %     \end{tikzpicture}
 %     \caption{\TransFigureCellUpDownCaption}
 %     \label{fig-cellup-celldown}
@@ -352,14 +352,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \begin{function}[added=2022-01-30]{\row}
 %   \begin{syntax}
-%      \tn{row} \marg{r} \marg{seq:info}
+%      \tn{row} \marg{r} \marg{seq: info}
 %   \end{syntax}
 % \qquad \TransCommandRowContent
 % \end{function}
 %
 % \begin{function}[added=2022-01-30, updated=2023-09-01]{\board}
 %   \begin{syntax}
-%      \tn{board} \oarg{board\_option=-|t|l|b|r|x} \marg{r} \marg{c}
+%      \tn{board} \oarg{board\_option = -|t|l|b|r|x} \marg{r} \marg{c}
 %   \end{syntax}
 % \qquad \TransCommandBoardContent
 % \end{function}
@@ -375,9 +375,48 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \caption{\TransFigureBoardCoordinateCaption}
 % \end{figure}
 %
+% \begin{function}[added=2022-09-17]{\abscoord}
+%   \begin{syntax}
+%      \tn{abscoord} \marg{pos\_option = uc|dc|t|l|b|r|tl|lt|tr|rt|bl|lb|br|rb} \marg{r} \marg{c}
+%   \end{syntax}
+% \qquad \TransCommandAbsoluteCoordinateContent
+% \end{function}
+%
+% \begin{figure}[!htp]
+%     \centering
+%     \begin{tikzpicture}[scale=2]
+%         \board[]{3}{4}
+%         \row{0}{----}
+%         \row{1}{----}
+%         \row{2}{0---}
+%         \fill[color=blue] \abscoord{uc}{0}{0} circle (1);
+%         \fill[color=blue] \abscoord{dc}{2}{0} circle (1);
+%         \fill[color=red] \abscoord{t}{1}{2} circle (1);
+%         \fill[color=red] \abscoord{l}{1}{2} circle (1);
+%         \fill[color=red] \abscoord{b}{1}{2} circle (1);
+%         \fill[color=red] \abscoord{r}{1}{2} circle (1);
+%         \fill[color=green] \abscoord{tl}{1}{2} circle (1);
+%         \fill[color=green] \abscoord{tr}{1}{2} circle (1);
+%         \fill[color=green] \abscoord{bl}{1}{2} circle (1);
+%         \fill[color=green] \abscoord{br}{1}{2} circle (1);
+%         \node[anchor=south] at \abscoord{t}{1}{2} {t};
+%         \node[anchor=east] at \abscoord{l}{1}{2} {r};
+%         \node[anchor=north] at \abscoord{b}{1}{2} {b};
+%         \node[anchor=west] at \abscoord{r}{1}{2} {l};
+%         \node[anchor=south east] at \abscoord{tl}{1}{2} {tl/lt};
+%         \node[anchor=south west] at \abscoord{tr}{1}{2} {tr/rt};
+%         \node[anchor=north east] at \abscoord{bl}{1}{2} {bl/lb};
+%         \node[anchor=north west] at \abscoord{br}{1}{2} {br/rb};
+%         \node[anchor=south] at \abscoord{uc}{0}{0} {uc};
+%         \node[anchor=north] at \abscoord{dc}{2}{0} {dc};
+%     \end{tikzpicture}
+%     \caption{\TransFigureAbsoluteCoordinateCaption}
+%     \label{fig-absolute-coordinate}
+% \end{figure}
+%
 % \begin{function}[added=2022-01-30, updated=2022-08-11]{\colorcell}
 %   \begin{syntax}
-%      \tn{colorcell} \marg{color} \marg{seq: pos}
+%      \tn{colorcell} \marg{color} \marg{seq: coords}
 %   \end{syntax}
 % \qquad \TransCommandColorCellContent
 % \end{function}
@@ -828,6 +867,31 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\msweeper_abs_coord:nnn}
+% \qquad \TransMacroAbsCoordContent
+%    \begin{macrocode}
+\cs_set:Npn \msweeper_abs_coord:nnn #1#2#3 {
+    \str_case:nn {#1} {
+        {uc} { (#3*16 + 8, -#2*16 - 8) }
+        {dc} { (#3*16 + 8.5, -#2*16 - 8.5) }
+        {t} { (#3*16 + 8, -#2*16) }
+        {l} { (#3*16, -#2*16 - 8) }
+        {b} { (#3*16 + 8, -#2*16 - 16) }
+        {r} { (#3*16 + 16, -#2*16 - 8) }
+        {tl} { (#3*16, -#2*16) }
+        {lt} { (#3*16, -#2*16) }
+        {tr} { (#3*16 + 16, -#2*16) }
+        {rt} { (#3*16 + 16, -#2*16) }
+        {bl} { (#3*16, -#2*16 - 16) }
+        {lb} { (#3*16, -#2*16 - 16) }
+        {br} { (#3*16 + 16, -#2*16 - 16) }
+        {rb} { (#3*16 + 16, -#2*16 - 16) }
+    }
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\msweeper_colorcell:nn}
 % \qquad \TransMacroColorCellContent
 %    \begin{macrocode}
@@ -861,6 +925,7 @@ This package consists of the files tikz-minesweeper.dtx,
 \newcommand{\border}[3][-]{\msweeper_border:nnn {#1}{#2}{#3}}
 \newcommand{\board}[3][-]{\msweeper_board:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
+\newcommand{\abscoord}[3]{\msweeper_abs_coord:nnn {#1}{#2}{#3}}
 
 %    \end{macrocode}
 %
