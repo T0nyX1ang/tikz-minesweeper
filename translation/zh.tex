@@ -95,10 +95,21 @@
 
 \def\TransSubsectionModules{综合模块}
 \def\TransSubsectionModulesContent{这一部分的模块是 \pkg{tikz-minesweeper} 提供给用户使用的模块, 如果没有特定的设计需求, 推荐仅使用这一部分提供的模块.}
-\def\TransCommandRowContent{在第 \meta{r} 行从左到右绘制多个方格. \meta{seq:info} 为一个含有 \meta{info} 的序列, 序列中的每个元素作为 \tn{cell} 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如 \meta{1\{23\}4} 的序列长度为3, 该序列中的元素分别为 \meta{1}, \meta{23} 和 \meta{4}.}
+\def\TransCommandRowContent{在第 \meta{r} 行从左到右绘制多个方格. \meta{seq: info} 为一个含有 \meta{info} 的序列, 序列中的每个元素作为 \tn{cell} 的第三个参数. 如果希望输入多个字符, 需要使用大括号, 例如 \meta{1\{23\}4} 的序列长度为3, 该序列中的元素分别为 \meta{1}, \meta{23} 和 \meta{4}.}
 \def\TransCommandBoardContent{绘制 \meta{r} 行 \meta{c} 列的盘面, 盘面选项中的 \meta{t}, \meta{r}, \meta{b}, \meta{l} 与 \tn{border} 的边框选项一致. 选项 \meta{x} 表示是否显示横纵坐标, 默认为不显示横纵坐标. 在绘制边框的过程中, 该指令会根据边框类型, 自动以 \ColorTagBorder{} 为颜色, 绘制一个 0.2pt 的外边框. 同时, 为了避免格子的同色邻接区域导致的渲染问题, 该指令会提前绘制同色邻接区域.}
 \def\TransFigureBoardCoordinateCaption{横纵坐标显示示例}
-\def\TransCommandColorCellContent{将 \meta{seq: pos} 位置的方格染色为 \meta{color} 颜色. \meta{color} 仅能传入 \tn{cell} 中接受的颜色类型, 但是与 \tn{cell} 仅支持单一颜色不同的是, \meta{color} 支持填入至多 4 种不同颜色, 颜色将从方格顶部逆时针填充. \meta{seq: pos} 定义了一个位置序列, 格式如下:
+\def\TransCommandAbsoluteCoordinateContent{
+    获取第 \meta{r} 行第 \meta{c} 列处的方格的绝对横纵坐标, 行列均从 0 开始编号. 该指令用于与绝对坐标相关的后续绘图指令. \meta{pos\_option} 仅接受如下选项:
+    \begin{optdesc}
+        \item[uc{\textbar}dc] 获得按下/抬起方格的中心坐标.
+        \item[t{\textbar}l{\textbar}b{\textbar}r] 获得方格上、左、下、右边界中心的坐标.
+        \item[tl{\textbar}tr{\textbar}bl{\textbar}br] 获得方格左上、右上、左下、右下角的坐标.
+        \item[lt{\textbar}rt{\textbar}lb{\textbar}rb] 与 \meta{tl{\textbar}tr{\textbar}bl{\textbar}br} 选项获得相同的坐标.
+    \end{optdesc}
+    获取绝对坐标的细节见图\ref{fig-absolute-coordinate}.
+}
+\def\TransFigureAbsoluteCoordinateCaption{绝对坐标获取示例}
+\def\TransCommandColorCellContent{将 \meta{seq: coords} 位置的方格染色为 \meta{color} 颜色. \meta{color} 仅能传入 \tn{cell} 中接受的颜色类型, 但是与 \tn{cell} 仅支持单一颜色不同的是, \meta{color} 支持填入至多 4 种不同颜色, 颜色将从方格顶部逆时针填充. \meta{seq: pos} 定义了一个位置序列, 格式如下:
     \begin{itemize}
         \item 序列中的每个元素以分号(;)分隔.
         \item 对于每个元素, 以逗号(,)分隔行区间和列区间.
@@ -128,6 +139,7 @@
 \def\TransMacroGapFillerContent{由于渲染问题, 绘制盘面时, 同色区域之间可能会出现一个空白的缝隙, 该函数用于提前填充这些缝隙.}
 \def\TransMacroBorderContent{绘制边框, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbr} 中的值.}
 \def\TransMacroBoardContent{绘制盘面, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} 为边框种类参数, \meta{\#2} 为行数, \meta{\#3} 为列数. 参数 \meta{\#1} 仅接受 \meta{-tlbrx} 中的值.}
+\def\TransMacroAbsCoordContent{获取某个方格绝对坐标, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#2} 为该方格的行坐标, \meta{\#3} 为该方格的列坐标. 参数 \meta{\#1} 仅接受方位选项 \meta{uc{\textbar}dc{\textbar}t{\textbar}l{\textbar}b{\textbar}r{\textbar}tl{\textbar}lt{\textbar}tr{\textbar}rt{\textbar}bl{\textbar}lb{\textbar}br{\textbar}rb} 中的值.}
 \def\TransMacroColorCellContent{给多个区域染色, 接受两个参数 \meta{\#1}, \meta{\#2}. \meta{\#1} 仅接受 \cs[no-index]{msweeper_cellcolored:n} 中的颜色, \meta{\#2} 传入待绘制的多个区域.}
 \def\TransMacroUserAPIContent{提供不显式调用 \LaTeXiii{} 的用户接口.}
 \def\TransMacroDisableLaTeXiiiEnvContent{关闭 \LaTeXiii{} 编程环境.}

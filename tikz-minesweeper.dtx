@@ -352,14 +352,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \begin{function}[added=2022-01-30]{\row}
 %   \begin{syntax}
-%      \tn{row} \marg{r} \marg{seq:info}
+%      \tn{row} \marg{r} \marg{seq: info}
 %   \end{syntax}
 % \qquad \TransCommandRowContent
 % \end{function}
 %
 % \begin{function}[added=2022-01-30, updated=2023-09-01]{\board}
 %   \begin{syntax}
-%      \tn{board} \oarg{board\_option=-|t|l|b|r|x} \marg{r} \marg{c}
+%      \tn{board} \oarg{board\_option = -|t|l|b|r|x} \marg{r} \marg{c}
 %   \end{syntax}
 % \qquad \TransCommandBoardContent
 % \end{function}
@@ -375,16 +375,48 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \caption{\TransFigureBoardCoordinateCaption}
 % \end{figure}
 %
-% \begin{function}[added=2022-09-16]{\abscoord}
+% \begin{function}[added=2022-09-17]{\abscoord}
 %   \begin{syntax}
-%      \tn{abscoord} \marg{pos} \marg{r} \marg{c}
+%      \tn{abscoord} \marg{pos\_option = uc|dc|t|l|b|r|tl|lt|tr|rt|bl|lb|br|rb} \marg{r} \marg{c}
 %   \end{syntax}
-% \qquad \TransUndefined
+% \qquad \TransCommandAbsoluteCoordinateContent
 % \end{function}
+%
+% \begin{figure}[!htp]
+%     \centering
+%     \begin{tikzpicture}[scale=2]
+%         \board[]{3}{4}
+%         \row{0}{----}
+%         \row{1}{----}
+%         \row{2}{0---}
+%         \fill[color=blue] \abscoord{uc}{0}{0} circle (1);
+%         \fill[color=blue] \abscoord{dc}{2}{0} circle (1);
+%         \fill[color=red] \abscoord{t}{1}{2} circle (1);
+%         \fill[color=red] \abscoord{l}{1}{2} circle (1);
+%         \fill[color=red] \abscoord{b}{1}{2} circle (1);
+%         \fill[color=red] \abscoord{r}{1}{2} circle (1);
+%         \fill[color=green] \abscoord{tl}{1}{2} circle (1);
+%         \fill[color=green] \abscoord{tr}{1}{2} circle (1);
+%         \fill[color=green] \abscoord{bl}{1}{2} circle (1);
+%         \fill[color=green] \abscoord{br}{1}{2} circle (1);
+%         \node[anchor=south] at \abscoord{t}{1}{2} {t};
+%         \node[anchor=east] at \abscoord{l}{1}{2} {r};
+%         \node[anchor=north] at \abscoord{b}{1}{2} {b};
+%         \node[anchor=west] at \abscoord{r}{1}{2} {l};
+%         \node[anchor=south east] at \abscoord{tl}{1}{2} {tl/lt};
+%         \node[anchor=south west] at \abscoord{tr}{1}{2} {tr/rt};
+%         \node[anchor=north east] at \abscoord{bl}{1}{2} {bl/lb};
+%         \node[anchor=north west] at \abscoord{br}{1}{2} {br/rb};
+%         \node[anchor=south] at \abscoord{uc}{0}{0} {uc};
+%         \node[anchor=north] at \abscoord{dc}{2}{0} {dc};
+%     \end{tikzpicture}
+%     \caption{\TransFigureAbsoluteCoordinateCaption}
+%     \label{fig-absolute-coordinate}
+% \end{figure}
 %
 % \begin{function}[added=2022-01-30, updated=2022-08-11]{\colorcell}
 %   \begin{syntax}
-%      \tn{colorcell} \marg{color} \marg{seq: pos}
+%      \tn{colorcell} \marg{color} \marg{seq: coords}
 %   \end{syntax}
 % \qquad \TransCommandColorCellContent
 % \end{function}
@@ -836,7 +868,7 @@ This package consists of the files tikz-minesweeper.dtx,
 % \end{macro}
 %
 % \begin{macro}{\msweeper_abs_coord:nnn}
-% \qquad \TransUndefined
+% \qquad \TransMacroAbsCoordContent
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_abs_coord:nnn #1#2#3 {
     \str_case:nn {#1} {

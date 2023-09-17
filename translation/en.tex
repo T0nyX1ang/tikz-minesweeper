@@ -95,10 +95,21 @@
 
 \def\TransSubsectionModules{Modules}
 \def\TransSubsectionModulesContent{This section contains the modules provided by \pkg{tikz-minesweeper}. In general, it's recommended to only use these commands unless there is specific customization needed.}
-\def\TransCommandRowContent{Draw multiple cells from left to right in the \meta{r}-th row. \meta{seq:info} is a sequence containing \meta{info}, where each element in the sequence serves as the third parameter of \tn{cell}. To display multiple characters in a cell, these characters should be surrounded by curly braces. For example, the length of the sequence \meta{1\{23\}4} is 3, and the elements in this sequence are \meta{1}, \meta{23}, and \meta{4} respectively.}
+\def\TransCommandRowContent{Draw multiple cells from left to right in the \meta{r}-th row. \meta{seq: info} is a sequence containing \meta{info}, where each element in the sequence serves as the third parameter of \tn{cell}. To display multiple characters in a cell, these characters should be surrounded by curly braces. For example, the length of the sequence \meta{1\{23\}4} is 3, and the elements in this sequence are \meta{1}, \meta{23}, and \meta{4} respectively.}
 \def\TransCommandBoardContent{Draw the board with \meta{r} rows and \meta{c} columns. \meta{t}, \meta{r}, \meta{b}, \meta{l} share the same syntax as \tn{border}. The option \meta{x} indicates whether to display the coordinates, which are hidden by default. During the process of drawing borders, this command will draw the outer border with \ColorTagBorder{} and a thickness of 0.2pt based on border options. Additionally, this command will pre-draw the neighboring regions of the same color to avoid rendering issues caused by adjacent areas of the same color.}
 \def\TransFigureBoardCoordinateCaption{Examples for displaying coordinates}
-\def\TransCommandColorCellContent{Color the cells in a sequence of areas \meta{seq: pos} with the \meta{color}. The \meta{color} argument can only accept color types that are accepted by \tn{cell}. However, unlike \tn{cell}, which only supports a single color, the \meta{color} argument supports up to four different colors. The colors will be filled counterclockwise starting from the top of a cell. \meta{seq: pos} defines a sequence of positions with the following format:
+\def\TransCommandAbsoluteCoordinateContent{
+    Get the absolute coordinate of a cell at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. This command is created for further coordinate-relevant drawing needs. The \meta{pos\_option} accepts the following options:
+    \begin{optdesc}
+        \item[uc{\textbar}dc] Get the coordinate of the center of a covered/revealed cell.
+        \item[t{\textbar}l{\textbar}b{\textbar}r] Get the coordinate of the center of the top/left/bottom/right side of a cell.
+        \item[tl{\textbar}tr{\textbar}bl{\textbar}br] Get the coordinate of the top-left/top-right/bottom-left/bottom-right corner of a cell.
+        \item[lt{\textbar}rt{\textbar}lb{\textbar}rb] Get the same coordinates as \meta{tl{\textbar}tr{\textbar}bl{\textbar}br}.
+    \end{optdesc}
+    The details of this command are in Fig. \ref{fig-absolute-coordinate}.
+}
+\def\TransFigureAbsoluteCoordinateCaption{Example for getting absolute coordinates}
+\def\TransCommandColorCellContent{Color the cells in a sequence of areas \meta{seq: coords} with the \meta{color}. The \meta{color} argument can only accept color types that are accepted by \tn{cell}. However, unlike \tn{cell}, which only supports a single color, the \meta{color} argument supports up to four different colors. The colors will be filled counterclockwise starting from the top of a cell. \meta{seq: pos} defines a sequence of positions with the following format:
     \begin{itemize}
         \item Each element in the sequence is separated by a semicolon (;);
         \item For each element, the row range and column range are separated by a comma (,);
@@ -128,6 +139,7 @@
 \def\TransMacroGapFillerContent{Due to rendering issues, when drawing a board, there may be gaps between adjacent areas of the same color. This function can pre-fill these gaps.}
 \def\TransMacroBorderContent{Draw the border, accepting three parameters \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} represents the border type parameter, \meta{\#2} represents the number of rows, and \meta{\#3} represents the number of columns. The parameter \meta{\#1} accepts values from \meta{-tlbr} only.}
 \def\TransMacroBoardContent{Draw the board, accepting three parameters \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#1} represents the border type parameter, \meta{\#2} represents the number of rows, and \meta{\#3} represents the number of columns. The parameter \meta{\#1} accepts values from \meta{-tlbrx} only.}
+\def\TransMacroAbsCoordContent{Get the absolute coordinate of a cell, accepting three parameters \meta{\#1}, \meta{\#2}, \meta{\#3}. \meta{\#2} is the row coordinate of this cell, and \meta{\#3} is the column coordinate of this cell. \meta{\#1} only accepts directional options from \meta{uc{\textbar}dc{\textbar}t{\textbar}l{\textbar}b{\textbar}r{\textbar}tl{\textbar}lt{\textbar}tr{\textbar}rt{\textbar}bl{\textbar}lb{\textbar}br{\textbar}rb}.}
 \def\TransMacroColorCellContent{Color the cells in multiple areas, which accepts two parameters \meta{\#1} and \meta{\#2}. The parameter \meta{\#1} can only accept colors that are accepted by \cs[no-index]{msweeper_cellcolored:n}. The parameter \meta{\#2} is used to pass multiple regions to be drawn.}
 \def\TransMacroUserAPIContent{Provide user APIs without calling \LaTeXiii{} directly.}
 \def\TransMacroDisableLaTeXiiiEnvContent{Disable the \LaTeXiii{} environment.}
