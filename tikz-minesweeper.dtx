@@ -287,14 +287,14 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \centering
 %     \begin{tikzpicture}[scale=6]
 %          \ExplSyntaxOn \msweeper_cellup: \ExplSyntaxOff
-%          \draw[thick, cborder] (0,0) rectangle (16, -16);
-%          \fill[red] (8, -8) circle (0.2);
+%          \border[]{1}{1} \cell{-}{0}{0}
+%          \fill[red] \abscoord{uc}{0}{0} circle (0.2);
 %     \end{tikzpicture}
 %     \quad
 %     \begin{tikzpicture}[scale=6]
 %          \ExplSyntaxOn \msweeper_celldown: \ExplSyntaxOff
-%          \draw[thick, cborder] (0,0) rectangle (16, -16);
-%          \fill[red] (8.5, -8.5) circle (0.2);
+%          \border[]{1}{1} \cell{0}{0}{0}
+%          \fill[red] \abscoord{dc}{0}{0} circle (0.2);
 %     \end{tikzpicture}
 %     \caption{\TransFigureCellUpDownCaption}
 %     \label{fig-cellup-celldown}
