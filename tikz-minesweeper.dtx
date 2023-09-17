@@ -840,8 +840,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Npn \msweeper_real_coord:nnn #1#2#3 {
     \str_case:nn {#1} {
-        {uc} { (#3*16 + 8.5, -#2*16 - 8.5) }
-        {dc} { (#3*16 + 8, -#2*16 - 8) }
+        {uc} { (#3*16 + 8, -#2*16 - 8) }
+        {dc} { (#3*16 + 8.5, -#2*16 - 8.5) }
         {t} { (#3*16 + 8, -#2*16) }
         {l} { (#3*16, -#2*16 - 8) }
         {b} { (#3*16 + 8, -#2*16 - 16) }
