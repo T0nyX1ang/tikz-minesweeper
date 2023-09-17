@@ -375,9 +375,9 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \caption{\TransFigureBoardCoordinateCaption}
 % \end{figure}
 %
-% \begin{function}[added=2022-09-16]{\colorcell}
+% \begin{function}[added=2022-09-16]{\abscoord}
 %   \begin{syntax}
-%      \tn{realcoord} \marg{pos} \marg{r} \marg{c}
+%      \tn{abscoord} \marg{pos} \marg{r} \marg{c}
 %   \end{syntax}
 % \qquad \TransUndefined
 % \end{function}
@@ -835,10 +835,10 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\msweeper_absolute_coord:nnn}
+% \begin{macro}{\msweeper_abs_coord:nnn}
 % \qquad \TransUndefined
 %    \begin{macrocode}
-\cs_set:Npn \msweeper_real_coord:nnn #1#2#3 {
+\cs_set:Npn \msweeper_abs_coord:nnn #1#2#3 {
     \str_case:nn {#1} {
         {uc} { (#3*16 + 8, -#2*16 - 8) }
         {dc} { (#3*16 + 8.5, -#2*16 - 8.5) }
@@ -893,7 +893,7 @@ This package consists of the files tikz-minesweeper.dtx,
 \newcommand{\border}[3][-]{\msweeper_border:nnn {#1}{#2}{#3}}
 \newcommand{\board}[3][-]{\msweeper_board:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
-\newcommand{\realcoord}[3]{\msweeper_real_coord:nnn {#1}{#2}{#3}}
+\newcommand{\abscoord}[3]{\msweeper_abs_coord:nnn {#1}{#2}{#3}}
 
 %    \end{macrocode}
 %
