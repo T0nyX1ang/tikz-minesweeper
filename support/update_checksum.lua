@@ -16,7 +16,7 @@ local function update_checksum(filename)
     --[[ update the checksum of a certain dtx file ]]
 
     -- read the file
-    local fin = assert(io.open(filename, "rb"), 'Failed to read file: ' .. filename)
+    local fin = assert(io.open(filename, "rb"), "Failed to read file: " .. filename)
     local content = fin:read("*all")
     fin:close()
 
@@ -63,7 +63,7 @@ local function update_checksum(filename)
                            "%1" .. new_checksum .. "%2")
 
     -- write the file
-    local fout = assert(io.open(filename, "wb"), 'Failed to write file: ' .. filename)
+    local fout = assert(io.open(filename, "wb"), "Failed to write file: " .. filename)
     fout:write(content)
     fout:close()
 

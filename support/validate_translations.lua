@@ -16,7 +16,7 @@ local function validate_translations(filename)
     --[[ validate the translations of a certain dtx file ]]
 
     -- read the file
-    local fin = assert(io.open(filename, "rb"), 'Failed to read file: ' .. filename)
+    local fin = assert(io.open(filename, "rb"), "Failed to read file: " .. filename)
     local lineno = 0
     local total_translation_keys = 0
     local flag = true

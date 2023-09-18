@@ -62,7 +62,7 @@ last_end = 0
 for res in re.finditer(coord_pattern, path):
     start, end, matched_str = res.start(), res.end(), res.group(0)
 
-    if '+' not in original_path[last_end:start]:
+    if "+" not in original_path[last_end:start]:
         old_x, old_y = re.findall(float_pattern, matched_str)
         new_x, new_y = Decimal(old_x) + xshift, Decimal(old_y) + yshift
         replaced_str = matched_str.replace(old_x, str(new_x),
@@ -71,11 +71,11 @@ for res in re.finditer(coord_pattern, path):
 
     last_end = end  # restore the last end
 
-print('-- Program results ---')
-print('X shift:', xshift)
-print('Y shift:', yshift)
-print('Original:', original_path)
-print('Shifted:', path)
+print("-- Program results ---")
+print("X shift:", xshift)
+print("Y shift:", yshift)
+print("Original:", original_path)
+print("Shifted:", path)
 
 if pyperclip_enabled:
     pyperclip.copy(path)
