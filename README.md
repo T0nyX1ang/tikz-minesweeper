@@ -46,21 +46,25 @@ Draw a minesweeper board in LaTeX.
 
 ## Usage
 
-- `\cell{r}{c}{info}`: draw `info` at (`r`, `c`), see [here](https://github.com/T0nyX1ang/tikz-minesweeper/discussions/16) for detailed command discussions
+- `\cell{r}{c}{info}`: draw `info` at (`r`, `c`), see [here](https://github.com/T0nyX1ang/tikz-minesweeper/discussions/16) for detailed command discussions.
 
-- `\row{r}{seq: info}`: draw a row with a sequence of `info` according to `\cell`
+- `\row{r}{seq: info}`: draw a row with a sequence of `info` according to `\cell`.
 
-- `\border[-tlbr]{r}{c}`: draw a border with edge options
+- `\border[-tlbr]{r}{c}`: draw a border with edge options.
 
-- `\board[-tlbrx]{r}{c}`: draw a board with border
+- `\board[-tlbrx]{r}{c}`: draw a board with border.
 
-- `\colorcell{color}{seq: pos}`: fill an area with up to four colors.
+- `\abscoord{pos_options}{r}{c}`: get the absolute coordination of a cell.
+
+- `\colorcell{color}{seq: coords}`: fill an area with up to four colors.
 
 ## Contribution
 
 - Issues and PRs are welcomed.
 
 - `LaTeX3` is preferred.
+
+- `VSCode` is very recommended for developing.
 
 ## Copyright and License
 
