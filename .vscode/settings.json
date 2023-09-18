@@ -58,5 +58,8 @@
             "name": "Locale (en)",
             "tools": ["update_locale(en)"]
         }
+    ],
+    "Lua.diagnostics.disable": [
+        "lowercase-global"
     ]
 }
