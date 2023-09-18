@@ -12,6 +12,18 @@
 -- and version 1.3 or later is part of all distributions of
 -- LaTeX version 2005/12/01 or later.
 
+local function check_key_in(key, iter)
+    --[[ check if a key exists in an iterator ]]
+
+    for k in iter do
+        if k == key then
+            return true
+        end
+    end
+    return false
+end
+
+
 local function validate_translations(filename)
     --[[ validate the translations of a certain dtx file ]]
 
@@ -46,13 +58,8 @@ local function validate_translations(filename)
             total_translation_keys = total_translation_keys + 1
             for locale, trans_content in pairs(trans_table) do
                 local key_match = false
-                for candidate_key in trans_content:gmatch("\\Trans[a-zA-Z]*") do
-                    if trans_key == candidate_key then
-                        key_match = true
-                        break
-                    end
-                end
-                if not key_match then
+                if not check_key_in(trans_key,
+                        trans_content:gmatch("\\Trans[a-zA-Z]*")) then
                     flag = false
                     print("./" .. filename .. ":" .. lineno ..
                         ": Translation key " .. trans_key ..
