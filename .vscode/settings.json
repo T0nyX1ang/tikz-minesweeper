@@ -36,6 +36,14 @@
             "name": "update_locale(en)",
             "command": "texlua",
             "args": ["support/update_locale.lua", "%DOCFILE%.dtx", "en"]
+        },
+        {
+            "name": "validate_translations",
+            "command": "texlua",
+            "args": [
+                "support/validate_translations.lua",
+                "%DOCFILE%.dtx"
+            ]
         }
     ],
     "latex-workshop.latex.recipes": [
@@ -57,6 +65,10 @@
         {
             "name": "Locale (en)",
             "tools": ["update_locale(en)"]
+        },
+        {
+            "name": "Validate translations",
+            "tools": ["validate_translations"]
         }
     ],
     "Lua.diagnostics.disable": [
