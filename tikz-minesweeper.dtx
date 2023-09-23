@@ -84,7 +84,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{312}
+% \CheckSum{342}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -125,7 +125,7 @@ This package consists of the files tikz-minesweeper.dtx,
             \row{1}{se405}
             \row{2}{mn678}
             \row{3}{rgbcy}
-            \row{4}{ov-f?}
+            \row{4}{ov{A/B\\C/D}f?}
         \end{tikzpicture}
     \end{document}
 \end{verbatim}
@@ -141,7 +141,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %             \row{1}{se405}
 %             \row{2}{mn678}
 %             \row{3}{rgbcy}
-%             \row{4}{ov-f?}
+%             \row{4}{ov{A/B\\C/D}f?}
 %         \end{tikzpicture}
 %         \caption{\TransFigureUsageCaption}
 %     \end{figure}
@@ -671,6 +671,28 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\msweeper_cellcontent:n}
+% \qquad \TransUndefined
+%    \begin{macrocode}
+\cs_set:Npn \msweeper_cellcontent:n #1 {
+    \int_set:Nn \l_tmpa_int {1} % max row length
+    \int_zero:N \l_tmpb_int % total rows
+    \seq_set_split:Nnn \l__msweeper_cellcontent_seq {\\} {#1}
+    \seq_map_inline:Nn \l__msweeper_cellcontent_seq {
+        \int_set:Nn \l_tmpa_int { \int_max:nn { \str_count:n {##1} }{ \l_tmpa_int } }
+        \int_incr:N \l_tmpb_int
+    }
+
+    \fp_set:Nn \l_tmpa_fp { 12 / max(\l_tmpa_int, \l_tmpb_int) }
+    \seq_map_indexed_inline:Nn \l__msweeper_cellcontent_seq {
+        \node[text~centered, text={color7}] at
+        (8, \fp_eval:n { -2 - 6*(2 * ##1 - 1) / \l_tmpb_int }) {
+            \textbf{\fontsize{\fp_eval:n {\l_tmpa_fp}}{0}\selectfont{##2}}};
+    }
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\msweeper_cellcolored:n}
 % \qquad \TransMacroCellColoredContent
 %    \begin{macrocode}
@@ -727,16 +749,10 @@ This package consists of the files tikz-minesweeper.dtx,
                         {n} { \msweeper_cellfail: \msweeper_mine: }
                         {e} { \msweeper_celldown: \msweeper_misflagfail: }
                         {-} { \msweeper_cellup: }
-                    } {
-                        \msweeper_cellup:
-                        \node[text~centered, text={color7}] at (8, -8) {\textbf{#1}};
-                    }
+                    } { \msweeper_cellup: \msweeper_cellcontent:n {#1} }
                 }
             }
-        } {
-            \msweeper_cellup:
-            \node[text~centered, text={color7}] at (8, -8) {\textbf{\tiny #1}};
-        }
+        } { \msweeper_cellup: \msweeper_cellcontent:n {#1} }
     \end{scope}
 }
 
