@@ -217,21 +217,21 @@ This package consists of the files tikz-minesweeper.dtx,
 %     \begin{tikzpicture}
 %         \begin{scope}[scale=10]
 %             \ExplSyntaxOn \msweeper_flag: \ExplSyntaxOff
-%             \draw[gray] (0,0) rectangle (16, -16);
-%             \draw[dashed] (0,-4) node[left] {-4} -- (8.5,-4);
-%             \draw[dashed,red] (16,-4.5) node[right] {-4.5} -- (8.5,-4.5);
-%             \draw[dashed,red] (0,-6.5) node[left] {-6.5} -- (4,-6.5);
-%             \draw[dashed,red] (16,-8.5) node[right] {-8.5} -- (8.5,-8.5);
-%             \draw[dashed] (0,-11) node[left] {-11} -- (6.5,-11);
-%             \draw[dashed] (16,-12) node[right] {-12} -- (12,-12);
-%             \draw[dashed] (0,-13) node[left] {-13} -- (5,-13);
-%             \draw[dashed,red] (4,0) node[above] {4} -- (4,-6.5);
-%             \draw[dashed] (5,-16) node[below] {5} -- (5,-13);
-%             \draw[dashed] (6.5,0) node[above] {6.5} -- (6.5,-11);
-%             \draw[dashed] (8.5,-16) node[below] {8.5} -- (8.5,-13);
-%             \draw[dashed] (9.5,0) node[above] {9.5} -- (9.5,-4);
-%             \draw[dashed] (10.5,-16) node[below] {10.5} -- (10.5,-13);
-%             \draw[dashed] (12,0) node[above] {12} -- (12,-12);
+%             \draw[gray] (0, 0) rectangle (16, -16);
+%             \node[above left] at (0, 0) {0};
+%             \draw[dashed,red] (16, -3) node[right] {-3} -- (9, -3);
+%             \draw[dashed,red] (0, -5.5) node[left] {-5.5} -- (4, -5.5);
+%             \draw[dashed,red] (16, -8) node[right] {-8} -- (9, -8);
+%             \draw[dashed] (0, -11) node[left] {-11} -- (4, -11);
+%             \draw[dashed] (16, -10) node[right] {-10} -- (10, -10);
+%             \draw[dashed] (0, -13) node[left] {-13} -- (4, -13);
+%             \draw[dashed,red] (4, 0) node[above] {4} -- (4, -5.5);
+%             \draw[dashed] (4, -16) node[below] {4} -- (4,-13);
+%             \draw[dashed] (6, 0) node[above] {6} -- (6, -10);
+%             \draw[dashed] (8, -16) node[below] {8} -- (8, -13);
+%             \draw[dashed] (9, -16) node[below] {9} -- (9, -13);
+%             \draw[dashed] (10, 0) node[above] {10} -- (10, -10);
+%             \draw[dashed] (12, -16) node[below] {12} -- (12, -13);
 %         \end{scope}
 %     \end{tikzpicture} \quad
 %     \begin{tikzpicture}
@@ -524,8 +524,8 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_flag: {
     \fill[color7] (4, -13) rectangle (12, -11); % lower base
-    \fill[color7] (6, -13) rectangle (10, -10); % upper base
-    \fill[color7] (8, -13) rectangle (9, -4); % pole
+    \fill[color7] (6, -12.5) rectangle (10, -10); % upper base
+    \fill[color7] (9, -12) -- (9, -8) -- (8, -5.5) -- (8, -12) -- cycle; % pole
     \fill[color3] (9, -3) -- (4, -5.5) -- (9, -8) -- cycle; % flag
 }
 
