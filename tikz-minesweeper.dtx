@@ -6,6 +6,7 @@
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<package>\RequirePackage{expl3}
+%<package>\RequirePackage{xparse}
 %<package>\RequirePackage{tikz}
 %<package>\ProvidesExplPackage{tikz-minesweeper}{2023-09-18}{0.2.5}
 %<package>                    {Draw a minesweeper board in LaTeX}
@@ -926,12 +927,12 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \TransMacroUserAPIContent
 %    \begin{macrocode}
-\newcommand{\cell}[3]{\msweeper_cell:nnn {#1}{#2}{#3}}
-\newcommand{\row}[2]{\msweeper_row:nn {#1}{#2}}
-\newcommand{\border}[3][-]{\msweeper_border:nnn {#1}{#2}{#3}}
-\newcommand{\board}[3][-]{\msweeper_board:nnn {#1}{#2}{#3}}
-\newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
-\newcommand{\abscoord}[3]{\msweeper_abs_coord:nnn {#1}{#2}{#3}}
+\NewDocumentCommand{\cell}{m m m}{\msweeper_cell:nnn {#1}{#2}{#3}}
+\NewDocumentCommand{\row}{m m}{\msweeper_row:nn {#1}{#2}}
+\NewDocumentCommand{\border}{O{-} m m}{\msweeper_border:nnn {#1}{#2}{#3}}
+\NewDocumentCommand{\board}{O{-} m m}{\msweeper_board:nnn {#1}{#2}{#3}}
+\NewDocumentCommand{\colorcell}{m m}{\msweeper_colorcell:nn {#1}{#2}}
+\NewDocumentCommand{\abscoord}{m m m}{\msweeper_abs_coord:nnn {#1}{#2}{#3}}
 
 %    \end{macrocode}
 %
