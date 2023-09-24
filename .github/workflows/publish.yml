@@ -26,13 +26,26 @@ jobs:
           sed 's/en.tex/zh.tex/g' tikz-minesweeper.dtx > tikz-minesweeper_zh.dtx
           l3build ctan
 
+    # Generate release notes
+    - name: Generate release notes
+      run: ./support/release_notes_generator.sh > release_notes.md
+
+    # Generate release TDS package
+    - name: Generate release TDS package
+      run: |
+        rm -rf ./build/distrib/tds/*.zip
+        rm -rf ./build/distrib/tds/source/latex/tikz-minesweeper/tikz-minesweeper_*.dtx
+        cd build/distrib/tds
+        zip -r tikz-minesweeper.tds.zip .
+        cd ../../..
+
     # Release sty file
     - name: Release sty file
       uses: softprops/action-gh-release@v0.1.15
       with:
         files: |
           ./build/doc/tikz-minesweeper.sty
-          ./build/doc/tikz-minesweeper.pdf
-          ./build/doc/tikz-minesweeper_*.pdf
+          ./build/distrib/tds/tikz-minesweeper.tds.zip
+        body_path: release_notes.md
         fail_on_unmatched_files: true
-        generate_release_notes: true
+        generate_release_notes: false
