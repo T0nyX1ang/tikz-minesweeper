@@ -28,7 +28,7 @@ jobs:
 
     # Generate release notes
     - name: Generate release notes
-      run: sh support/release_notes_generator.sh > release_notes.md
+      run: sudo sh support/release_notes_generator.sh > release_notes.md
 
     # Generate release TDS package
     - name: Generate release TDS package
