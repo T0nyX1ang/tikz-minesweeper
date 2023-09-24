@@ -41,25 +41,26 @@
 \def\TransSubsectionColorSchemeTableContent{
     \begin{tabular}{ccccc}
         \toprule
-        Color label       & R   & G   & B   & Use case                            \\
+        Color label       & R   & G   & B   & Use case                               \\
         \midrule
-        \ColorTagZero{}   & 192 & 192 & 192 & cell interior/middle layer of frame \\
-        \ColorTagOne{}    & 0   & 0   & 255 & number 1                            \\
-        \ColorTagTwo{}    & 0   & 128 & 0   & number 2                            \\
-        \ColorTagThree{}  & 255 & 0   & 0   & number 3                            \\
-        \ColorTagFour{}   & 0   & 0   & 128 & number 4                            \\
-        \ColorTagFive{}   & 128 & 0   & 0   & number 5                            \\
-        \ColorTagSix{}    & 0   & 128 & 128 & number 6                            \\
-        \ColorTagSeven{}  & 0   & 0   & 0   & number 7                            \\
-        \ColorTagEight{}  & 128 & 128 & 128 & number 8                            \\
-        \ColorTagBorder{} & 160 & 160 & 160 & frame shade                         \\
-        \ColorTagLight{}  & 255 & 255 & 255 & highlight in contrast with shades   \\
-        \ColorTagShade{}  & 128 & 128 & 128 & cell shade/border of opened cell    \\
-        \ColorTagFail{}   & 255 & 0   & 0   & blasted cell                        \\
+        \ColorTagZero{}   & 192 & 192 & 192 & cell interior/middle layer of frame    \\
+        \ColorTagOne{}    & 0   & 0   & 255 & number 1                               \\
+        \ColorTagTwo{}    & 0   & 128 & 0   & number 2                               \\
+        \ColorTagThree{}  & 255 & 0   & 0   & number 3/flag                          \\
+        \ColorTagFour{}   & 0   & 0   & 128 & number 4                               \\
+        \ColorTagFive{}   & 128 & 0   & 0   & number 5                               \\
+        \ColorTagSix{}    & 0   & 128 & 128 & number 6                               \\
+        \ColorTagSeven{}  & 0   & 0   & 0   & number 7/plaintext/flag pole/flag base \\
+        \ColorTagEight{}  & 128 & 128 & 128 & number 8                               \\
+        \ColorTagBorder{} & 160 & 160 & 160 & frame shade                            \\
+        \ColorTagLight{}  & 255 & 255 & 255 & highlight in contrast with shades      \\
+        \ColorTagShade{}  & 128 & 128 & 128 & cell shade/border of opened cell       \\
+        \ColorTagFail{}   & 255 & 0   & 0   & blasted cell                           \\
         \bottomrule
     \end{tabular}
 }
 \def\TransSubsectionColorSchemeTableCaption{Look-up table of colors}
+\def\TransDarkColorSchemeContent{Note that the color scheme can be redefined to satisfy your needs. The \textbf{night theme} is one of the most commonly used color themes. You can apply this theme by appending the following codes into your preamble.}
 
 \def\TransSubsectionCellElements{Cell Elements}
 \def\TransCommandCellContent{Draw the cell containing \meta{info} at the intersection of the \meta{r}-th row and the \meta{c}-th column, starting from 0. The \meta{info} is checked in the following order:
