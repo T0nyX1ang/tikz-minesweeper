@@ -33,8 +33,8 @@ jobs:
     # Generate release TDS package
     - name: Generate release TDS package
       run: |
-        rm -rf ./build/distrib/tds/*.zip
-        rm -rf ./build/distrib/tds/source/latex/tikz-minesweeper/tikz-minesweeper_*.dtx
+        rm -f build/distrib/tds/*.zip
+        rm -f build/distrib/tds/source/latex/tikz-minesweeper/tikz-minesweeper_*.dtx
         cd build/distrib/tds
         zip -r tikz-minesweeper.tds.zip .
         cd ../../..
