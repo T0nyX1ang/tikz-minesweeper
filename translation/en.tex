@@ -74,7 +74,7 @@
         \item[e] If \meta{info} is \meta{e}, then the cell is pressed and shows a mistakenly flagged mine, which is a cross in \ColorTagFail{} on top of a mine;
         \item[-] If \meta{info} is \meta{-}, then the cell is covered and has no content. A covered cell is drawn with the light side and dark side first. The widths of these sides are both 2pt, with \ColorTagLight{} and \ColorTagShade{} respectively to create a 3D effect. Then, the background is filled with \ColorTagZero{}. Note that the center of this cell is (8.5, -8.5);
         \item[(?)] If \meta{info} is any other \textbf{single} character, then the cell is covered and shows the character centered at (8, -8);
-        \item[(*)] If \meta{info} contains \textbf{multiple} characters, the string will be shown in \tn[no-index]{tiny} font.
+        \item[(*)] If \meta{info} contains \textbf{multiple} characters, the characters will be shown with adaptive resized font according to the row of the characters and the max character length of these rows.
     \end{optdesc}
     The details of cell elements are in Fig. \ref{fig-flag-mine} and Fig. \ref{fig-cellup-celldown}.
 }
@@ -132,6 +132,7 @@
 \def\TransMacroCellFailContent{Draw the failed cell by clicking a mine.}
 \def\TransMacroMisflagFailContent{Draw the failed cell by misflaging.}
 \def\TransMacroCellNumContent{Use \ColorTagOne{} to \ColorTagEight{} to draw the given vectorized numbers from 1 to 8. It accepts one parameter \meta{\#1}. The parameter \meta{\#1} only accepts characters from \meta{12345678}. Any other value passed will be ignored.}
+\def\TransMacroCellContentContent{Fill contents into a cell. It accepts one parameter \meta{\#1} which supports multi-lines by the line separator \texttt{\textbackslash\textbackslash}.}
 \def\TransMacroCellColoredContent{Draw the colored revealed cell. It accepts one parameter \meta{\#1}, which only accepts characters from \meta{rgbcyov}. Any other value passed will be ignored. The maximum length of parameter \meta{\#1} is 4. If the length of the parameter is less than 4, it will be padded on the left/right side with the same character. If the length of the parameter is greater than 4, it will be truncated to 4 characters.}
 \def\TransMacroCellContent{Draw the cell, accepting three parameters \meta{\#1}, \meta{\#2}, \meta{\#3}. The cell will be drawn at coordinates (\meta{\#3}, \meta{\#2}), and the content of the cell is determined by \meta{\#1}. \meta{\#1} can accept any parameter. The function sequentially checks if \meta{\#1} is a numeric parameter \meta{012345678}, a color parameter \meta{rgbcyov}, a mine or flag parameter \meta{fmsne-}, a single character parameter excluding the mentioned characters, or a multi-character parameter.}
 \def\TransMacroRowContent{Draw the row of cells, accepting two parameters \meta{\#1}, \meta{\#2}. \meta{\#1} represents the row number, \meta{\#2} represents the content of the cells.}

@@ -74,7 +74,7 @@
         \item[e] 如果 \meta{info} 是 \meta{e}, 方格是按下状态并且会显示标记错误的地雷, 即在普通地雷的基础上, 进一步用 \ColorTagFail{} 绘制一个叉;
         \item[-] 如果 \meta{info} 是 \meta{-}, 方格是弹起状态并且无字符. 弹起状态的方格首先分别用 \ColorTagLight{} 和 \ColorTagShade{} 对称地绘制亮面和暗面, 营造立体感, 亮面和暗面的宽度均为 2pt, 然后用 \ColorTagZero{} 绘制底色. 需要注意的是, 该方格的中心点为 (8.5, -8.5);
         \item[(?)] 如果 \meta{info} 是其他\textbf{单个}字符, 方格是弹起状态并包含该字符, 字符中心为 (8, -8);
-        \item[(*)] 如果 \meta{info} 包含\textbf{多个}字符, 将会自动缩小字符, 转化为 \tn[no-index]{tiny} 模式.
+        \item[(*)] 如果 \meta{info} 包含\textbf{多个}字符, 将会根据字符的行数与每一行的最大字符数, 自适应确定每个字符的大小.
     \end{optdesc}
     相关元素绘制细节见图\ref{fig-flag-mine}和图\ref{fig-cellup-celldown}.
 }
@@ -132,6 +132,7 @@
 \def\TransMacroCellFailContent{绘制由于踩雷而失败的方格.}
 \def\TransMacroMisflagFailContent{绘制由于标记错误而失败的方格.}
 \def\TransMacroCellNumContent{用 \ColorTagOne{} 至 \ColorTagEight{} 绘制给定的矢量化数字 1 至 8, 接受一个参数 \meta{\#1}. 参数 \meta{\#1} 仅接受 \meta{12345678} 中的字符, 传入其它值将会被忽略.}
+\def\TransMacroCellContentContent{在方格中自适应填入内容, 接受一个参数 \meta{\#1}, 参数 \meta{\#1} 支持以 \texttt{\textbackslash\textbackslash} 换行.}
 \def\TransMacroCellColoredContent{绘制鼠标按下时的染色方格, 接受一个参数 \meta{\#1}. 参数 \meta{\#1} 仅接受 \meta{rgbcyov} 中的字符, 传入其它值将会被忽略. 参数 \meta{\#1} 的最长长度为 4, 如果传入的参数长度小于 4, 则会在参数的左/右侧补充与其相同的字符, 如果传入的参数长度大于 4, 则会直接被截断为 4 个字符.}
 \def\TransMacroCellContent{绘制方格, 接受三个参数 \meta{\#1}, \meta{\#2}, \meta{\#3}. 在坐标(\meta{\#3}, \meta{\#2})处绘制一个方格, 方格中的内容由 \meta{\#1} 决定, \meta{\#1}可以传入任意参数. 该函数依次检查 \meta{\#1} 是否为数字参数 \meta{012345678}, 颜色参数 \meta{rgbcyov}, 雷与旗帜参数 \meta{fmsne-}, 除上述字符外的单字符参数以及多字符参数.}
 \def\TransMacroRowContent{绘制一行格子, 接受两个参数 \meta{\#1}, \meta{\#2}. \meta{\#1} 为行号, \meta{\#2} 为格子内容.}
