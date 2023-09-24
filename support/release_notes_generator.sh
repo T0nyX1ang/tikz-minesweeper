@@ -2,11 +2,6 @@ CURV=`git tag --sort=committerdate | grep -v conti | tail -n 1`
 PREV=`git tag --sort=committerdate | grep -v conti | tail -n 2 | head -n1`
 
 git log ${PREV}..${CURV} > .l
-if [ ! -s .l ]; then
-  CURV=$PREV
-  PREV=`git tag --sort=committerdate | grep -v conti | tail -n 2 | head -n1`
-  git log ${PREV}..${CURV} > .l
-fi
 grep ^Author .l | cut -d : -f 2- | uniq > .A
 
 echo "# Release Notes"
