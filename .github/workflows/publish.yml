@@ -32,12 +32,7 @@ jobs:
 
     # Generate release TDS package
     - name: Generate release TDS package
-      run: |
-        rm -f build/distrib/tds/*.zip
-        rm -f build/distrib/tds/source/latex/tikz-minesweeper/tikz-minesweeper_*.dtx
-        cd build/distrib/tds
-        zip -r tikz-minesweeper.tds.zip .
-        cd ../../..
+      run: zip -d build/distrib/tds/tikz-minesweeper.tds.zip source/latex/tikz-minesweeper/tikz-minesweeper_*.dtx
 
     # Release sty file
     - name: Release sty file
