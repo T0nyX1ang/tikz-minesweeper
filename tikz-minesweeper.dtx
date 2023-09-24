@@ -5,8 +5,11 @@
 
 % \iffalse
 %<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
-%<package>\ProvidesPackage{tikz-minesweeper}
-%<package>    [2023-09-18 v0.2.5 Draw a minesweeper board in LaTeX]
+%<package>\RequirePackage{expl3}
+%<package>\RequirePackage{tikz}
+%<package>\ProvidesExplPackage{tikz-minesweeper}{2023-09-18}{0.2.5}
+%<package>                    {Draw a minesweeper board in LaTeX}
+%<package>
 %<*batchfile>
 \begingroup
 \input ctxdocstrip.tex
@@ -84,7 +87,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{342}
+% \CheckSum{338}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -104,7 +107,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %
 % \GetFileInfo{tikz-minesweeper.sty}
 %
-% \title{\TransTitle}
+% \title{\TransTitle~(\fileversion)}
 % \author{\TransAuthor}
 % \date{\filedate}
 % \maketitle
@@ -468,13 +471,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \clearpage
 %
 % \section{\TransSectionImplementation}
-% \TransMacroDependencyContent
-%    \begin{macrocode}
-
-\RequirePackage{expl3}
-\RequirePackage{tikz}
-
-%    \end{macrocode}
 %
 % \TransMacroColorSchemeContent
 %    \begin{macrocode}
@@ -497,12 +493,6 @@ This package consists of the files tikz-minesweeper.dtx,
 % \TransMacroUnitContent
 %    \begin{macrocode}
 \tikzset{x=1pt, y=1pt} % Default unit
-
-%    \end{macrocode}
-%
-% \TransMacroEnableLaTeXiiiEnvContent
-%    \begin{macrocode}
-\ExplSyntaxOn
 
 %    \end{macrocode}
 %
@@ -942,12 +932,6 @@ This package consists of the files tikz-minesweeper.dtx,
 \newcommand{\board}[3][-]{\msweeper_board:nnn {#1}{#2}{#3}}
 \newcommand{\colorcell}[2]{\msweeper_colorcell:nn {#1}{#2}}
 \newcommand{\abscoord}[3]{\msweeper_abs_coord:nnn {#1}{#2}{#3}}
-
-%    \end{macrocode}
-%
-% \TransMacroDisableLaTeXiiiEnvContent
-%    \begin{macrocode}
-\ExplSyntaxOff
 
 %    \end{macrocode}
 %
