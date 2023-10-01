@@ -88,7 +88,7 @@ This package consists of the files tikz-minesweeper.dtx,
 %</driver>
 % \fi
 %
-% \CheckSum{338}
+% \CheckSum{326}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -860,17 +860,17 @@ This package consists of the files tikz-minesweeper.dtx,
 %    \begin{macrocode}
 \cs_set:Nn \msweeper_gap_filler: {
     % draw lines in advance to avoid gaps
-    \int_step_variable:nnNn {1} {\l__msweeper_cols_int - 1} \l_tmpa_tl {
-        \int_step_variable:nnNn {1} {\l__msweeper_rows_int} \l_tmpb_tl {
-            \fill[cshade, xshift=\l_tmpa_tl*16, yshift=-\l_tmpb_tl * 16] (0, 0) --
+    \int_step_inline:nnn {1} {\l__msweeper_cols_int - 1} {
+        \int_step_inline:nnn {1} {\l__msweeper_rows_int} {
+            \fill[cshade, xshift=##1*16, yshift=-####1*16] (0, 0) --
                 (-0.5, 0.5) -- (-0.5, 14.5) -- (0, 15) -- (-0.5, 15.5) -- (0, 16) --
                 (0.5, 15.5) -- (0, 15) -- (0.5, 14.5) -- (0.5, 0.5) -- cycle;
         }
     }
 
-    \int_step_variable:nnNn {1} {\l__msweeper_rows_int - 1} \l_tmpb_tl {
-        \int_step_variable:nnNn {1} {\l__msweeper_cols_int} \l_tmpa_tl {
-            \fill[cshade, xshift=\l_tmpa_tl*16, yshift=-\l_tmpb_tl * 16] (0, 0) --
+    \int_step_inline:nnn {1} {\l__msweeper_rows_int - 1} {
+        \int_step_inline:nnn {1} {\l__msweeper_cols_int} {
+            \fill[cshade, xshift=####1*16, yshift=-##1*16] (0, 0) --
                 (-0.5, -0.5) -- (-14.5, -0.5) -- (-15, 0) -- (-15.5, -0.5) --
                 (-16, 0) -- (-15.5, 0.5) -- (-15, 0) -- (-14.5, 0.5) --
                 (-0.5, 0.5) -- cycle;
@@ -932,11 +932,11 @@ This package consists of the files tikz-minesweeper.dtx,
             \seq_item:Nn \l__msweeper_ranges_seq {1} } % row
         \exp_args:NNnx \seq_set_split:Nnn \l__msweeper_colranges_seq {-} {
             \seq_item:Nn \l__msweeper_ranges_seq {2} } % col
-        \int_step_variable:nnNn { \seq_item:Nn \l__msweeper_rowranges_seq {1} } {
-            \seq_item:Nn \l__msweeper_rowranges_seq {-1} } \l_tmpa_tl {
-            \int_step_variable:nnNn { \seq_item:Nn \l__msweeper_colranges_seq {1} } {
-                \seq_item:Nn \l__msweeper_colranges_seq {-1} } \l_tmpb_tl {
-                \begin{scope}[xshift=\l_tmpb_tl*16,yshift=-\l_tmpa_tl*16]
+        \int_step_inline:nnn { \seq_item:Nn \l__msweeper_rowranges_seq {1} } {
+            \seq_item:Nn \l__msweeper_rowranges_seq {-1} } {
+            \int_step_inline:nnn { \seq_item:Nn \l__msweeper_colranges_seq {1} } {
+                \seq_item:Nn \l__msweeper_colranges_seq {-1} } {
+                \begin{scope}[xshift=(########1*16),yshift=(-####1*16)]
                     \msweeper_cellcolored:n {#1}
                 \end{scope}
             }
